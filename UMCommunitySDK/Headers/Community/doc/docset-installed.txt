@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/yeahugo/Library/Developer/Shared/Documentation/DocSets/com.umeng.umcommunity.UMCommunity.docset
+Time: 2015-01-21 06:25:50 +0000

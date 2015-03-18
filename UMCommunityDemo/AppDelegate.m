@@ -7,6 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import "UMCommunity.h"
+#import "UMComMessageManager.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "UMComDemoViewController.h"
+
+#define UMengMessageAppkey @"54d19091fd98c55a19000406"
+#define UMengCommunityAppkey @"54d19091fd98c55a19000406"//
+#define UMengLoginAppkey UMengCommunityAppkey
 
 @interface AppDelegate ()
 
@@ -16,6 +25,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [UMComMessageManager setAppkey:UMengMessageAppkey];
+    [UMCommunity openLog:YES];
+    [UMComMessageManager startWithOptions:launchOptions];
+    
+    [UMCommunity setWithAppKey:UMengCommunityAppkey];
+    
+    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+    
+    //设置分享到QQ互联的appId和appKey
+    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+    
     // Override point for customization after application launch.
     return YES;
 }

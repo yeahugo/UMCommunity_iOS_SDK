@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "UMCommunity.h"
 
 @interface ViewController ()
 
@@ -18,6 +19,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+- (IBAction)onClickWxq:(id)sender
+{
+    UINavigationController *viewController = [UMCommunity getFeedsModalViewController];
+    [self presentViewController:viewController animated:YES completion:nil];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

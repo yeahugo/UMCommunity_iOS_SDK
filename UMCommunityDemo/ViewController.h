@@ -10,6 +10,7 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction)onClickWxq:(id)sender;
 
 @end
 

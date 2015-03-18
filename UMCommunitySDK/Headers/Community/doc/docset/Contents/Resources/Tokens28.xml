@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UMCommunity.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UMCommunity</TokenIdentifier>
+			<Abstract type="html">友盟微社区总体控制类</Abstract>
+			<DeclaredIn>UMCommunity.h</DeclaredIn>
+            
+			
+			<NodeRef refid="28"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMCommunity/openLog:</TokenIdentifier>
+			<Abstract type="html">设置打开Log</Abstract>
+			<DeclaredIn>UMCommunity.h</DeclaredIn>
+			
+			<Declaration>+ (void)openLog:(BOOL)isLog</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>isLog</Name>
+					<Abstract type="html">是否打开Log</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/openLog:</Anchor>
+            <NodeRef refid="28"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMCommunity/setWithAppKey:</TokenIdentifier>
+			<Abstract type="html">设置appkey</Abstract>
+			<DeclaredIn>UMCommunity.h</DeclaredIn>
+			
+			<Declaration>+ (void)setWithAppKey:(NSString *)appkey</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>appkey</Name>
+					<Abstract type="html">应用appkey</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setWithAppKey:</Anchor>
+            <NodeRef refid="28"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMCommunity/getFeedsViewController</TokenIdentifier>
+			<Abstract type="html">得到一个消息流页面的普通UIViewController对象</Abstract>
+			<DeclaredIn>UMCommunity.h</DeclaredIn>
+			
+			<Declaration>+ (UIViewController *)getFeedsViewController</Declaration>
+			
+			<ReturnValue><Abstract type="html">消息流页面</Abstract></ReturnValue>
+			<Anchor>//api/name/getFeedsViewController</Anchor>
+            <NodeRef refid="28"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMCommunity/getFeedsModalViewController</TokenIdentifier>
+			<Abstract type="html">得到一个消息流页面的模态窗口对象</Abstract>
+			<DeclaredIn>UMCommunity.h</DeclaredIn>
+			
+			<Declaration>+ (UINavigationController *)getFeedsModalViewController</Declaration>
+			
+			<ReturnValue><Abstract type="html">消息流页面</Abstract></ReturnValue>
+			<Anchor>//api/name/getFeedsModalViewController</Anchor>
+            <NodeRef refid="28"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

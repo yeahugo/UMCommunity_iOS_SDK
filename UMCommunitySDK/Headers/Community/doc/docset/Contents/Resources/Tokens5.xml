@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UMComDeleteFeedRequest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UMComDeleteFeedRequest</TokenIdentifier>
+			<Abstract type="html">删除消息请求</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+            
+			
+			<NodeRef refid="5"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMComDeleteFeedRequest/deleteWithFeedId:completion:</TokenIdentifier>
+			<Abstract type="html">删除消息</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+			
+			<Declaration>+ (void)deleteWithFeedId:(NSString *)feedId completion:(PostResultResponse)result</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>feedId</Name>
+					<Abstract type="html">消息Id</Abstract>
+				</Parameter><Parameter>
+					<Name>result</Name>
+					<Abstract type="html">结果</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deleteWithFeedId:completion:</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

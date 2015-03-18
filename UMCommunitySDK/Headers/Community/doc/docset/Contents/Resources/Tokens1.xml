@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UMComAllFeedsRequest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UMComAllFeedsRequest</TokenIdentifier>
+			<Abstract type="html">获取所有消息的请求</Abstract>
+			<DeclaredIn>UMComPullRequest.h</DeclaredIn>
+            
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComAllFeedsRequest/initWithCount:</TokenIdentifier>
+			<Abstract type="html">获取消息的初始化方法</Abstract>
+			<DeclaredIn>UMComPullRequest.h</DeclaredIn>
+			
+			<Declaration>- (id)initWithCount:(NSInteger)count</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>count</Name>
+					<Abstract type="html">数量</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">初始化请求对象</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithCount:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

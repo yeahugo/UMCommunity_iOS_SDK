@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UMComCreateFeedRequest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UMComCreateFeedRequest</TokenIdentifier>
+			<Abstract type="html">创建新feed</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+            
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMComCreateFeedRequest/postWithFeed:completion:</TokenIdentifier>
+			<Abstract type="html">发送新feed</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+			
+			<Declaration>+ (void)postWithFeed:(UMComFeedEntity *)feed completion:(PostResultResponse)result</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>feed</Name>
+					<Abstract type="html">消息，消息构造参考&apos;UMComFeedEntity&apos;</Abstract>
+				</Parameter><Parameter>
+					<Name>result</Name>
+					<Abstract type="html">结果</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/postWithFeed:completion:</Anchor>
+            <NodeRef refid="4"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
