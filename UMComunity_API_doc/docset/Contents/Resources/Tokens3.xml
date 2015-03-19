@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UMComCommentFeedRequest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UMComCommentFeedRequest</TokenIdentifier>
+			<Abstract type="html">评论消息请求</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+            
+			
+			<NodeRef refid="3"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMComCommentFeedRequest/postWithSourceFeedId:commentContent:replyUserId:completion:</TokenIdentifier>
+			<Abstract type="html">发送消息的评论</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+			
+			<Declaration>+ (void)postWithSourceFeedId:(NSString *)feedId commentContent:(NSString *)commentContent replyUserId:(NSString *)userId completion:(PostResultResponse)result</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>feedId</Name>
+					<Abstract type="html">消息Id</Abstract>
+				</Parameter><Parameter>
+					<Name>commentContent</Name>
+					<Abstract type="html">评论内容</Abstract>
+				</Parameter><Parameter>
+					<Name>userId</Name>
+					<Abstract type="html">回复的用户id</Abstract>
+				</Parameter><Parameter>
+					<Name>result</Name>
+					<Abstract type="html">结果</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/postWithSourceFeedId:commentContent:replyUserId:completion:</Anchor>
+            <NodeRef refid="3"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

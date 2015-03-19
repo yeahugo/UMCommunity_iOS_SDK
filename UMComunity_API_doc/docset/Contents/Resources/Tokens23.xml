@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UMComUpdateProfileRequest.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UMComUpdateProfileRequest</TokenIdentifier>
+			<Abstract type="html">更新登录用户请求</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+            
+			
+			<NodeRef refid="23"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/UMComUpdateProfileRequest/updateWithUser:completion:</TokenIdentifier>
+			<Abstract type="html">更新登录用户数据</Abstract>
+			<DeclaredIn>UMComPushRequest.h</DeclaredIn>
+			
+			<Declaration>+ (void)updateWithUser:(UMComUserAccount *)userAccount completion:(PostResultResponse)result</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>userAccount</Name>
+					<Abstract type="html">登录用户</Abstract>
+				</Parameter><Parameter>
+					<Name>result</Name>
+					<Abstract type="html">返回结果</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/updateWithUser:completion:</Anchor>
+            <NodeRef refid="23"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

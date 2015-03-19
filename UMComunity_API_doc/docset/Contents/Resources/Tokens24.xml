@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/UMComUserAccount.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/UMComUserAccount</TokenIdentifier>
+			<Abstract type="html">使用第三方登录方法后得到的登录数据构造此类</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+            
+			
+			<NodeRef refid="24"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/setSnsPlatformName:</TokenIdentifier>
+			<Abstract type="html">required sns平台名，例如sina</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *snsPlatformName</Declaration>
+			
+			
+			<Anchor>//api/name/snsPlatformName</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/snsPlatformName</TokenIdentifier>
+			<Abstract type="html">required sns平台名，例如sina</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *snsPlatformName</Declaration>
+			
+			
+			<Anchor>//api/name/snsPlatformName</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UMComUserAccount/snsPlatformName</TokenIdentifier>
+			<Abstract type="html">required sns平台名，例如sina</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *snsPlatformName</Declaration>
+			
+			
+			<Anchor>//api/name/snsPlatformName</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/setUsid:</TokenIdentifier>
+			<Abstract type="html">required, sns平台的用户id</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *usid</Declaration>
+			
+			
+			<Anchor>//api/name/usid</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/usid</TokenIdentifier>
+			<Abstract type="html">required, sns平台的用户id</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *usid</Declaration>
+			
+			
+			<Anchor>//api/name/usid</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UMComUserAccount/usid</TokenIdentifier>
+			<Abstract type="html">required, sns平台的用户id</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *usid</Declaration>
+			
+			
+			<Anchor>//api/name/usid</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/setName:</TokenIdentifier>
+			<Abstract type="html">required, sns平台的用户昵称</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/name</TokenIdentifier>
+			<Abstract type="html">required, sns平台的用户昵称</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UMComUserAccount/name</TokenIdentifier>
+			<Abstract type="html">required, sns平台的用户昵称</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/setToken:</TokenIdentifier>
+			<Abstract type="html">sns平台的token</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/token</TokenIdentifier>
+			<Abstract type="html">sns平台的token</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UMComUserAccount/token</TokenIdentifier>
+			<Abstract type="html">sns平台的token</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *token</Declaration>
+			
+			
+			<Anchor>//api/name/token</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/setIcon_url:</TokenIdentifier>
+			<Abstract type="html">用户头像的链接地址</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *icon_url</Declaration>
+			
+			
+			<Anchor>//api/name/icon_url</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/icon_url</TokenIdentifier>
+			<Abstract type="html">用户头像的链接地址</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *icon_url</Declaration>
+			
+			
+			<Anchor>//api/name/icon_url</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UMComUserAccount/icon_url</TokenIdentifier>
+			<Abstract type="html">用户头像的链接地址</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *icon_url</Declaration>
+			
+			
+			<Anchor>//api/name/icon_url</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/setAge:</TokenIdentifier>
+			<Abstract type="html">用户年龄</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSNumber *age</Declaration>
+			
+			
+			<Anchor>//api/name/age</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/age</TokenIdentifier>
+			<Abstract type="html">用户年龄</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSNumber *age</Declaration>
+			
+			
+			<Anchor>//api/name/age</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UMComUserAccount/age</TokenIdentifier>
+			<Abstract type="html">用户年龄</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSNumber *age</Declaration>
+			
+			
+			<Anchor>//api/name/age</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/setGender:</TokenIdentifier>
+			<Abstract type="html">用户性别,1代表男性，0代表女性</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSNumber *gender</Declaration>
+			
+			
+			<Anchor>//api/name/gender</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/UMComUserAccount/gender</TokenIdentifier>
+			<Abstract type="html">用户性别,1代表男性，0代表女性</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSNumber *gender</Declaration>
+			
+			
+			<Anchor>//api/name/gender</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/UMComUserAccount/gender</TokenIdentifier>
+			<Abstract type="html">用户性别,1代表男性，0代表女性</Abstract>
+			<DeclaredIn>UMComUserAccount.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) NSNumber *gender</Declaration>
+			
+			
+			<Anchor>//api/name/gender</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
