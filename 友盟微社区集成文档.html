@@ -84,5 +84,34 @@ AssertsLibrary.framework</p>
 }
 </code></pre>
 
+<h3>5.5 使用自定义登录</h3>
+<p>在你的登录页面设置代理对象，并处理弹出登录页面的方法：</p>
+<pre><code> //在你弹出友盟微社区的页面前，设置你的登录页面，例如
+LoginViewController *loginViewController = [[LoginViewController alloc] initWithNibName:@&quot;LoginViewController&quot; bundle:nil];
+[UMComLoginManager setLoginHandler:loginController];
+//在你的登陆页面loginViewController实现下面弹出登录页面的回调方法
+ - (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(LoadDataCompletion)loginCompletion
+ {
+    //弹出你的登录页面
+    [viewController presentViewController:self animated:YES completion:nil];
+ }
+
+  //登录完成之后上传开放平台uid
+ {
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc] init];
+    userAccount.usid = @&quot;用户id&quot;;
+    userAccount.snsPlatformName = sns平台来源名; //例如sina，qq，wxsession
+    userAccount.token = @&quot;登录token&quot;;
+    userAccount.name = @&quot;昵称&quot;;
+    [UMComLoginManager finishLoginWithAccount:userAccount completion:^(NSArray *data, NSError *error) {
+        if (error) {
+            NSLog(@&quot;登录错误&quot;);
+        } else {
+            NSLog(@&quot;登录成功&quot;);
+        }
+    }];
+ }
+</code></pre>
+
 <h2>6 <a name="detail_code" id="detail_code" style="color:black"> 详细使用</a></h2>
 <p>SDK 详细使用情况可以参考API文档。</p>
