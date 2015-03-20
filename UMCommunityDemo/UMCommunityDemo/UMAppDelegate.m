@@ -1,31 +1,35 @@
 //
-//  AppDelegate.m
-//  UMCommunityDemo
+//  UMAppDelegate.m
+//  UMCommunity
 //
-//  Created by Gavin Ye on 3/18/15.
-//  Copyright (c) 2015 Umeng. All rights reserved.
+//  Created by Gavin Ye on 8/25/14.
+//  Copyright (c) 2014 Umeng. All rights reserved.
 //
 
 #import "UMAppDelegate.h"
-#import "UMCommunity.h"
-#import "UMComMessageManager.h"
-#import "UMSocialWechatHandler.h"
-#import "UMSocialQQHandler.h"
 #import "UMCommViewController.h"
-
-#define UMengMessageAppkey @"54d19091fd98c55a19000406"
-#define UMengCommunityAppkey @"4eaee02c527015373b000003"//
+#import "UMCommunity.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialSinaHandler.h"
+#import "UMSocialWechatHandler.h"
+#define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
+#define UMengCommunityAppkey @"54d19091fd98c55a19000406"//@"54d19091fd98c55a19000406" //@"4eaee02c527015373b000003" //550baca4fd98c5e45c000744
 #define UMengLoginAppkey UMengCommunityAppkey
+//iOS平台的appkey：54c877ecfd98c5b9d8000776
+//secretkey：820d2128264d7be114ba5d5888e4b132
 
-@interface AppDelegate ()
+@implementation UMAppDelegate
 
-@end
+void uncaughtExceptionHandler(NSException *exception) {
+    NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+    // Internal error reporting
+}
 
-@implementation AppDelegate
-
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    //Message
     [UMComMessageManager setAppkey:UMengMessageAppkey];
     [UMCommunity openLog:YES];
     [UMComMessageManager startWithOptions:launchOptions];
@@ -37,15 +41,18 @@
     
     //设置分享到QQ互联的appId和appKey
     [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+//    [UMSocialSinaHandler openSSOWithRedirectURL:nil];
+    //Login
+//    [UMComLoginManager setAppKey:UMengLoginAppkey];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    UMCommViewController *demoViewController = [[UMCommViewController alloc] initWithNibName:@"UMCommViewController" bundle:nil];
-    self.window.rootViewController = demoViewController;
-
-    // Override point for customization after application launch.
+    
+    UMCommViewController *loginDemoViewController = [[UMCommViewController alloc] initWithNibName:@"UMCommViewController" bundle:nil];
+    self.window.rootViewController = loginDemoViewController;
+    
     return YES;
 }
 
@@ -70,25 +77,30 @@
     [UMComMessageManager didReceiveRemoteNotification:userInfo];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
+- (void)applicationWillResignActive:(UIApplication *)application
+{
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {
+- (void)applicationWillTerminate:(UIApplication *)application
+{
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
