@@ -103,7 +103,7 @@
 		D5340D251ABBF63500C9AEB0 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5340CC31ABBF63400C9AEB0 /* libSocialWechat.a */; };
 		D5340D261ABBF63500C9AEB0 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5340CC41ABBF63400C9AEB0 /* libWeChatSDK.a */; };
 		D540A2F71AB9585F007063E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D540A2F61AB9585F007063E6 /* main.m */; };
-		D540A2FA1AB9585F007063E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D540A2F91AB9585F007063E6 /* AppDelegate.m */; };
+		D540A2FA1AB9585F007063E6 /* UMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D540A2F91AB9585F007063E6 /* UMAppDelegate.m */; };
 		D540A3111AB9585F007063E6 /* UMCommunityDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D540A3101AB9585F007063E6 /* UMCommunityDemoTests.m */; };
 		D540A4B71AB95D11007063E6 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D540A4B61AB95D11007063E6 /* CoreTelephony.framework */; };
 		D540A4B91AB95D18007063E6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D540A4B81AB95D18007063E6 /* SystemConfiguration.framework */; };
@@ -260,8 +260,8 @@
 		D540A2F11AB9585F007063E6 /* UMCommunityDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UMCommunityDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D540A2F51AB9585F007063E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D540A2F61AB9585F007063E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D540A2F81AB9585F007063E6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D540A2F91AB9585F007063E6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D540A2F81AB9585F007063E6 /* UMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UMAppDelegate.h; sourceTree = "<group>"; };
+		D540A2F91AB9585F007063E6 /* UMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UMAppDelegate.m; sourceTree = "<group>"; };
 		D540A2FF1AB9585F007063E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D540A3041AB9585F007063E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D540A30A1AB9585F007063E6 /* UMCommunityDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UMCommunityDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -604,8 +604,8 @@
 				D5340C3A1ABBF63400C9AEB0 /* umeng_community_ios_sdk_v1.0 */,
 				D540A5A31AB9A456007063E6 /* iPhone6Portrait.png */,
 				D540A5A41AB9A456007063E6 /* iPhone6PlusPortrait.png */,
-				D540A2F81AB9585F007063E6 /* AppDelegate.h */,
-				D540A2F91AB9585F007063E6 /* AppDelegate.m */,
+				D540A2F81AB9585F007063E6 /* UMAppDelegate.h */,
+				D540A2F91AB9585F007063E6 /* UMAppDelegate.m */,
 				D540A5AC1AB9ACEB007063E6 /* UMCommViewController.h */,
 				D540A5AD1AB9ACEB007063E6 /* UMCommViewController.m */,
 				D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */,
@@ -847,7 +847,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D540A2FA1AB9585F007063E6 /* AppDelegate.m in Sources */,
+				D540A2FA1AB9585F007063E6 /* UMAppDelegate.m in Sources */,
 				D540A5AF1AB9ACEB007063E6 /* UMCommViewController.m in Sources */,
 				D5340CC81ABBF63400C9AEB0 /* README.md in Sources */,
 				D540A2F71AB9585F007063E6 /* main.m in Sources */,

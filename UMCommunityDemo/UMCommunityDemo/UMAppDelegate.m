@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Umeng. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "UMAppDelegate.h"
 #import "UMCommunity.h"
 #import "UMComMessageManager.h"
 #import "UMSocialWechatHandler.h"
