@@ -14,7 +14,7 @@
 #import "UMCommViewController.h"
 
 #define UMengMessageAppkey @"54d19091fd98c55a19000406"
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"//
+#define UMengCommunityAppkey @"4eaee02c527015373b000003"//
 #define UMengLoginAppkey UMengCommunityAppkey
 
 @interface AppDelegate ()
