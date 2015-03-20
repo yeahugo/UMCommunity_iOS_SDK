@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F75A8BAA-46F0-40F3-BFC8-3F2264537A28</string>
+	<key>IDESourceControlProjectName</key>
+	<string>UMCommunityDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F90E67CD0393E88BD121087709512236ECDA7015</key>
+		<string>github.umeng.com:yeahugo/umeng_community_ios_sdk.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>UMCommunityDemo/UMCommunityDemo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F90E67CD0393E88BD121087709512236ECDA7015</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.umeng.com:yeahugo/umeng_community_ios_sdk.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F90E67CD0393E88BD121087709512236ECDA7015</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F90E67CD0393E88BD121087709512236ECDA7015</string>
+			<key>IDESourceControlWCCName</key>
+			<string>umeng_community_ios_sdk_v1.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>
