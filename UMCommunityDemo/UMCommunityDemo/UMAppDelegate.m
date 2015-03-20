@@ -13,10 +13,8 @@
 #import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
 #define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"//@"54d19091fd98c55a19000406" //@"4eaee02c527015373b000003" //550baca4fd98c5e45c000744
+#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 #define UMengLoginAppkey UMengCommunityAppkey
-//iOS平台的appkey：54c877ecfd98c5b9d8000776
-//secretkey：820d2128264d7be114ba5d5888e4b132
 
 @implementation UMAppDelegate
 
@@ -41,8 +39,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     //设置分享到QQ互联的appId和appKey
     [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
-//    [UMSocialSinaHandler openSSOWithRedirectURL:nil];
-    //Login
 //    [UMComLoginManager setAppKey:UMengLoginAppkey];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
