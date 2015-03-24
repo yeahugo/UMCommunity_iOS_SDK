@@ -165,6 +165,7 @@
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="acounTypeLabel" destination="77y-ug-oHc" id="ZHQ-jJ-144"/>
                 <outlet property="avatarImageView" destination="8pR-wD-91k" id="5rY-SQ-EzB"/>
