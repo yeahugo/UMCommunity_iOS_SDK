@@ -14,4 +14,17 @@
 
 #import "UMUtils.h"
 
+#define UMSBJSONErrorDomain UMComSBJSONErrorDomain
+#define UMOpenUDID UMeComOpenUDID
+#define GTMUMStringEncoding GTMUMComStringEncoding
+#define UMSBJsonBase UMComSBJsonBase
+#define UMSBJsonParser UMComSBJsonParser
+#define UMSBJsonWriter UMComSBJsonWriter
+#define UMProtocolData UMComProtocolData
+#define UMImageView UMComImageView
+#define UMImageLoader UMComImageLoader
+#define UMImageLoadConnection UMComImageLoadConnection
+#define UMCache UMComCache
+#define UMImageViewDelegate UMComImageViewDelegate
+
 #endif
