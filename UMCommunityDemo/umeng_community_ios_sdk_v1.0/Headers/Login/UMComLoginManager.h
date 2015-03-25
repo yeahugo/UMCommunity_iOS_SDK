@@ -11,6 +11,13 @@
 #import "UMComLoginDelegate.h"
 #import "UMComPullRequest.h"
 
+#define  UserLoginSecceed  @"User_Login_Secceed"
+#define  UserLogoutSucceed @"UserLogoutSucceed"
+
+#define kUserNameTooLong 10010
+#define kUserNameSensitive 10012
+#define kUserNameRepeat 10013
+#define kUserNameWrongCharater 10009
 
 @interface UMComLoginManager : NSObject
 
