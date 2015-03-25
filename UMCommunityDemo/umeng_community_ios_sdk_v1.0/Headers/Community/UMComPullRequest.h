@@ -7,12 +7,12 @@
 //
 
 #import <CoreData/CoreData.h>
-//#import "UMComUser.h"
-//#import "UMComTopic.h"
-//#import "UMComFeed.h"
-//#import "UMComComment.h"
-//#import "UMComUserProfile.h"
-//#import "UMComHttpPagesManager.h"
+#import "UMComUser.h"
+#import "UMComTopic.h"
+#import "UMComFeed.h"
+#import "UMComComment.h"
+#import "UMComUserProfile.h"
+#import "UMComHttpPagesManager.h"
 
 @class UMComFetchRequest;
 

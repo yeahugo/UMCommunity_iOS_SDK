@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "UMComUserAccount.h"
 #import "UMComLoginDelegate.h"
-#import "UMComPullRequest.h"
 
+#define  UserLoginSecceed  @"User_Login_Secceed"
+#define  UserLogoutSucceed @"UserLogoutSucceed"
+
+#define kUserNameTooLong 10010
+#define kUserNameSensitive 10012
+#define kUserNameRepeat 10013
+#define kUserNameWrongCharater 10009
 
 @interface UMComLoginManager : NSObject
 
@@ -49,14 +55,14 @@
  提供社区SDK调用，默认使用友盟登录SDK，或者自定义的第三方登录SDK，实现登录功能
  
  */
-+ (void)performLogin:(UIViewController *)viewController completion:(FetchCoreDataResponse)completion;
++ (void)performLogin:(UIViewController *)viewController completion:(LoadDataCompletion)completion;
 
 
 /**
  第三方登录SDK登录完成后，调用此方法上传登录的账号信息
  
  */
-+ (void)finishLoginWithAccount:(UMComUserAccount *)userAccount completion:(FetchCoreDataResponse)completion;
++ (void)finishLoginWithAccount:(UMComUserAccount *)userAccount completion:(LoadDataCompletion)completion;
 
 /**
  用户注销方法

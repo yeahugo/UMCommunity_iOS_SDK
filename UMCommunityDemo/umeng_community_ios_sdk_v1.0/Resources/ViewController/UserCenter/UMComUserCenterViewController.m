@@ -25,7 +25,8 @@
 
 #import "UMComAction.h"
 #import "UMComUser+UMComManagedObject.h"
-#import "UMComFetchedResultsController+UMCom.h"
+#import "UMUtils.h"
+//#import "UMComFetchedResultsController+UMCom.h"
 
 @interface UMComUserCenterViewController ()
 
@@ -63,10 +64,10 @@ static float FLIP_ANIMATION_DURATION = 0.5;
         
         self.tableDelegate = [[UMComUserCenterTableDelegate alloc] initWithViewController:self];
         
-        UMComUserResultController *userResultController = [[UMComUserResultController alloc] initWithUid:uid];
-        [userResultController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
-            self.user = data.firstObject;
-        }];
+//        UMComUserResultController *userResultController = [[UMComUserResultController alloc] initWithUid:uid];
+//        [userResultController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
+//            self.user = data.firstObject;
+//        }];
         
         UMComUserCenterViewModel *ucViewModel = [[UMComUserCenterViewModel alloc] initWithUid:uid];
         self.feedViewModel = ucViewModel;

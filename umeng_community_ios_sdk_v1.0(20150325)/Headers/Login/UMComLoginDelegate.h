@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UMComPullRequest.h"
+#import "UMComTools.h"
 
 @protocol UMComLoginDelegate <NSObject>
 
@@ -15,6 +15,6 @@
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 
-- (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(FetchCoreDataResponse)loginCompletion;
+- (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(LoadDataCompletion)loginCompletion;
 
 @end
