@@ -63,7 +63,6 @@
 		D5340CFD1ABBF63400C9AEB0 /* ♂x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5340C811ABBF63400C9AEB0 /* ♂x@2x.png */; };
 		D5340CFE1ABBF63400C9AEB0 /* UMComModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = D5340C821ABBF63400C9AEB0 /* UMComModel.xcdatamodel */; };
 		D5340D141ABBF63400C9AEB0 /* umeng_community_ios_sdk_v1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5340C991ABBF63400C9AEB0 /* umeng_community_ios_sdk_v1.0.a */; };
-		D5340D151ABBF63400C9AEB0 /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5340C9B1ABBF63400C9AEB0 /* libUMessage_Sdk_1.1.0.a */; };
 		D5340D161ABBF63400C9AEB0 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D5340C9F1ABBF63400C9AEB0 /* UMSocialLocalizable.strings */; };
 		D5340D171ABBF63400C9AEB0 /* libUMSocial_Sdk_4.2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5340CAD1ABBF63400C9AEB0 /* libUMSocial_Sdk_4.2.2.a */; };
 		D5340D181ABBF63400C9AEB0 /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5340CAF1ABBF63400C9AEB0 /* UMSCommentDetailController.xib */; };
@@ -99,6 +98,7 @@
 		D540A5AF1AB9ACEB007063E6 /* UMCommViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D540A5AD1AB9ACEB007063E6 /* UMCommViewController.m */; };
 		D540A5B01AB9ACEB007063E6 /* UMCommViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */; };
 		D56E21B11AB9B6EB00D7E13B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */; };
+		D5D6211E1AC6611800C6D9E4 /* libUMessage_Sdk_1.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5D6211C1AC6611800C6D9E4 /* libUMessage_Sdk_1.1.0.a */; };
 		D5FD81E51AC299CA0062953D /* UMComActionDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FD818A1AC299CA0062953D /* UMComActionDeleteView.m */; };
 		D5FD81E61AC299CA0062953D /* UMComActionPickerAddView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FD818C1AC299CA0062953D /* UMComActionPickerAddView.m */; };
 		D5FD81E71AC299CA0062953D /* UMComAddedImageCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5FD818E1AC299CA0062953D /* UMComAddedImageCellView.m */; };
@@ -255,8 +255,6 @@
 		D5340C811ABBF63400C9AEB0 /* ♂x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "♂x@2x.png"; sourceTree = "<group>"; };
 		D5340C821ABBF63400C9AEB0 /* UMComModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UMComModel.xcdatamodel; sourceTree = "<group>"; };
 		D5340C991ABBF63400C9AEB0 /* umeng_community_ios_sdk_v1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = umeng_community_ios_sdk_v1.0.a; sourceTree = "<group>"; };
-		D5340C9B1ABBF63400C9AEB0 /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
-		D5340C9C1ABBF63400C9AEB0 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		D5340CA01ABBF63400C9AEB0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		D5340CA21ABBF63400C9AEB0 /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		D5340CA31ABBF63400C9AEB0 /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -317,6 +315,8 @@
 		D540A5AD1AB9ACEB007063E6 /* UMCommViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMCommViewController.m; sourceTree = "<group>"; };
 		D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMCommViewController.xib; sourceTree = "<group>"; };
 		D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D5D6211C1AC6611800C6D9E4 /* libUMessage_Sdk_1.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.1.0.a; sourceTree = "<group>"; };
+		D5D6211D1AC6611800C6D9E4 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		D5FD7F0B1AC2641C0062953D /* UMComComment+UMComManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UMComComment+UMComManagedObject.h"; sourceTree = "<group>"; };
 		D5FD7F0D1AC2641C0062953D /* UMComComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComComment.h; sourceTree = "<group>"; };
 		D5FD7F0F1AC2641C0062953D /* UMComFeed+UMComManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UMComFeed+UMComManagedObject.h"; sourceTree = "<group>"; };
@@ -505,9 +505,9 @@
 				D5340D141ABBF63400C9AEB0 /* umeng_community_ios_sdk_v1.0.a in Frameworks */,
 				D540A4BF1AB95D39007063E6 /* libsqlite3.dylib in Frameworks */,
 				D5340D171ABBF63400C9AEB0 /* libUMSocial_Sdk_4.2.2.a in Frameworks */,
-				D5340D151ABBF63400C9AEB0 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				D540A4BD1AB95D24007063E6 /* libz.dylib in Frameworks */,
 				D5340D231ABBF63400C9AEB0 /* TencentOpenAPI.framework in Frameworks */,
+				D5D6211E1AC6611800C6D9E4 /* libUMessage_Sdk_1.1.0.a in Frameworks */,
 				D540A4BB1AB95D1E007063E6 /* Security.framework in Frameworks */,
 				D540A4B91AB95D18007063E6 /* SystemConfiguration.framework in Frameworks */,
 				D5340D221ABBF63400C9AEB0 /* libSocialQQ.a in Frameworks */,
@@ -533,7 +533,7 @@
 				D5340C4A1ABBF63400C9AEB0 /* README.md */,
 				D5340C4B1ABBF63400C9AEB0 /* Resources */,
 				D5340C991ABBF63400C9AEB0 /* umeng_community_ios_sdk_v1.0.a */,
-				D5340C9A1ABBF63400C9AEB0 /* UMessage_Sdk_1.1.0 */,
+				D5D6211B1AC6611800C6D9E4 /* UMessage_Sdk_1.1.0 */,
 				D5340C9D1ABBF63400C9AEB0 /* UMSocial_Sdk_4.2 */,
 			);
 			path = umeng_community_ios_sdk_v1.0;
@@ -652,15 +652,6 @@
 				D5340C811ABBF63400C9AEB0 /* ♂x@2x.png */,
 			);
 			path = images;
-			sourceTree = "<group>";
-		};
-		D5340C9A1ABBF63400C9AEB0 /* UMessage_Sdk_1.1.0 */ = {
-			isa = PBXGroup;
-			children = (
-				D5340C9B1ABBF63400C9AEB0 /* libUMessage_Sdk_1.1.0.a */,
-				D5340C9C1ABBF63400C9AEB0 /* UMessage.h */,
-			);
-			path = UMessage_Sdk_1.1.0;
 			sourceTree = "<group>";
 		};
 		D5340C9D1ABBF63400C9AEB0 /* UMSocial_Sdk_4.2 */ = {
@@ -839,6 +830,15 @@
 				D540A4B61AB95D11007063E6 /* CoreTelephony.framework */,
 			);
 			name = frameworks;
+			sourceTree = "<group>";
+		};
+		D5D6211B1AC6611800C6D9E4 /* UMessage_Sdk_1.1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				D5D6211C1AC6611800C6D9E4 /* libUMessage_Sdk_1.1.0.a */,
+				D5D6211D1AC6611800C6D9E4 /* UMessage.h */,
+			);
+			path = UMessage_Sdk_1.1.0;
 			sourceTree = "<group>";
 		};
 		D5FD7F0A1AC2641C0062953D /* Model */ = {

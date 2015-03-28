@@ -13,7 +13,7 @@
 #import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
 #define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+#define UMengCommunityAppkey @"4eaee02c527015373b000003"
 #define UMengLoginAppkey UMengCommunityAppkey
 
 @implementation UMAppDelegate
@@ -46,8 +46,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    UMCommViewController *loginDemoViewController = [[UMCommViewController alloc] initWithNibName:@"UMCommViewController" bundle:nil];
-    self.window.rootViewController = loginDemoViewController;
+    UINavigationController *communityController = [UMCommunity getFeedsModalViewController];
+    self.window.rootViewController = communityController;
+    
+//    UMCommViewController *loginDemoViewController = [[UMCommViewController alloc] initWithNibName:@"UMCommViewController" bundle:nil];
+//    self.window.rootViewController = loginDemoViewController;
     
     return YES;
 }
