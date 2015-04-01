@@ -47,6 +47,7 @@
             [iv setTag:i];
             [iv setCacheSecondes:A_WEEK_SECONDES];
             zoomScrollView.imageView = iv;
+            
             [self.arrayImageView addObject:zoomScrollView];
         }
         
@@ -95,8 +96,12 @@
 
 - (void)tapImageView:(UITapGestureRecognizer *)tapGesture
 {
+
     [self dismissViewControllerAnimated:YES completion:^{
-        
+        for (UMZoomScrollView *zoomView in self.arrayImageView) {
+            zoomView.zoomScale = 1.0;
+            zoomView.imageView.center = CGPointMake(zoomView.frame.size.width/2, zoomView.frame.size.height/2);
+        }
     }];
 }
 
@@ -156,8 +161,8 @@
         self.delegate = self;
         self.showsHorizontalScrollIndicator = NO;
         self.showsVerticalScrollIndicator = NO;
-        self.minimumZoomScale = 1.0;
-        self.maximumZoomScale = 5.0;
+//        self.minimumZoomScale = 1.0;
+//        self.maximumZoomScale = 5.0;
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveIamgeToAssest:)];
         longPress.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:longPress];
@@ -168,6 +173,13 @@
 - (void)setImageView:(UMImageProgressView *)imageView
 {
     _imageView = imageView;
+    if (imageView.isCacheImage) {
+        self.minimumZoomScale = 1.0;
+        self.maximumZoomScale = 5.0;
+    } else{
+        self.minimumZoomScale = 1.0;
+        self.maximumZoomScale = 1.0;
+    }
     [self addSubview:_imageView];
 }
 
@@ -180,10 +192,11 @@
 {
     
     CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
-    (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;
+    (scrollView.bounds.size.width - scrollView.contentSize.width) /2 : 0.0;
     CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
-    (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
-    self.imageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,scrollView.contentSize.height * 0.5 + offsetY);
+    (scrollView.bounds.size.height - scrollView.contentSize.height) /2 : 0.0;
+    self.imageView.center = CGPointMake(scrollView.contentSize.width /2 + offsetX,scrollView.contentSize.height /2 + offsetY);
+
 }
 
 //默认一周（60*60*24*7）

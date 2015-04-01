@@ -396,9 +396,11 @@ static inline NSString * createTimeString(NSString * create_time)
     } else {
         self.gridView.hidden = NO;
         [self.gridView setImages:showImageArray placeholder:[UIImage imageNamed:@"image-placeholder"] cellPad:ImageSpace];
-        self.gridView.frame = CGRectMake(self.gridView.frame.origin.x,  totalBgHeight, 240, ceil((float)imagesArray.count/3) *  (Cell.gridView.frame.size.height+ImageSpace) + ImageSpace);
+       
         if (self.feed.origin_feed  && !self.feed.origin_feed.isFault) {
-            self.gridView.frame = CGRectMake(2, self.gridView.frame.origin.y, self.gridView.frame.size.width, self.gridView.frame.size.height);
+            self.gridView.frame = CGRectMake(2, totalBgHeight, self.gridView.frame.size.width, ceil((float)imagesArray.count/3) *  (Cell.gridView.frame.size.height+ImageSpace) + ImageSpace);
+        }else{
+            self.gridView.frame = CGRectMake(0,  totalBgHeight, self.gridView.frame.size.width, ceil((float)imagesArray.count/3) *  (Cell.gridView.frame.size.height+ImageSpace) + ImageSpace);
         }
         [self.gridView setPresentFatherViewController:self.tableView.feedTableViewController];
         totalBgHeight += self.gridView.frame.size.height+2;

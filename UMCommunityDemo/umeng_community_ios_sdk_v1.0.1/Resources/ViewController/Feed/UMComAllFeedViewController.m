@@ -53,10 +53,12 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clearAndRefreshAllData) name:UserLoginSecceed object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clearAndRefreshAllData) name:UserLogoutSucceed object:nil];
     
-    [self.feedsTableView setFeedTableViewController:self];
-    UIBarButtonItem *leftButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"Backx" target:self action:@selector(onClickClose:)];
-
-    [self.navigationItem setLeftBarButtonItems:@[leftButtonItem]];
+    if(self.navigationController.viewControllers.count > 1 || self.presentingViewController){
+        [self.feedsTableView setFeedTableViewController:self];
+        UIBarButtonItem *leftButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"Backx" target:self action:@selector(onClickClose:)];
+        
+        [self.navigationItem setLeftBarButtonItems:@[leftButtonItem]];    
+    }
     UIBarButtonItem *topicButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"topic" target:self action:@selector(onClickTopic:)];
     UIBarButtonItem *selfButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"profile" target:self action:@selector(onClickProfile:)];
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];

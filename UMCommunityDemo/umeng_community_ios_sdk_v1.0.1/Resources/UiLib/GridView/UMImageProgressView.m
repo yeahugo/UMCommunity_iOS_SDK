@@ -87,7 +87,11 @@
 {
     self.progressView.hidden = YES;
     [self resetSizeWithURLImage:imageView];
+    
+    UIScrollView * zoomView = (UIScrollView *)self.superview;
+    zoomView.maximumZoomScale = 5;
 }
+
 - (void)imageViewFailedToLoadImage:(UMImageView*)imageView error:(NSError*)error
 {
     self.progressView.hidden = YES;
