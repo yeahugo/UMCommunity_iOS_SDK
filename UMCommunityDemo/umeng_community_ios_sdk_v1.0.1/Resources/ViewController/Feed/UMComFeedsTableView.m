@@ -388,13 +388,13 @@ static int HeaderOffSet = -90;//-120
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             [self.feedTableViewController loadMoreDataWithCompletion:^(NSArray *data,NSError *error) {
             } getDataFromWeb:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-                [self.footerIndicatorView stopAnimating];
                 if (error) {
                     [UMComShowToast fetchMoreFeedFail:error];
                 }
                 _loadingMore = NO;
                 [self addTableViewData:data];
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                [self.footerIndicatorView stopAnimating];
                 if (!haveNextPage) {
                     self.footerIndicatorView.hidden = YES;
                 }

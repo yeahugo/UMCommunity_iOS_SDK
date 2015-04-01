@@ -95,12 +95,8 @@
 
 - (void)tapImageView:(UITapGestureRecognizer *)tapGesture
 {
-
     [self dismissViewControllerAnimated:YES completion:^{
-        for (UMZoomScrollView *zoomView in self.arrayImageView) {
-            zoomView.zoomScale = 1.0;
-            zoomView.imageView.center = CGPointMake(zoomView.frame.size.width/2, zoomView.frame.size.height/2);
-        }
+        
     }];
 }
 
@@ -184,11 +180,10 @@
 {
     
     CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
-    (scrollView.bounds.size.width - scrollView.contentSize.width) /2 : 0.0;
+    (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;
     CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
-    (scrollView.bounds.size.height - scrollView.contentSize.height) /2 : 0.0;
-    self.imageView.center = CGPointMake(scrollView.contentSize.width /2 + offsetX,scrollView.contentSize.height /2 + offsetY);
-
+    (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
+    self.imageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,scrollView.contentSize.height * 0.5 + offsetY);
 }
 
 //默认一周（60*60*24*7）

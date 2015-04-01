@@ -183,6 +183,7 @@ static inline CGSize getGridViewSize(NSArray *array,NSUInteger cellPad)
 {
     for(UMImageView *iv in self.arrayImageView)
     {
+//        iv.hidden = YES;
         [iv removeFromSuperview];
     }
 }
