@@ -256,6 +256,8 @@ static int HeaderOffSet = -90;//-120
 //    UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 10)];
     self.footerIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.footerIndicatorView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height+60);
+    //暂时隐藏
+    self.footerIndicatorView.hidden = YES;
     [self addSubview:self.footerIndicatorView];
 //    [footView addSubview:self.footerIndicatorView];
 //    self.tableFooterView = footView;

@@ -17,6 +17,7 @@
 #import "UMComPushRequest.h"
 #import "UMComShowToast.h"
 #import "UMComUser+UMComManagedObject.h"
+#import "UMUtils.h"
 
 @interface UMComFeedTableViewController ()<NSFetchedResultsControllerDelegate,UITextFieldDelegate> {
     NSFetchedResultsController *_fetchedResultsController;

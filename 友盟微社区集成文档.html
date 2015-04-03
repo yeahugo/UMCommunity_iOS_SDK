@@ -30,7 +30,23 @@ AssertsLibrary.framework</p>
 <li>在xcode的info.plist添加一项<code>NSLocationAlwaysUsageDescription</code> 为True</li>
 <li>若要qq登录的功能，需要添加xcode的一项url scheme：tencent+QQ 开放平台的应用appid，例如tencent100424468 。还有添加领一下url scheme：“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FC5B14”。另外需要在你的工程的info.plist设置Bundle display name。</li>
 <li>若要微信登录的功能，需要添加一项xcode的url scheme为微信appid，例如wxd930ea5d5a258f4f</li>
+<li>在你的工程.pch文件（若没有.pch文件需要新建一个），添加下面的代码：</li>
 </ol>
+<pre><code>#define UMSBJSONErrorDomain UMComSBJSONErrorDomain
+#define UMOpenUDID UMeComOpenUDID
+#define GTMUMStringEncoding GTMUMComStringEncoding
+#define UMSBJsonBase UMComSBJsonBase
+#define UMSBJsonParser UMComSBJsonParser
+#define UMSBJsonWriter UMComSBJsonWriter
+#define UMProtocolData UMComProtocolData
+#define UMImageView UMComImageView
+#define UMImageLoader UMComImageLoader
+#define UMImageLoadConnection UMComImageLoadConnection
+#define UMCache UMComCache
+#define UMUtils UMComUtils
+#define UMImageViewDelegate UMComImageViewDelegate
+</code></pre>
+
 <h2>5 <a name="integrated_code" id="integrated_code" style="color:black"> 添加集成代码</a></h2>
 <h3>5.1 设置appkey</h3>
 <p>在appdelegate下面的方法内设置appkey，例如：</p>

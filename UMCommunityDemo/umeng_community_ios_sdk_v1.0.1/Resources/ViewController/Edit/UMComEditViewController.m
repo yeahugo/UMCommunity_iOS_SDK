@@ -17,6 +17,7 @@
 #import "UMComUser.h"
 #import "UMComTopic.h"
 #import "UMComShowToast.h"
+#import "UMUtils.h"
 
 #define ForwardViewHeight 101
 #define EditToolViewHeight 43

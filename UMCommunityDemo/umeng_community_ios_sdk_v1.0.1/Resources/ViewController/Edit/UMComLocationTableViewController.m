@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "UMComLocationTableViewCell.h"
 #import "UMComShowToast.h"
+#import "UMUtils.h"
 
 @interface UMComLocationTableViewController ()
 

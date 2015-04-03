@@ -24,6 +24,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UMComTools.h"
 #import "UMComLike.h"
+#import "UMUtils.h"
 
 #define USE_UMIMAGE 1
 #define USE_GRIDVIEW 1

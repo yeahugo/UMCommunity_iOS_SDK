@@ -9,6 +9,7 @@
 #import "UMComMessageSettingViewController.h"
 #import "UMComBarButtonItem.h"
 #import "UMComTools.h"
+#import "UMUtils.h"
 
 @interface UMComMessageSettingViewController ()
 

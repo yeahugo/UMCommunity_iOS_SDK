@@ -9,6 +9,7 @@
 #import "UMComAddedImageView.h"
 #import "UMComActionPickerAddView.h"
 #import "UMComAddedImageCellView.h"
+#import "UMUtils.h"
 
 #define IMAGE_WIDTH 73.35
 

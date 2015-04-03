@@ -17,6 +17,7 @@
 #import "UMComSession.h"
 #import "UMComCoreData.h"
 #import "UMComShowToast.h"
+#import "UMUtils.h"
 
 #define NoticeLabelTag 10001
 

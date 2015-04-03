@@ -11,6 +11,7 @@
 #import "math.h"
 #import "UMComGridViewerController.h"
 #import "UMComShowToast.h"
+#import "UMUtils.h"
 
 #define HTTP_PREFIX @"http://"
 #define IMAGE_CELL_WIDTH 75

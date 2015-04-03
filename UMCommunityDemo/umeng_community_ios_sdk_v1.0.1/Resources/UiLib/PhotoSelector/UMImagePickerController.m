@@ -10,6 +10,7 @@
 #import "UMImagePickerGroupCell.h"
 #import "UMAssetsCollectionController.h"
 #import "UMComTools.h"
+#import "UMUtils.h"
 
 static NSArray *groupTypes;
 

@@ -11,6 +11,7 @@
 #import "UMComUsersTableCell.h"
 #import "UMComFeed.h"
 #import "UMComUsersTableCellOne.h"
+#import "UMUtils.h"
 
 @interface UMComUserCenterTableDelegate ()
 
