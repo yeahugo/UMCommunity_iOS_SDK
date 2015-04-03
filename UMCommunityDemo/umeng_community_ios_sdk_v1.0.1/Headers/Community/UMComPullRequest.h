@@ -191,7 +191,7 @@ typedef void (^OnlyFetchFromServerRespone)(NSArray *data, NSError *error);
  
  @returns 获取粉丝请求对象
  */
-- (id)initWithUid:(NSString *)uid;
+- (id)initWithUid:(NSString *)uid count:(NSInteger)count;
 
 @end
 
@@ -208,7 +208,7 @@ typedef void (^OnlyFetchFromServerRespone)(NSArray *data, NSError *error);
  
  @returns 获取关注用户请求的对象
  */
-- (id)initWithUid:(NSString *)uid;
+- (id)initWithUid:(NSString *)uid count:(NSInteger)count;
 
 @end
 

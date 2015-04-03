@@ -23,7 +23,7 @@
         <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="feeds" inverseEntity="User" syncable="YES"/>
         <relationship name="forward_feeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Feed" inverseName="origin_feed" inverseEntity="Feed" syncable="YES"/>
         <relationship name="likes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Like" inverseName="feed" inverseEntity="Like" syncable="YES"/>
-        <relationship name="origin_feed" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Feed" inverseName="forward_feeds" inverseEntity="Feed" syncable="YES"/>
+        <relationship name="origin_feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Feed" inverseName="forward_feeds" inverseEntity="Feed" syncable="YES"/>
         <relationship name="related_user" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="related_feeds" inverseEntity="User" syncable="YES"/>
         <relationship name="topics" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Topic" inverseName="feeds" inverseEntity="Topic" syncable="YES"/>
     </entity>

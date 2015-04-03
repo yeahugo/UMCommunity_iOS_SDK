@@ -42,7 +42,7 @@
 
     self.indicatorView.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2,[UIScreen mainScreen].bounds.size.height/2);
     [self.indicatorView startAnimating];
-    self.fetchedFollowersController = [[UMComFollowersRequest alloc] initWithUid:[UMComSession sharedInstance].uid];
+    self.fetchedFollowersController = [[UMComFollowersRequest alloc] initWithUid:[UMComSession sharedInstance].uid count:TotalFriendSize];
     self.title = UMComLocalizedString(@"FriendTitle",@"我的好友");
     [self.fetchedFollowersController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         if (!error) {

@@ -26,7 +26,7 @@
 #import "UMComAction.h"
 #import "UMComUser+UMComManagedObject.h"
 #import "UMUtils.h"
-//#import "UMComFetchedResultsController+UMCom.h"
+#import "UMComFetchedResultsController+UMCom.h"
 
 @interface UMComUserCenterViewController ()
 
@@ -64,10 +64,7 @@ static float FLIP_ANIMATION_DURATION = 0.5;
         
         self.tableDelegate = [[UMComUserCenterTableDelegate alloc] initWithViewController:self];
         
-//        UMComUserResultController *userResultController = [[UMComUserResultController alloc] initWithUid:uid];
-//        [userResultController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
-//            self.user = data.firstObject;
-//        }];
+
         
         UMComUserCenterViewModel *ucViewModel = [[UMComUserCenterViewModel alloc] initWithUid:uid];
         self.feedViewModel = ucViewModel;
@@ -114,6 +111,37 @@ static float FLIP_ANIMATION_DURATION = 0.5;
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UserLogoutSucceed object:nil];
 }
 
+- (void)updateUserInfo
+{
+    //    //请求头像
+    NSString *iconURL = ![[self.user.icon_url valueForKey:@"240"] isKindOfClass:[NSNull class]] ? [self.user.icon_url valueForKey:@"240"]:nil;
+    
+    [self.profileImageView setImageURL:[NSURL URLWithString:iconURL]];
+    if ([self.user.gender intValue] == 0) {
+        [self.profileImageView setPlaceholderImage:[UIImage imageNamed:@"female"]];
+    } else{
+        [self.profileImageView setPlaceholderImage:[UIImage imageNamed:@"male"]];
+    }
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width/2;
+    self.profileImageView.clipsToBounds = YES;
+    [self.profileImageView startImageLoad];
+    
+    //用户名
+    if([self.user.name length]){
+        [self.userName setText:self.user.name];
+    }else{
+        [self.userName setText:UMComLocalizedString(@"No_Name", @"用户名为空")];
+    }
+    
+    UMComGenderView *gender = [[UMComGenderView alloc] initWithGender:UMComUserGenderFemale];
+    gender.frame = CGRectMake(self.userName.frame.origin.x+self.userName.frame.size.width, self.userName.frame.origin.y + 2, gender.frame.size.width, gender.frame.size.height);
+    [self.view addSubview:gender];
+    if ([self.user.user_profile.gender integerValue] == 1) {
+        [gender setUserGender:UMComUserGenderMale];
+    }
+    gender.tag = 10000;
+}
+
 - (void)viewDidLoad {
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self.feedsTableView action:@selector(dismissAllEditView)];
@@ -140,33 +168,17 @@ static float FLIP_ANIMATION_DURATION = 0.5;
     }
 //当用户注销时直接跳回主页面
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popOutWhenUserlogout) name:UserLogoutSucceed object:nil];
-//    //请求头像
-    NSString *iconURL = ![[self.user.icon_url valueForKey:@"240"] isKindOfClass:[NSNull class]] ? [self.user.icon_url valueForKey:@"240"]:nil;
     
-    [self.profileImageView setImageURL:[NSURL URLWithString:iconURL]];
-    if ([self.user.gender intValue] == 0) {
-        [self.profileImageView setPlaceholderImage:[UIImage imageNamed:@"female"]];
-    } else{
-        [self.profileImageView setPlaceholderImage:[UIImage imageNamed:@"male"]];
+    if (!self.user) {
+        UMComUserResultController *userResultController = [[UMComUserResultController alloc] initWithUid:self.uid];
+        [userResultController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
+            self.user = data.firstObject;
+            [self updateUserInfo];
+        }];
+    } else {
+        [self updateUserInfo];
     }
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width/2;
-    self.profileImageView.clipsToBounds = YES;
-    [self.profileImageView startImageLoad];
- 
-    //用户名
-    if([self.user.name length]){
-        [self.userName setText:self.user.name];
-    }else{
-        [self.userName setText:UMComLocalizedString(@"No_Name", @"用户名为空")];
-    }
-
-    UMComGenderView *gender = [[UMComGenderView alloc] initWithGender:UMComUserGenderFemale];
-    gender.frame = CGRectMake(self.userName.frame.origin.x+self.userName.frame.size.width, self.userName.frame.origin.y + 2, gender.frame.size.width, gender.frame.size.height);
-    [self.view addSubview:gender];
-    if ([self.user.user_profile.gender integerValue] == 1) {
-        [gender setUserGender:UMComUserGenderMale];
-    }
-    gender.tag = 10000;
+    
 
 //    //请求详细信息
     [self updateUserProfile];

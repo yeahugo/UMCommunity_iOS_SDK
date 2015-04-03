@@ -824,7 +824,7 @@ static inline NSString * createTimeString(NSString * create_time)
     cell.textView.clikTextDict = clikDicts;
     cell.textView.pointOffset = CGPointMake(0, ComTextViewHeightOffset);
     CGRect rect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(self.commentTableView.frame.size.width - CommentTableViewDeltaWidth,MAXFLOAT) font:font string:replayStr lineSpace:CommentViewLineSpace];
-    cell.textView.frame = CGRectMake(cell.textView.frame.origin.x,0,rect.size.width, rect.size.height+ComTextViewHeightOffset/2);
+    cell.textView.frame = CGRectMake(cell.textView.frame.origin.x,0,self.commentTableView.frame.size.width - CommentTableViewDeltaWidth, rect.size.height+ComTextViewHeightOffset/2);
     cell.textView.font = font;
     cell.textView.lineSpace = CommentViewLineSpace;
     cell.textView.text = replayStr;

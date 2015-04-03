@@ -13,6 +13,8 @@
 
 @property (nonatomic) BOOL hasAlreadyResponseForInit;
 @property (nonatomic,readonly) BOOL hasNextPage;
+@property (nonatomic) BOOL needDelete;
+@property (nonatomic) BOOL handleNextPage;
 
 - (id)initWithMethod:(UMComHttpMethodType)method
                 path:(NSString *)path

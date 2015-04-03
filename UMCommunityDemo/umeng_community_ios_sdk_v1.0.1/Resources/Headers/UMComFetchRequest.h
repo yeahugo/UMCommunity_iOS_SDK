@@ -35,6 +35,9 @@ typedef NS_ENUM(NSUInteger, UMComFetchResultType) {
 //定义所有话题
 #define TotalTopicSize 100
 
+//定义所有好友数量
+#define TotalFriendSize 1000
+
 //获取所有喜欢
 #define TotalLikesSize 100
 
