@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FZLanTingHei-L-GBK-M.TTF">
+            <string>FZLTXHKM</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UMComEditViewController">
+            <connections>
+                <outlet property="atFriendButton" destination="WSe-aB-lI3" id="CaS-Of-I2B"/>
+                <outlet property="editBgView" destination="B2B-ic-i5N" id="7Eh-0t-gRl"/>
+                <outlet property="editToolView" destination="f3c-W8-71P" id="6dC-e7-a7o"/>
+                <outlet property="fakeForwardTextView" destination="dl1-Ns-C25" id="Y78-R1-7QE"/>
+                <outlet property="fakeTextView" destination="FZ0-Ru-Gy5" id="Mrb-s2-um5"/>
+                <outlet property="forwardFeedBackground" destination="9XM-lN-cEp" id="vJu-kf-aDB"/>
+                <outlet property="forwardImage" destination="bSt-7P-99a" id="cgO-uW-E3M"/>
+                <outlet property="imagesButton" destination="laL-2G-EjJ" id="l9Z-5m-2EX"/>
+                <outlet property="locationBackgroundView" destination="Mic-qG-jGs" id="KGc-pI-dZP"/>
+                <outlet property="locationButton" destination="ZMB-gg-GWc" id="rRh-rG-Tqi"/>
+                <outlet property="locationLabel" destination="sMI-Qh-7a0" id="9Mm-a8-hrE"/>
+                <outlet property="takePhotoButton" destination="SyN-Hp-ExR" id="Rik-ex-O0q"/>
+                <outlet property="topicButton" destination="DQE-Zd-RsB" id="J22-4x-J7p"/>
+                <outlet property="topicNoticeBgView" destination="5cu-ey-NXr" id="yES-9V-hYE"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="B2B-ic-i5N">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="FZ0-Ru-Gy5">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="234"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <view hidden="YES" contentMode="scaleToFill" id="9XM-lN-cEp" customClass="UIImageView">
+                            <rect key="frame" x="8" y="223" width="304" height="86"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <view hidden="YES" contentMode="scaleToFill" id="Mic-qG-jGs">
+                                    <rect key="frame" x="8" y="0.0" width="296" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京市海淀区花园东路" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sMI-Qh-7a0">
+                                            <rect key="frame" x="20" y="0.0" width="237" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="FZLTXHKM" family="FZLanTingHei-L-GBK-M" pointSize="13"/>
+                                            <color key="textColor" red="0.54117647059999996" green="0.53725490200000003" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin3x.png" id="GgN-5z-cVd">
+                                            <rect key="frame" x="8" y="3" width="10" height="15"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="bSt-7P-99a" customClass="UMImageView">
+                                    <rect key="frame" x="228" y="11" width="70" height="70"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                </imageView>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="dl1-Ns-C25">
+                                    <rect key="frame" x="0.0" y="8" width="220" height="76"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="f3c-W8-71P">
+                            <rect key="frame" x="0.0" y="307" width="320" height="43"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="WSe-aB-lI3">
+                                    <rect key="frame" x="258" y="2" width="48" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="@+x.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showAtFriend:" destination="-1" eventType="touchUpInside" id="5K3-HT-aus"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="laL-2G-EjJ">
+                                    <rect key="frame" x="136" y="2" width="48" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="photo+x.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showImagePicker:" destination="-1" eventType="touchUpInside" id="FvN-qQ-SfT"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DQE-Zd-RsB">
+                                    <rect key="frame" x="8" y="1" width="48" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="##+x.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showTopicPicker:" destination="-1" eventType="touchUpInside" id="VcX-Lz-R9m"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SyN-Hp-ExR">
+                                    <rect key="frame" x="71" y="1" width="48" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="camera+x.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="takePhoto:" destination="-1" eventType="touchUpInside" id="foD-cI-ZfX"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZMB-gg-GWc">
+                                    <rect key="frame" x="197" y="3" width="48" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" image="pin+x.png">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showLocationPicker:" destination="-1" eventType="touchUpInside" id="Hwd-ep-qcW"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.94117653369903564" green="0.94117653369903564" blue="0.94117653369903564" alpha="1" colorSpace="deviceRGB"/>
+                        </view>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_topic_notice.png" id="5cu-ey-NXr">
+                            <rect key="frame" x="14" y="279" width="188" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="-356.5" y="-189.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="##+x.png" width="24" height="24"/>
+        <image name="@+x.png" width="24" height="24"/>
+        <image name="add_topic_notice.png" width="100" height="15"/>
+        <image name="camera+x.png" width="24" height="24"/>
+        <image name="photo+x.png" width="24" height="24"/>
+        <image name="pin+x.png" width="24" height="24"/>
+        <image name="pin3x.png" width="10" height="14"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
