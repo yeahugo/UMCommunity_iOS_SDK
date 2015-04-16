@@ -65,19 +65,6 @@
     return self;
 }
 
-//- (id)initWithUser:(UMComUser *)user
-//{
-//    self = [super initWithNibName:@"UMComProfileSettingController" bundle:nil];
-//    if (self) {
-//        //        self.user = user;
-//        //       设置页面只有登录用户才能访问
-//        self.user = [UMComSession sharedInstance].loginUser.user;
-//        self.profile = [UMComSession sharedInstance].profile;
-//    }
-//    return self;
-//}
-
-
 
 -(void)viewDidLoad
 {
@@ -347,14 +334,13 @@
 
 -(void)onClickClose
 {
-//    [UIView setAnimationsEnabled:YES];
     if (self.navigationController.viewControllers.count > 1) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self dismissViewControllerAnimated:YES completion:^{
-            if (self.completion) {
-                self.completion(nil,nil);
-            }
+//            if (self.completion) {
+//                self.completion(nil,nil);
+//            }
         }];
     }
 }
