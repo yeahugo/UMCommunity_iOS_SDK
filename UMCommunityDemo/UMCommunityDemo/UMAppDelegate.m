@@ -12,7 +12,10 @@
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
+#import "LoginViewController.h"
+
 #define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
+//#define UMengCommunityAppkey @"54c5fa26fd98c55b2b0000cc"
 #define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 #define UMengLoginAppkey UMengCommunityAppkey
 
@@ -27,19 +30,23 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+//    [UMCommunity openLog:YES];
     //Message
     [UMComMessageManager setAppkey:UMengMessageAppkey];
-    [UMCommunity openLog:YES];
     [UMComMessageManager startWithOptions:launchOptions];
     
     [UMCommunity setWithAppKey:UMengCommunityAppkey];
     
+    //下面实现自定义登录
+//    LoginViewController *loginViewControler =[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+//    [UMComLoginManager setLoginHandler:loginViewControler];
     //设置微信AppId、appSecret，分享url
     [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
     
     //设置分享到QQ互联的appId和appKey
     [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
-//    [UMComLoginManager setAppKey:UMengLoginAppkey];
+    [UMComLoginManager setAppKey:UMengLoginAppkey];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -48,9 +55,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     UINavigationController *communityController = [UMCommunity getFeedsModalViewController];
     self.window.rootViewController = communityController;
-    
-//    UMCommViewController *loginDemoViewController = [[UMCommViewController alloc] initWithNibName:@"UMCommViewController" bundle:nil];
-//    self.window.rootViewController = loginDemoViewController;
     
     return YES;
 }

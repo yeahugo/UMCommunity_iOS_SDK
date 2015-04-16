@@ -119,12 +119,8 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
     userAccount.snsPlatformName = sns平台来源名; //例如sina，qq，wxsession
     userAccount.token = @&quot;登录token&quot;;
     userAccount.name = @&quot;昵称&quot;;
-    [UMComLoginManager finishLoginWithAccount:userAccount completion:^(NSArray *data, NSError *error) {
-        if (error) {
-            NSLog(@&quot;登录错误&quot;);
-        } else {
-            NSLog(@&quot;登录成功&quot;);
-        }
+    [UMComLoginManager finishLoginWithAccount:account completion:^(NSArray *data, NSError *error) {
+        [UMComLoginManager finishDismissViewController:self data:data error:error];
     }];
  }
 </code></pre>
