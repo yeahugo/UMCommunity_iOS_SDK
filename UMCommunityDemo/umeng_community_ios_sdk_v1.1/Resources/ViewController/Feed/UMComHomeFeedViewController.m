@@ -18,6 +18,9 @@
 #define kTagRecommend 100
 #define kTagAll 101
 
+#define DeltaBottom  45
+#define DeltaRight 45
+
 @interface UMComHomeFeedViewController ()
 
 @property (nonatomic,strong) UMComAllFeedViewController *currentViewController;
@@ -118,7 +121,7 @@
     [self.editButton setImage:[UIImage imageNamed:@"new+"] forState:UIControlStateSelected];
     [self.editButton addTarget:self action:@selector(onClickEdit:) forControlEvents:UIControlEventTouchUpInside];
     [self setEditButtonAnimation];
-
+      [[UIApplication sharedApplication].keyWindow addSubview:self.editButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -130,15 +133,15 @@
     }else{
         self.titlePageControl.currentPage = 0;
     }
-//    [self transitionViewControllers:nil];
-    self.editButton.frame = CGRectMake(selfViewSize.width-70, selfViewSize.height-self.navigationController.navigationBar.frame.size.height, 50, 50);
-    [[UIApplication sharedApplication].keyWindow addSubview:self.editButton];
+    [self transitionViewControllers:nil];
+    self.editButton.hidden = NO;
+    self.editButton.frame = CGRectMake(selfViewSize.width-DeltaRight - 25,[UIApplication sharedApplication].keyWindow.bounds.size.height-DeltaBottom -25, 50, 50);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.editButton removeFromSuperview];
+    self.editButton.hidden = YES;
 }
 
 - (void)transitionViewControllers:(id)sender
@@ -195,7 +198,7 @@
 
 - (void)transitionWithFromViewController:(UMComAllFeedViewController *)fromViewController disAppearViewFrame:(CGRect)disappearFrame
 {
-    [self transitionFromViewController:fromViewController toViewController:self.currentViewController duration:0.5 options:UIViewAnimationOptionTransitionNone animations:^{
+    [self transitionFromViewController:fromViewController toViewController:self.currentViewController duration:0.4 options:UIViewAnimationOptionCurveEaseIn animations:^{
         didTransition = NO;
         if (fromViewController == self.currentViewController) {
             return;
@@ -222,16 +225,17 @@
 
 - (void)setEditButtonAnimation
 {
+    self.editButton.center = CGPointMake(self.view.frame.size.width-DeltaRight, [UIApplication sharedApplication].keyWindow.bounds.size.height-DeltaBottom);
     __weak UMComHomeFeedViewController *weakSelf = self;
     self.tempfeedTableView.scrollViewDidScroll = ^(BOOL isShowEditedBt){
         if (!isShowEditedBt) {
-            [UIView animateWithDuration:0.5 animations:^{
-                weakSelf.editButton.center = CGPointMake(weakSelf.editButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height+weakSelf.editButton.frame.size.height);
-            }];
+            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                weakSelf.editButton.center = CGPointMake(weakSelf.editButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height+DeltaBottom);
+            } completion:nil];
         }else{
-            [UIView animateWithDuration:0.5 animations:^{
-                weakSelf.editButton.center = CGPointMake(weakSelf.editButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height-80);
-            }];
+            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                weakSelf.editButton.center = CGPointMake(weakSelf.editButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height-DeltaBottom);
+            } completion:nil];
         }
     };
 }

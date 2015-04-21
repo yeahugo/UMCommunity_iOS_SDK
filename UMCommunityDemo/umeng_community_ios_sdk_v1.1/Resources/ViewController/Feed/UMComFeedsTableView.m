@@ -292,7 +292,9 @@ static int HeaderOffSet = -90;//-120
             [self.heightDictionary removeAllObjects];
             
             if (data.count > 0) {
-                self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
+                    self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                }
             } else {
                 self.footView.backgroundColor = [UIColor clearColor];
                 self.noRecommendTip.hidden = NO;
@@ -378,12 +380,12 @@ static int HeaderOffSet = -90;//-120
     else if (self.resultArray.count >= kFetchLimit && offset + self.superview.frame.size.height > self.contentSize.height){
         [self.footerIndicatorView startAnimating];
     }
-    if (scrollView.contentOffset.y >0 && scrollView.contentOffset.y>weakSelf.lastPosition+5) {
+    if (scrollView.contentOffset.y >0 && scrollView.contentOffset.y>weakSelf.lastPosition+15) {
         if (weakSelf.scrollViewDidScroll) {
             weakSelf.scrollViewDidScroll(NO);
         }
     }else{
-        if (scrollView.contentOffset.y < weakSelf.lastPosition-5) {
+        if (scrollView.contentOffset.y < weakSelf.lastPosition-15) {
             if (weakSelf.scrollViewDidScroll) {
                 weakSelf.scrollViewDidScroll(YES);
             }

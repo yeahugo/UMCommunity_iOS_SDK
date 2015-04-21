@@ -15,7 +15,7 @@
 #import "LoginViewController.h"
 
 #define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
-#define UMengCommunityAppkey @"54c5fa26fd98c55b2b0000cc"
+#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 //#define UMengCommunityAppkey @"4eaee02c527015373b000003"
 #define UMengLoginAppkey UMengCommunityAppkey
 

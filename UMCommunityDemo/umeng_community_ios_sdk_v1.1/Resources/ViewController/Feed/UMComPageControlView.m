@@ -114,7 +114,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     // Border
-    CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
+//    CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
+    CGContextSetFillColorWithColor(context, self.numberColor.CGColor);
     CGContextFillEllipseInRect(context, self.bounds);
     // Body
     CGContextSetFillColorWithColor(context, self.numberColor.CGColor);

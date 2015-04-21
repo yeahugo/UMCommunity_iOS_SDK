@@ -395,8 +395,8 @@ static inline NSString * createTimeString(NSString * create_time)
     }
     [oringFeedString appendFormat:OriginUserNameString,originUserName,feed.origin_feed.text];
     self.fakeOriginTextView.pointOffset = CGPointMake(0, OriginFeedHeightOffset);
-    CGRect originFeedRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(self.cellSubviewCommonWidth, MAXFLOAT) font:FeedFont string:oringFeedString lineSpace:TextViewLineSpace];
-    self.fakeOriginTextView.frame = CGRectMake(self.fakeOriginTextView.frame.origin.x, OriginFeedOriginY, self.cellSubviewCommonWidth, originFeedRect.size.height + OriginFeedHeightOffset/2+4);
+    CGRect originFeedRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(self.cellSubviewCommonWidth-FeedAndOriginFeedDeltaWidth, MAXFLOAT) font:FeedFont string:oringFeedString lineSpace:TextViewLineSpace];
+    self.fakeOriginTextView.frame = CGRectMake(self.fakeOriginTextView.frame.origin.x, OriginFeedOriginY, self.cellSubviewCommonWidth-FeedAndOriginFeedDeltaWidth, originFeedRect.size.height + OriginFeedHeightOffset/2+4);
     self.fakeOriginTextView.font = FeedFont;
     self.fakeOriginTextView.lineSpace = TextViewLineSpace;
     self.fakeOriginTextView.runType = UMComMutiTextRunFeedContentType;

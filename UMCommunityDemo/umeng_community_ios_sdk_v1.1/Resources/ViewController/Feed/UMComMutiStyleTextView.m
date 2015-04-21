@@ -367,21 +367,6 @@
     lineSpaceStyle.valueSize = sizeof(lineSpace);
     lineSpaceStyle.value =&lineSpace;
     
-//    //创建文本对齐方式
-//    CTTextAlignment alignment = 0;//左对齐
-//    CTParagraphStyleSetting alignmentStyle;
-//    alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;//指定为对齐属性
-//    alignmentStyle.valueSize=sizeof(alignment);
-//    alignmentStyle.value=&alignment;
-    
-    
-//    CGFloat LineSpacingAdjustment = 10;//
-//    CTParagraphStyleSetting LineSpacingAdjustmentStyle;
-//    LineSpacingAdjustmentStyle.spec = kCTParagraphStyleSpecifierLineSpacingAdjustment;//
-//    LineSpacingAdjustmentStyle.valueSize=sizeof(LineSpacingAdjustment);
-//    LineSpacingAdjustmentStyle.value=&LineSpacingAdjustment;
-    
-    
     CTParagraphStyleSetting settings[] = {lineSpaceStyle,lineBreakMode};
     CTParagraphStyleRef style = CTParagraphStyleCreate(settings, sizeof(settings)/sizeof(settings[0]));
     NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObject:(__bridge id)style forKey:(id)kCTParagraphStyleAttributeName ];
@@ -395,7 +380,6 @@
 + (NSArray *)createTextRunsWithAttString:(NSMutableAttributedString *)attString runType:(UMComMutiTextRunTypeList)type clickDicts:(NSArray *)dicts
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    
     if (UMComMutiTextRunLikeType == type)
     {
         [array addObjectsFromArray:[UMComMutiTextRunLike runsForAttributedString:attString withClickDicts:dicts]];
@@ -429,7 +413,6 @@
         [array addObjectsFromArray:[UMComMutiTextRunTopic runsForAttributedString:attString topics:nil]];
     }
     return  array;
-
 
 }
 
@@ -476,7 +459,6 @@
             {
                 height += (lineAscent + lineDescent + linespace);
             }
-//            UMLog(@"\nattString:%@,\nlinespace:%f,\nlineAscent:%f,\nlineDescent:%f,\nheight:%f",attString,linespace,lineAscent,lineDescent,height);
         }
         
         width = size.width;
@@ -495,10 +477,8 @@
             CTLineGetTypographicBounds(lineRef, &lineAscent, &lineDescent, &lineLeading);
             
             height += (lineAscent + lineDescent + lineLeading + linespace);
-//            UMLog(@"\nattString:%@,\nlinespace:%f,\nlineAscent:%f,\nlineDescent:%f,\nheight:%f\nlineLeading:%f",attString,linespace,lineAscent,lineDescent,height,lineLeading);
 
         }
-        
         height = height;
     }
     
@@ -527,7 +507,6 @@
         [frameDict setValue:@0 forKey:@"lineHeight"];
 
         return frameDict;
-//        return ;
     }
     
     CGFloat shortestLineWith = 0;

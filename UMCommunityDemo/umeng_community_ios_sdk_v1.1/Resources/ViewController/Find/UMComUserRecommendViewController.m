@@ -15,7 +15,7 @@
 
 @interface UMComUserRecommendViewController ()
 
-@property (nonatomic, strong) NSMutableArray *recommendUserList;
+@property (nonatomic, strong) NSArray *recommendUserList;
 
 @property (nonatomic, strong) UMComPullRequest *fetchRequest;
 
@@ -105,6 +105,14 @@
     [[UMComUserCenterAction action] performActionAfterLogin:user viewController:paramViewController completion:nil];
 }
 
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (scrollView.contentOffset.y < -65) {
+        [self requestRecommendUsers];
+    }
+}
+
 #pragma mark - private method
 - (void)didSelectUser:(UMComUser *)user
 {
@@ -119,29 +127,29 @@
 - (void)requestRecommendUsers
 {
     [self.fetchRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-        if (data.count > 0) {
-            if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
-                self.footView.backgroundColor = TableViewSeparatorRGBColor;
-            }
-            [self.recommendUserList removeAllObjects];
-            [self.recommendUserList addObjectsFromArray:data];
+        self.noRecommendTip.hidden = YES;
+        self.recommendUserList = data;
+        if (error) {
             self.noRecommendTip.hidden = YES;
+            [UMComShowToast fetchRecommendUserFail:error];
         }else{
-            if (error) {
-                self.noRecommendTip.hidden = YES;
-            }else{
+            if (self.recommendUserList.count == 0) {
                 if (self.noRecommendTip == nil) {
                     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/2-80, self.view.frame.size.width, 40)];
                     label.backgroundColor = [UIColor clearColor];
                     label.text = UMComLocalizedString(@"Tehre is no recommend user", @"暂时没有推荐用户咯");
                     label.textAlignment = NSTextAlignmentCenter;
-                    self.noRecommendTip = label;
                     [self.tableView addSubview:label];
+                    self.noRecommendTip = label;
                 } else {
                     self.noRecommendTip.hidden = NO;
                 }
+            }else{
+                if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
+                    self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                }
+                self.noRecommendTip.hidden = YES;
             }
-            [UMComShowToast fetchRecommendUserFail:error];
         }
         [self.tableView reloadData];
     }];

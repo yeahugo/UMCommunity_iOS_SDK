@@ -36,7 +36,7 @@
 //@property (nonatomic, strong) UMComUserProfile profile;
 @property (nonatomic, strong) UMComUserCenterTableDelegate *tableDelegate;
 
-@property (nonatomic, strong) UMComLabel *tipLabel;
+@property (nonatomic, strong) UILabel *tipLabel;
 
 @property (nonatomic) UMComUserCenterDataType curDataType;
 
@@ -147,12 +147,12 @@ static float FLIP_ANIMATION_DURATION = 0.5;
     
     [self.feedsTableView setFeedTableViewController:self];
 
-    if ([self.user.uid isEqualToString:[UMComSession sharedInstance].uid] || [self.uid isEqualToString:[UMComSession sharedInstance].uid]) {
-        UMComBarButtonItem * settingButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"settingx" target:self action:@selector(onClickSetting)];
-        self.navigationItem.rightBarButtonItem = settingButtonItem;
-        self.focus.hidden = YES;
-    }
-    
+//    if ([self.user.uid isEqualToString:[UMComSession sharedInstance].uid] || [self.uid isEqualToString:[UMComSession sharedInstance].uid]) {
+//        UMComBarButtonItem * settingButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"settingx" target:self action:@selector(onClickSetting)];
+//        self.navigationItem.rightBarButtonItem = settingButtonItem;
+//        self.focus.hidden = YES;
+//    }
+//    
     UMComUserFeedsRequest *userFeedsController = [[UMComUserFeedsRequest alloc] initWithUid:self.user.uid count:BatchSize];
     self.fetchFeedsController = userFeedsController;
     [super viewDidLoad];
@@ -224,7 +224,8 @@ static float FLIP_ANIMATION_DURATION = 0.5;
     }];
     
     self.tipLabel = [[UMComLabel alloc] initWithFont:UMComFontNotoSansDemiWithSafeSize(15)];
-   
+    self.tipLabel.frame = CGRectMake(0, 0, 300, 30);
+    self.tipLabel.textAlignment = NSTextAlignmentCenter;
     //如果为空，删除线
     self.feedsTableView.tag = UMComUserCenterDataFeeds;
     __weak UMComUserCenterViewController *weakSelf = self;
@@ -246,12 +247,12 @@ static float FLIP_ANIMATION_DURATION = 0.5;
     self.followerTableView.dataSource = self;
     self.followerTableView.delegate = self;
     [self.followerTableView registerClass:[UMComUsersTableCell class] forCellReuseIdentifier:@"UsersTableViewCell"];
-    self.tipLabel.center =  CGPointMake(self.followerTableView.frame.size.width/2, self.followerTableView.frame.size.height/2);
+//    self.tipLabel.center =  CGPointMake(self.followerTableView.frame.size.width/2, self.followerTableView.frame.size.height/2);
     
     self.fansTableView.dataSource = self;
     self.fansTableView.delegate = self;
     [self.fansTableView registerClass:[UMComUsersTableCell class] forCellReuseIdentifier:@"UsersTableViewCell"];
-    self.tipLabel.center =  CGPointMake(self.fansTableView.frame.size.width/2, self.fansTableView.frame.size.height/2);
+//    self.tipLabel.center =  CGPointMake(self.fansTableView.frame.size.width/2, self.fansTableView.frame.size.height/2);
     
     self.followersArray = [NSArray array];
     self.fansArray = [NSArray array];
@@ -263,7 +264,6 @@ static float FLIP_ANIMATION_DURATION = 0.5;
     UIImageView *footerImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"footerArrow"]];
     self.footerViewImage = footerImageView;
     self.footerViewImage.hidden = YES;
-    self.tipLabel.frame = CGRectMake(0, 0, 300, 30);
     [self setOtherWithType:UMComUserCenterDataFeeds];
 }
 
@@ -367,12 +367,11 @@ static float FLIP_ANIMATION_DURATION = 0.5;
                     self.followerNumber.text = [NSString stringWithFormat:@"%ld",data.count];
                 }
             } else {
-                self.tipLabel.center = CGPointMake(self.followerTableView.frame.size.width/2, self.followerTableView.frame.size.height/2);
-                [self.tipLabel setText:UMComLocalizedString(@"No_FocusPeople", @"内容为空")];
+                self.tipLabel.text = UMComLocalizedString(@"No_FocusPeople", @"内容为空");
                 self.tipLabel.hidden = NO;
             }
         }
-
+        self.tipLabel.center = CGPointMake(self.followerTableView.frame.size.width/2, self.followerTableView.frame.size.height/2);
     }];
 }
 
@@ -391,10 +390,10 @@ static float FLIP_ANIMATION_DURATION = 0.5;
                 self.fanNumber.text = [NSString stringWithFormat:@"%ld",data.count];
             }
         } else {
-            self.tipLabel.center = CGPointMake(self.fansTableView.frame.size.width/2, self.followerTableView.frame.size.height/2);
-            [self.tipLabel setText:UMComLocalizedString(@"No_Followers", @"内容为空")];
+            self.tipLabel.text = UMComLocalizedString(@"No_Followers", @"内容为空");
             self.tipLabel.hidden = NO;
         }
+        self.tipLabel.center = CGPointMake(self.fansTableView.frame.size.width/2, self.fansTableView.frame.size.height/2);
     }];
 }
 

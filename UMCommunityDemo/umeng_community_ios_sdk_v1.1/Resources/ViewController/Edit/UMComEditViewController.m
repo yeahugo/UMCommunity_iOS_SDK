@@ -139,7 +139,13 @@
 {
     [super viewDidLoad];
     isShowTopicNoticeBgView = YES;
-    self.title = @"新鲜事";
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(3, 0, self.topicNoticeBgView.frame.size.width, 25)];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.font = UMComFontNotoSansLightWithSafeSize(18);
+    titleLabel.text= @"新鲜事";
+    titleLabel.textColor = [UIColor blackColor];
+    [self.navigationItem setTitleView:titleLabel];
     UMComEditViewModel *editViewModel = [[UMComEditViewModel alloc] init];
     [editViewModel addObserver:self forkeyPath:@"editContent"];
     [editViewModel addObserver:self forkeyPath:@"locationDescription"];
@@ -157,6 +163,7 @@
         //添加站位语句
         placeholderLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, -4.5, self.fakeTextView.frame.size.width-10, 40)];
         placeholderLabel.backgroundColor = [UIColor clearColor];
+        placeholderLabel.font = textFont;
         placeholderLabel.textColor = [UIColor lightGrayColor];
         [self.realTextView addSubview:placeholderLabel];
     }
@@ -188,8 +195,10 @@
         placeholderLabel.text = @"分享新鲜事...#此处添加话题更好哦#";
         self.topicNoticeBgView.frame = CGRectMake(20, 250, self.topicNoticeBgView.frame.size.width, 30);
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(3, 0, self.topicNoticeBgView.frame.size.width, 25)];
+        label.textAlignment = NSTextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
-        label.textColor = [UIColor grayColor];
+        label.font = textFont;
+        label.textColor = [UIColor whiteColor];
         [self.topicNoticeBgView addSubview:label];
         if ([[[[UMComSession sharedInstance] loginUser] gender] integerValue] == 1) {
             label.text = @"大哥啊，添加个话题吧！";

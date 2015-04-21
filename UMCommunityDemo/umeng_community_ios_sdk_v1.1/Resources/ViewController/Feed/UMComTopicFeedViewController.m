@@ -27,6 +27,9 @@
 
 @end
 
+#define DeltaBottom  50
+#define DeltaRight 50
+
 @implementation UMComTopicFeedViewController
 
 -(id)initWithTopic:(UMComTopic *)topic
@@ -99,13 +102,13 @@
     __weak UMComTopicFeedViewController *weakSelf = self;
     self.feedsTableView.scrollViewDidScroll = ^(BOOL isShowEditedBt){
         if (!isShowEditedBt) {
-            [UIView animateWithDuration:0.5 animations:^{
-                weakSelf.editedButton.center = CGPointMake(weakSelf.editedButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height+weakSelf.editedButton.frame.size.height);
-            }];
+            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                weakSelf.editedButton.center = CGPointMake(weakSelf.editedButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height+DeltaBottom);
+            } completion:nil];
         }else{
-            [UIView animateWithDuration:0.5 animations:^{
-                weakSelf.editedButton.center = CGPointMake(weakSelf.editedButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height-80);
-            }];
+            [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                weakSelf.editedButton.center = CGPointMake(weakSelf.editedButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height-DeltaBottom);
+            } completion:nil];
         }
     };
     [self.topicFeedBt setTitleColor:[UMComTools colorWithHexString:FontColorBlue] forState:UIControlStateNormal];
@@ -144,10 +147,10 @@
     }else{
         [self onClickHotUserFeedsButton:self.hotUserBt];
     }
-
-    self.editedButton.frame = CGRectMake(self.view.frame.size.width-70, self.view.frame.size.height-self.navigationController.navigationBar.frame.size.height, 50, 50);
-    [[UIApplication sharedApplication].keyWindow addSubview:self.editedButton];
     
+    self.editedButton.center = CGPointMake(self.view.frame.size.width-DeltaRight, [UIApplication sharedApplication].keyWindow.bounds.size.height-DeltaBottom);
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:self.editedButton];    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -181,7 +184,9 @@
 - (IBAction)onClickTopicFeedsButton:(id)sender {
     self.currentPage = 0;
     CGFloat feedViewOriginY = self.followViewBackground.frame.origin.y + self.followViewBackground.frame.size.height;
-    [UIView animateWithDuration:0.5 animations:^{
+    self.editedButton.frame = CGRectMake(self.view.frame.size.width-70, self.view.frame.size.height-self.navigationController.navigationBar.frame.size.height, 50, 50);
+    self.editedButton.hidden = NO;
+    [UIView animateWithDuration:0.4 animations:^{
         self.feedsTableView.frame = CGRectMake(0, feedViewOriginY, self.feedsTableView.frame.size.width, self.feedsTableView.frame.size.height);
         self.recommendUsersVc.view.frame = CGRectMake(self.feedsTableView.frame.size.width, feedViewOriginY, self.feedsTableView.frame.size.width, self.feedsTableView.frame.size.height);
         self.selectedImageView.frame = CGRectMake(0, self.selectedImageView.frame.origin.y, self.topicFeedBt.frame.size.width, self.selectedImageView.frame.size.height);
@@ -194,8 +199,9 @@
 
 - (IBAction)onClickHotUserFeedsButton:(id)sender {
     self.currentPage = 1;
+    self.editedButton.hidden = YES;
     CGFloat feedViewOriginY = self.followViewBackground.frame.origin.y + self.followViewBackground.frame.size.height;
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         self.feedsTableView.frame = CGRectMake(-self.feedsTableView.frame.size.width, feedViewOriginY, self.feedsTableView.frame.size.width, self.feedsTableView.frame.size.height);
         self.recommendUsersVc.view.frame = CGRectMake(0, feedViewOriginY, self.feedsTableView.frame.size.width, self.feedsTableView.frame.size.height);
         self.selectedImageView.frame = CGRectMake(self.topicFeedBt.frame.size.width, self.selectedImageView.frame.origin.y, self.topicFeedBt.frame.size.width, self.selectedImageView.frame.size.height);
