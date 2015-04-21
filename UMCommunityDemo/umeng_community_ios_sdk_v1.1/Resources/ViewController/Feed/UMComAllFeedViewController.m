@@ -39,12 +39,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.editButton.hidden = YES;
-    if (self.feedsTableView.resultArray.count == 0) {
-        [self refreshAllData];
-    }else{
-        [self.feedsTableView reloadData];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -63,15 +57,8 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clearAndRefreshAllData) name:UserLoginSecceed object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clearAndRefreshAllData) name:UserLogoutSucceed object:nil];
-    
-//    if(self.navigationController.viewControllers.count > 1 || self.presentingViewController){
-//        [self.feedsTableView setFeedTableViewController:self];
-//        UIBarButtonItem *leftButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"Backx" target:self action:@selector(onClickClose:)];
-//        [self.navigationItem setLeftBarButtonItems:@[leftButtonItem]];    
-//    }
 }
 
 - (void)getFetchedResultsController
@@ -84,40 +71,6 @@
     [self getFetchedResultsController];
     [self refreshAllData];
 }
-//
-//-(IBAction)onClickClose:(id)sender
-//{
-////    [UIView setAnimationsEnabled:YES]; 
-//    if ([self.navigationController isKindOfClass:[UMComNavigationController class]]) {
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//    } else {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }
-//    [(UMComFeedsTableView *)self.feedsTableView dismissAllEditView];
-//}
-//
-//-(IBAction)onClickProfile:(id)sender
-//{
-//    [[UMComUserCenterAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
-//    }];
-//}
-//
-//- (void)onClickFind:(UIButton *)sender
-//{
-//    [[UMComFindAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
-//    }];
-//}
-//
-//-(IBAction)onClickTopic:(id)sender
-//{
-//    [[UMComTopicFilterAction action] performActionAfterLogin:nil viewController:self completion:nil];
-//}
-//
-//-(IBAction)onClickEdit:(id)sender
-//{
-//    [[UMComEditAction action] performActionAfterLogin:nil viewController:self completion:nil];
-//}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

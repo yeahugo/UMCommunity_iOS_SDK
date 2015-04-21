@@ -196,6 +196,7 @@
 		D540A5A61AB9A456007063E6 /* iPhone6PlusPortrait.png in Resources */ = {isa = PBXBuildFile; fileRef = D540A5A41AB9A456007063E6 /* iPhone6PlusPortrait.png */; };
 		D540A5AF1AB9ACEB007063E6 /* UMCommViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D540A5AD1AB9ACEB007063E6 /* UMCommViewController.m */; };
 		D540A5B01AB9ACEB007063E6 /* UMCommViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */; };
+		D5462FC71AE6159F00957649 /* UMCommunityStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = D5462FC61AE6159F00957649 /* UMCommunityStrings.strings */; };
 		D56E21B11AB9B6EB00D7E13B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -542,6 +543,7 @@
 		D540A5AC1AB9ACEB007063E6 /* UMCommViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCommViewController.h; sourceTree = "<group>"; };
 		D540A5AD1AB9ACEB007063E6 /* UMCommViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMCommViewController.m; sourceTree = "<group>"; };
 		D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMCommViewController.xib; sourceTree = "<group>"; };
+		D5462FC61AE6159F00957649 /* UMCommunityStrings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = UMCommunityStrings.strings; path = Resources/UMCommunityStrings.strings; sourceTree = "<group>"; };
 		D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D5FD803E1AC27A690062953D /* UMCommunityDemo.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UMCommunityDemo.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -584,6 +586,7 @@
 		D51419701ADF8A1700E41B94 /* umeng_community_ios_sdk_v1.1 */ = {
 			isa = PBXGroup;
 			children = (
+				D5462FC61AE6159F00957649 /* UMCommunityStrings.strings */,
 				D51419711ADF8A1700E41B94 /* Headers */,
 				D51419811ADF8A1700E41B94 /* Resources */,
 				D5141A931ADF8A1800E41B94 /* umeng_community_ios_sdk_v1.1.a */,
@@ -1273,6 +1276,7 @@
 				TargetAttributes = {
 					D540A2F01AB9585F007063E6 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = K7FM47A3M5;
 					};
 					D540A3091AB9585F007063E6 = {
 						CreatedOnToolsVersion = 6.2;
@@ -1347,6 +1351,7 @@
 				D5141AEC1ADF8A1800E41B94 /* selected@2x.png in Resources */,
 				D540A5A51AB9A456007063E6 /* iPhone6Portrait.png in Resources */,
 				D5141AC21ADF8A1800E41B94 /* FZLanTingHei-L-GBK-M.TTF in Resources */,
+				D5462FC71AE6159F00957649 /* UMCommunityStrings.strings in Resources */,
 				D5141B4B1ADF8A1800E41B94 /* UMComNavigationController.xib in Resources */,
 				D5141B441ADF8A1800E41B94 /* UMComTableViewCell.xib in Resources */,
 				D5141B601ADF8A1800E41B94 /* UMShareEditViewController.xib in Resources */,
@@ -1624,6 +1629,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.0(20150319)/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -1666,6 +1673,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1674,6 +1682,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.0(20150319)/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -1716,6 +1726,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

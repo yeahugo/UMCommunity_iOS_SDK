@@ -42,7 +42,6 @@
         self.filterTopicsViewModel = [[UMComFilterTopicsViewModel alloc] init];
         self.topicRequestType = allTopicType;
         self.isShowNextButton = NO;
-//        self.filteredTopicsArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -280,8 +279,6 @@
     {
         topic = [self.allTopicsArray objectAtIndex:indexPath.row];
     }
-//    UMComTopic *topic = [self.allTopicsArray objectAtIndex:indexPath.row];
-//    UMComTopicFeedViewController *oneFeedViewController = [[UMComTopicFeedViewController alloc] initWithTopic:topic];
 
     UMComTopicFeedViewController *oneFeedViewController = nil;
     oneFeedViewController = [[UMComTopicFeedViewController alloc] initWithTopic:topic];

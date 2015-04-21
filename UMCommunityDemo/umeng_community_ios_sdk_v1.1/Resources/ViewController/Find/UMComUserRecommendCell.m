@@ -54,7 +54,11 @@
     self.descriptionLable.text =  [NSString stringWithFormat:@"发消息：%@ / 粉丝：%@",user.post_count,user.fans_count];
     
     CGSize textSize = [self.userName.text sizeWithFont:self.userName.font forWidth:self.descriptionLable.frame.size.width lineBreakMode:NSLineBreakByCharWrapping];
-    self.genderImageView.frame = CGRectMake(20+textSize.width+self.portrait.frame.size.width, self.genderImageView.frame.origin.y, self.genderImageView.frame.size.width, self.genderImageView.frame.size.height);
+    CGFloat originX = self.userName.frame.origin.x+textSize.width;
+    if (textSize.width > self.userName.frame.size.width) {
+        originX-= 15;
+    }
+    self.genderImageView.frame = CGRectMake(originX+5, self.genderImageView.frame.origin.y, self.genderImageView.frame.size.width, self.genderImageView.frame.size.height);
     if ([user.gender intValue] == 1) {
         self.genderImageView.image = [UIImage imageNamed:@"♀.png"];
         
@@ -104,9 +108,12 @@
 {
     if (isFollow) {
         [focusButtun setBackgroundColor:[UMComTools colorWithHexString:ViewGrayColor]];
+        UIColor *bcolor = [UIColor colorWithRed:15.0/255.0 green:121.0/255.0 blue:254.0/255.0 alpha:1];
+        [focusButtun setTitleColor:bcolor forState:UIControlStateNormal];
         [focusButtun setTitle:UMComLocalizedString(@"has_been_followed" ,@"已关注") forState:UIControlStateNormal];
     }else{
         [focusButtun setBackgroundColor:[UMComTools colorWithHexString:ViewGreenBgColor]];
+        [focusButtun setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [focusButtun setTitle:UMComLocalizedString(@"follow" ,@"关注") forState:UIControlStateNormal];
     }
 }

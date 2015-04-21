@@ -96,13 +96,23 @@
     [self.feedsTableView registerNib:[UINib nibWithNibName:@"UMComFeedsTableViewCell" bundle:nil] forCellReuseIdentifier:@"FeedsTableViewCell"];
     self.feedsTableView.dataSource = self;
     self.feedsTableView.delegate = self;
+    __weak UMComTopicFeedViewController *weakSelf = self;
+    self.feedsTableView.scrollViewDidScroll = ^(BOOL isShowEditedBt){
+        if (!isShowEditedBt) {
+            [UIView animateWithDuration:0.5 animations:^{
+                weakSelf.editedButton.center = CGPointMake(weakSelf.editedButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height+weakSelf.editedButton.frame.size.height);
+            }];
+        }else{
+            [UIView animateWithDuration:0.5 animations:^{
+                weakSelf.editedButton.center = CGPointMake(weakSelf.editedButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height-80);
+            }];
+        }
+    };
     [self.topicFeedBt setTitleColor:[UMComTools colorWithHexString:FontColorBlue] forState:UIControlStateNormal];
     self.recommendUsersVc = [[UMComUserRecommendViewController alloc]init];
     self.recommendUsersVc.topicId = self.topic.topicID;
     self.recommendUsersVc.viewController = self;
     [self.view addSubview:self.recommendUsersVc.view];
-    
-    self.editButton.hidden = YES;
     
     self.editedButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.editedButton.frame = CGRectMake(0, 0, 50, 50);
@@ -117,14 +127,24 @@
     [super viewWillAppear:animated];
     self.feedsTableView.hidden = NO;
     self.recommendUsersVc.view.hidden = NO;
+    
+    CGFloat viewHieght = self.focuBackgroundView.frame.size.height;
+    CGSize textSize = [self.topicDescription.text sizeWithFont:self.topicDescription.font forWidth:self.topicDescription.frame.size.width lineBreakMode:NSLineBreakByCharWrapping];
+    if (textSize.height > viewHieght) {
+        viewHieght = textSize.height;
+    }
+    self.focuBackgroundView.frame = CGRectMake(self.focuBackgroundView.frame.origin.x, self.focuBackgroundView.frame.origin.y, self.focuBackgroundView.frame.size.width, viewHieght);
+    self.followViewBackground.frame = CGRectMake(self.followViewBackground.frame.origin.x, self.followViewBackground.frame.origin.y, self.followViewBackground.frame.size.width, viewHieght+self.selectedSuperView.frame.size.height);
+    self.topicDescription.frame = CGRectMake(self.topicDescription.frame.origin.x,0, self.topicDescription.frame.size.width, viewHieght);
+    self.followButton.center = CGPointMake(self.followButton.center.x, self.focuBackgroundView.frame.size.height/2);
+    
     if (self.currentPage == 0) {
         self.recommendUsersVc.view.frame = CGRectMake(self.feedsTableView.frame.size.width, self.feedsTableView.frame.origin.y, self.feedsTableView.frame.size.width, self.feedsTableView.frame.size.height);
-
         [self onClickTopicFeedsButton:self.topicFeedBt];
     }else{
         [self onClickHotUserFeedsButton:self.hotUserBt];
     }
-    
+
     self.editedButton.frame = CGRectMake(self.view.frame.size.width-70, self.view.frame.size.height-self.navigationController.navigationBar.frame.size.height, 50, 50);
     [[UIApplication sharedApplication].keyWindow addSubview:self.editedButton];
     
@@ -159,7 +179,6 @@
 }
 
 - (IBAction)onClickTopicFeedsButton:(id)sender {
-//    [UIView setAnimationsEnabled:YES];
     self.currentPage = 0;
     CGFloat feedViewOriginY = self.followViewBackground.frame.origin.y + self.followViewBackground.frame.size.height;
     [UIView animateWithDuration:0.5 animations:^{
@@ -174,7 +193,6 @@
 }
 
 - (IBAction)onClickHotUserFeedsButton:(id)sender {
-//    [UIView setAnimationsEnabled:YES];
     self.currentPage = 1;
     CGFloat feedViewOriginY = self.followViewBackground.frame.origin.y + self.followViewBackground.frame.size.height;
     [UIView animateWithDuration:0.5 animations:^{
@@ -193,10 +211,6 @@
 {
     [self.fetchFeedsController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
         completion(data,error);
-//        NSOrderedSet *feeds = [self.topic performSelector:@selector(feeds)];
-//        if (completion) {
-//            completion(feeds.array, error);
-//        }
     }];
 }
 
@@ -204,8 +218,6 @@
 {
     [self.fetchFeedsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         completion(data,error);
-//        NSOrderedSet *feeds = [self.topic performSelector:@selector(feeds)];
-//        completion(feeds.array, error);
     }];
 }
 

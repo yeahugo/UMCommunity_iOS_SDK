@@ -41,6 +41,7 @@
 
 @property (nonatomic, strong) UIView *footView;
 
+@property (nonatomic, copy) void (^scrollViewDidScroll)(BOOL isShowEditedBt);
 
 @property (nonatomic, copy) void (^deletedFeedSucceedAction)();
 
@@ -69,4 +70,5 @@
 - (void)keyboardWillShow:(NSNotification*)notification;
 
 - (void)keyboardHiden:(NSNotification*)notification;
+
 @end

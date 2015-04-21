@@ -111,27 +111,6 @@
         }
         [self.feedsTableView reloadData];
         [self.feedsTableView refreshFeedsData];
-//        [self.fetchFeedsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-//            [self.indicatorView stopAnimating];
-//            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//            if (error) {
-//                [UMComShowToast fetchFeedFail:error];
-//            } else {
-//                if (data.count > 0) {
-//                    [self.feedsTableView.resultArray removeAllObjects];
-//                    [self.feedsTableView.resultArray addObjectsFromArray:data];
-//                    if ([[[UIDevice currentDevice] systemVersion]floatValue] < 8.0) {
-//                        self.feedsTableView.footView.backgroundColor = TableViewSeparatorRGBColor;
-//                    }
-//                }else{
-//                    self.feedsTableView.footView.backgroundColor = [UIColor clearColor];
-//                }
-//                [self.feedsTableView reloadData];
-//                if (haveNextPage) {
-//                    [self.feedsTableView addFootView];
-//                }
-//            }
-//        }];
     }];
 }
 

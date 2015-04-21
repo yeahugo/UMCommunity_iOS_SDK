@@ -89,31 +89,24 @@
 
 - (void)setFocused:(BOOL)focused
 {
-   
-//CGRect recommendFrame = CGRectMake(self.butFocuse.frame.origin.x+2.5, self.butFocuse.frame.origin.y+1.5, self.butFocuse.frame.size.width-5, self.butFocuse.frame.size.height-3);
- 
     if(focused){
-     
+        UIColor *bcolor = [UIColor colorWithRed:15.0/255.0 green:121.0/255.0 blue:254.0/255.0 alpha:1];
+        [self.butFocuse setTitleColor:bcolor forState:UIControlStateNormal];
         if (self.isRecommendTopic == NO) {
             [self setButFocuseWithFocus:focused];
         }else{
-            
             [self.butFocuse setTitle:UMComLocalizedString(@"has_been_followed" ,@"已关注") forState:UIControlStateNormal];
-            [self.butFocuse setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             self.butFocuse.backgroundColor = [UMComTools colorWithHexString:ViewGrayColor];
-//            self.butFocuse.frame = recommendFrame;
         }
 
         [self.topic setValue:@1 forKey:@"is_focused"];
     }else{
+        [self.butFocuse setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         if (self.isRecommendTopic == NO) {
             [self setButFocuseWithFocus:focused];
         }else{
             [self.butFocuse setTitle:UMComLocalizedString(@"follow" ,@"关注") forState:UIControlStateNormal];
-            [self.butFocuse setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             self.butFocuse.backgroundColor = [UMComTools colorWithHexString:ViewGreenBgColor];
-//            self.butFocuse.frame = recommendFrame;
-
         }
 
     }
@@ -127,11 +120,9 @@
     if (isFocus){
         UIColor *bcolor = [UIColor colorWithRed:15.0/255.0 green:121.0/255.0 blue:254.0/255.0 alpha:1];
         [downButtonLayer setBorderColor:[bcolor CGColor]];
-        [self.butFocuse setTitleColor:bcolor forState:UIControlStateNormal];
         [self.butFocuse setTitle:UMComLocalizedString(@"Has_Focused",@"取消关注") forState:UIControlStateNormal];
     }else{
         [downButtonLayer setBorderColor:[[UIColor grayColor] CGColor]];
-        [self.butFocuse setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [self.butFocuse setTitle:UMComLocalizedString(@"No_Focused",@"关注") forState:UIControlStateNormal];
     }
 }

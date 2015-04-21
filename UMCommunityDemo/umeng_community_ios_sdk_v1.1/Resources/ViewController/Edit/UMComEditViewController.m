@@ -187,15 +187,16 @@
     }else{
         placeholderLabel.text = @"分享新鲜事...#此处添加话题更好哦#";
         self.topicNoticeBgView.frame = CGRectMake(20, 250, self.topicNoticeBgView.frame.size.width, 30);
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.topicNoticeBgView.frame.size.width, 25)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(3, 0, self.topicNoticeBgView.frame.size.width, 25)];
         label.backgroundColor = [UIColor clearColor];
+        label.textColor = [UIColor grayColor];
         [self.topicNoticeBgView addSubview:label];
         if ([[[[UMComSession sharedInstance] loginUser] gender] integerValue] == 1) {
             label.text = @"大哥啊，添加个话题吧！";
         }else{
             label.text = @"大妹砸，添加个话题吧！";
         }
-        
+
         self.fakeForwardTextView.hidden = YES;
         self.forwardImage.hidden = YES;
         [self setUpAddedImageView:nil];
@@ -456,10 +457,12 @@
         self.imagesButton.center = CGPointMake(self.takePhotoButton.center.x+48+viewSpace, self.editToolView.frame.size.height/2);
         self.locationButton.center = CGPointMake(self.imagesButton.center.x+48+viewSpace, self.editToolView.frame.size.height/2);
         self.atFriendButton.center = CGPointMake(self.locationButton.center.x+48+viewSpace, self.editToolView.frame.size.height/2);
-        self.topicNoticeBgView.frame = CGRectMake(self.topicButton.center.x-10, self.editToolView.frame.origin.y-30, self.topicNoticeBgView.frame.size.width, 30);
+        self.topicNoticeBgView.frame = CGRectMake(self.topicButton.center.x, self.editToolView.frame.origin.y-30, self.topicNoticeBgView.frame.size.width, 30);
         [self.editBgView bringSubviewToFront:self.topicNoticeBgView];
-        if (self.addedImageView.arrayImages.count == 0 && isShowTopicNoticeBgView == YES) {
-            deltaHeight = 30;
+        if (isShowTopicNoticeBgView == YES) {
+            if (self.addedImageView.arrayImages.count == 0) {
+                deltaHeight = 30;   
+            }
             self.topicNoticeBgView.hidden = NO;
             
         }else{
@@ -483,7 +486,6 @@
     [self viewsFrameChange];
     self.topicsViewController.view.frame = CGRectMake(0,self.editBgView.frame.size.height-endheight, self.editBgView.frame.size.width, endheight);
     [self.editBgView updateConstraints];
- 
 }
 
 -(void)keyboardDidShow:(NSNotification*)notification
@@ -497,7 +499,6 @@
     self.topicsViewController.view.frame  = CGRectMake(0,self.editToolView.frame.origin.y+self.editToolView.frame.size.height, self.editBgView.frame.size.width, endheight);
     [self.topicsViewController.tableView setContentInset:UIEdgeInsetsZero];
     self.forwardFeedBackground.hidden = NO;
-//    UMLog(@"topicNoticeBgView：%@",self.topicNoticeBgView);
 }
 
 -(void)onClickClose:(id)sender

@@ -10,6 +10,4 @@
 
 @interface UMComAllFeedViewController : UMComFeedTableViewController
 
-@property (nonatomic, weak) IBOutlet UIButton * editButton;
-
 @end

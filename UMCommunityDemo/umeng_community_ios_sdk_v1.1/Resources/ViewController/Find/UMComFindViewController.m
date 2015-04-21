@@ -129,9 +129,7 @@
 
 - (void)tranToUsersRecommend
 {
-//    UMComUserRecommendViewController *userRecommendVc = [[UMComUserRecommendViewController alloc]init];
-//    [self.navigationController pushViewController:userRecommendVc animated:YES];
-    
+
     [[UMComUserRecommendAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
         
     }];
@@ -145,7 +143,7 @@
 }
 - (void)tranToSetting
 {
-    [[UMComSettingAction action] performActionAfterLogin:nil viewController:self completion:nil];
+    [[UMComSettingAction action] performActionAfterLogin:@"push" viewController:self completion:nil];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

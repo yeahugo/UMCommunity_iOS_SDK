@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="FZLanTingHei-L-GBK-M.TTF">
+            <string>FZLTXHKM</string>
             <string>FZLTXHKM</string>
         </mutableArray>
     </customFonts>
@@ -34,7 +35,9 @@
                         <rect key="frame" x="220" y="17" width="90" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                         <color key="backgroundColor" red="0.66274511814117432" green="0.84705889225006104" blue="0.50196081399917603" alpha="1" colorSpace="deviceRGB"/>
+                        <fontDescription key="fontDescription" name="FZLTXHKM" family="FZLanTingHei-L-GBK-M" pointSize="15"/>
                         <state key="normal" title="关注">
+                            <color key="titleColor" red="0.43137258291244507" green="0.53333336114883423" blue="0.37254902720451355" alpha="1" colorSpace="deviceRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -61,7 +64,7 @@
                 <outlet property="portrait" destination="QTo-oA-mSm" id="aDe-9z-pdk"/>
                 <outlet property="userName" destination="prs-Yz-Yii" id="gjG-hO-Xay"/>
             </connections>
-            <point key="canvasLocation" x="396" y="54"/>
+            <point key="canvasLocation" x="288" y="62"/>
         </tableViewCell>
     </objects>
     <resources>

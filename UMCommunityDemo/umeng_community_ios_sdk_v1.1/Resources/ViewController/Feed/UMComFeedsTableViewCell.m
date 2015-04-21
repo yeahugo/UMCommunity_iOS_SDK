@@ -58,35 +58,29 @@
 #define LikeViewDeltaWidth 43
 #define FeedAndOriginFeedDeltaWidth 10
 
-static UMComFeedsTableViewCell *Cell;
+#define LocationBackgroundViewHeight 21
+#define UserNameLabelViewHeight      29
+#define ImageViewHeight              75
+#define LikeNumWith                  15
+
+#define FeedFont UMComFontNotoSansLightWithSafeSize(15)
+#define LikeFont UMComFontNotoSansLightWithSafeSize(14)
+#define CommentFont UMComFontNotoSansLightWithSafeSize(13)
+
 
 @interface UMComFeedsTableViewCell ()<UMImageViewDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, weak) UMComFeedsTableView *tableView;
-@property (nonatomic, strong) UITextView *attributedTextView;
-@property (nonatomic, strong) UITextView *originTextView;
-@property (nonatomic, strong) NSMutableAttributedString * attributedText;
-@property (nonatomic, strong) NSMutableParagraphStyle * paragraphStyle;
-@property (nonatomic, strong) NSMutableParagraphStyle *likeParagraphStyle;
 
-@property (nonatomic, strong) NSArray *commentContents;
-
-@property (nonatomic, strong) UIView *originBackground;
 @property (nonatomic, strong) UMComLike *like;
 
-@property (nonatomic, assign) CGFloat commentTextViewWidth;
 @property (nonatomic, strong) NSArray *commentCellHeightArr;
 
 @property (nonatomic, strong) UILabel *likeNumLabel;
 
+@property (nonatomic, assign) CGFloat cellSubviewCommonWidth;
+
 @end
-
-
-static NSMutableParagraphStyle *style;
-static NSDictionary *commentStyleDictionary;
-static NSMutableParagraphStyle *likeStyle;
-static NSDictionary *likeStyleDictionary;
-static NSDictionary *textStyleDictionary;
 
 
 
@@ -141,29 +135,6 @@ static inline NSString * createTimeString(NSString * create_time)
 
 @implementation UMComFeedsTableViewCell
 
-+(void)initialize {
-    if(!Cell){
-        
-        Cell = [[[NSBundle mainBundle] loadNibNamed:@"UMComFeedsTableViewCell" owner:nil options:nil] objectAtIndex:0];
-        likeStyle = [[NSMutableParagraphStyle alloc] init];
-        likeStyle.lineSpacing = 8;
-        style = [[NSMutableParagraphStyle alloc] init];
-        style.lineSpacing = TextViewLineSpace;
-        textStyleDictionary = @{NSFontAttributeName:UMComFontNotoSansLightWithSafeSize(15),NSParagraphStyleAttributeName:style};
-        commentStyleDictionary = @{NSFontAttributeName:UMComFontNotoSansLightWithSafeSize(13),NSParagraphStyleAttributeName:likeStyle};
-        likeStyleDictionary = @{NSFontAttributeName:UMComFontNotoSansLightWithSafeSize(15),NSParagraphStyleAttributeName:likeStyle};
-        if (!Cell.commentCellHeightArr) {
-            Cell.commentCellHeightArr = [NSArray array];
-        }
-        Cell.commentTextViewWidth = Cell.commentTableView.frame.size.width - CommentTableViewDeltaWidth;
-    }
-}
-
-+ (UMComFeedsTableViewCell *)cell
-{
-    return Cell;
-}
-
 - (void)removeSubViews:(UIView *)superView
 {
     for (UIView * subView in superView.subviews) {
@@ -173,18 +144,13 @@ static inline NSString * createTimeString(NSString * create_time)
 
 -(void)awakeFromNib
 {
-    self.userNameLabel.font = UMComFontNotoSansDemiWithSafeSize(17);
     self.userNameLabel.adjustsFontSizeToFitWidth = YES;
-    self.fakeTextView.font = UMComFontNotoSansLightWithSafeSize(15);
-    self.fakeOriginTextView.font = UMComFontNotoSansLightWithSafeSize(15);
     self.dateLabel.font = UMComFontNotoSansDemiWithSafeSize(12);
-    self.paragraphStyle = style;
-    self.likeParagraphStyle  = likeStyle;
     [self.commentTableView registerNib:[UINib nibWithNibName:@"UMComFeedsCommentTableViewCell" bundle:nil] forCellReuseIdentifier:@"FeedsCommentTableViewCell"];
     UITapGestureRecognizer *tapGestureRecog = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickUserProfile:)];
     [self.avatarImageView addGestureRecognizer:tapGestureRecog];
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width/2;
-    self.avatarImageView.layer.masksToBounds = YES;
+    self.avatarImageView.clipsToBounds = YES;
     
     UIImageView *likeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"like+x"]];
     likeImageView.frame = CGRectMake(0, 0, likeImageView.frame.size.width, likeImageView.frame.size.height);
@@ -193,10 +159,15 @@ static inline NSString * createTimeString(NSString * create_time)
     
     self.likeNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(190, 0, 50, 20)];
     self.likeNumLabel.backgroundColor = [UIColor clearColor];
-    self.likeNumLabel.font = UMComFontNotoSansLightWithSafeSize(14);
+    self.likeNumLabel.font = UMComFontNotoSansLightWithSafeSize(11);
     self.likeNumLabel.textColor = [UMComTools colorWithHexString:@"#8e8e93"];
-    self.likeNumLabel.textAlignment = NSTextAlignmentCenter;
+    self.likeNumLabel.textAlignment = NSTextAlignmentRight;
     [self.likeListTextView addSubview:self.likeNumLabel];
+    
+    UIView *seperateView = [[UIView alloc]initWithFrame:CGRectMake(self.likeImageBgVIew.frame.origin.x, self.likeImageBgVIew.frame.origin.y + self.likeListTextView.frame.size.height, self.likeImageBgVIew.frame.size.width, 0.5)];
+    seperateView.backgroundColor = [UMComTools colorWithHexString:@"#e7e7e7"];
+    [self.contentView addSubview:seperateView];
+    self.seperateView = seperateView;
 }
 
 - (void)drawRect:(CGRect)rect
@@ -274,18 +245,103 @@ static inline NSString * createTimeString(NSString * create_time)
     return view.frame.origin.y + view.frame.size.height;
 }
 
+/****************************reload cell views start *****************************/
 -(void)reload:(UMComFeed *)feed tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     self.feed = feed;
     self.userNameLabel.text = feed.creator.name;
     self.indexPath = indexPath;
     self.tableView = (UMComFeedsTableView *)tableView;
-    Cell.tableView = (UMComFeedsTableView *)tableView;
     [self.dateLabel setText:createTimeString(feed.create_time)];
+    self.cellSubviewCommonWidth = tableView.frame.size.width - TableViewDeltaWidth;
+    //刷新头像
+    [self reloadAvatarImageViewWithFeed:feed];
+
+    float totalHeight = UserNameLabelViewHeight + DeltaHeight;
+    //刷新fakeTextView
+    [self reloadFakeTextViewWithFeed:feed originHeigt:totalHeight];
     
+    totalHeight += self.fakeTextView.frame.size.height;
+    
+    float totalBgHeight = 0;
+    if (feed.origin_feed && !feed.origin_feed.isFault && !feed.origin_feed.isDeleted) {
+        //如果是转发，显示fakeOriginTextView，否则隐藏
+        [self reloadFakeOriginTextViewWithFeed:feed originHeigt:totalBgHeight];
+        totalBgHeight += self.fakeOriginTextView.frame.size.height + OriginFeedOriginY;
+        UIImage *resizableImage = [[UIImage imageNamed:@"origin_image_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 50, 0, 0)];
+        self.imagesBackGroundView.image = resizableImage;
+    } else {
+        self.imagesBackGroundView.image = nil;
+        self.fakeOriginTextView.hidden = YES;
+    }
+    //如果存在定位信息则显示否则隐藏
+    if (feed.location == nil) {
+        self.locationBackground.hidden = YES;
+    } else {
+        [self.locationLabel setText:feed.location];
+        self.locationBackground.hidden = NO;
+        self.locationBackground.frame = CGRectMake(self.locationBackground.frame.origin.x, totalBgHeight, self.locationBackground.frame.size.width, self.locationBackground.frame.size.height);
+        totalBgHeight += self.locationBackground.frame.size.height;
+    }
+    
+    NSDictionary *imagesArray =  feed.images;
+    if (imagesArray.count == 0 && feed.origin_feed && !feed.origin_feed.isFault) {
+        imagesArray = feed.origin_feed.images;
+    }
+    if ([imagesArray count] == 0) {
+        self.gridView.hidden = YES;
+    } else {
+        //如果有图片则刷新图片
+        [self reloadGridViewWithFeed:feed originHeigt:totalBgHeight imagesArr:imagesArray];
+        totalBgHeight += self.gridView.frame.size.height+2;
+    }
+    self.imagesBackGroundView.frame = CGRectMake(self.imagesBackGroundView.frame.origin.x, totalHeight, self.imagesBackGroundView.frame.size.width, totalBgHeight);
+    
+    totalHeight += self.imagesBackGroundView.frame.size.height;
+
+    self.showEditBackGround.center = CGPointMake(self.showEditBackGround.center.x, totalHeight+self.showEditBackGround.frame.size.height/2);
+    self.editBackGround.center = CGPointMake(self.editBackGround.center.x,  self.showEditBackGround.center.y);
+    self.dateLabel.center = CGPointMake(self.dateLabel.center.x, totalHeight+self.dateLabel.frame.size.height/2 + DeltaHeight);
+    totalHeight += self.dateLabel.frame.size.height + DeltaHeight;
+    
+    NSInteger likeNum = feed.likes.count < ShowLikeNum ? feed.likes.count : ShowLikeNum;
+
+    if (likeNum == 0) {
+        self.likeListTextView.hidden = YES;
+        self.likeImageBgVIew.hidden = YES;
+        self.likeNumLabel.hidden =  YES;
+        [self.likeButton setImage:[UIImage imageNamed:@"likex"] forState:UIControlStateNormal];
+        totalHeight += DeltaHeight;
+        self.seperateView.hidden = YES;
+    } else{
+        [self reloadLikeTextViewWithFeed:feed originHeigt:totalHeight likeNum:(int)likeNum];
+        if (feed.comments.count > 0) {
+            self.seperateView.frame = CGRectMake(self.likeImageBgVIew.frame.origin.x, self.likeImageBgVIew.frame.origin.y + self.likeImageBgVIew.frame.size.height,self.likeImageBgVIew.frame.size.width, 0.5);
+            self.seperateView.hidden = NO;
+        } else {
+            self.seperateView.hidden = YES;
+        }
+        totalHeight += self.likeListTextView.frame.size.height+DeltaHeight;
+
+    }
+    if (self.feed.comments.count == 0) {
+        self.commentTableView.hidden = YES;
+    } else {
+        [self reloadCommentTableViewWithFeed:feed originHeigt:totalHeight];
+        totalHeight += self.commentTableView.contentSize.height;
+    }
+    if ([feed.type integerValue] == 1) {
+        self.acounTypeLabel.hidden = NO;
+        self.acounTypeLabel.text = @"公告";
+    }else{
+        self.acounTypeLabel.hidden = YES;
+        self.acounTypeLabel.text = @"";
+    }
+}
+
+- (void)reloadAvatarImageViewWithFeed:(UMComFeed *)feed
+{
     [self.avatarImageView setIsAutoStart:NO];
-    self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width/2;
-    self.avatarImageView.clipsToBounds = YES;
     if ([feed.creator.gender intValue] == 0) {
         [self.avatarImageView setPlaceholderImage:[UIImage imageNamed:@"female"]];
     } else{
@@ -299,21 +355,16 @@ static inline NSString * createTimeString(NSString * create_time)
         [self.avatarImageView setImageURL:iconURL ];
         [self.avatarImageView startImageLoad];
     }
-    
-    __weak UMComFeedsTableViewCell *weakSelf = self;
+}
 
-
-    float totalHeight = Cell.userNameLabel.frame.size.height + DeltaHeight;
-    //修正字体的行间距
+- (void)reloadFakeTextViewWithFeed:(UMComFeed *)feed originHeigt:(CGFloat)originHeigth
+{
     NSString *feedString = @"";
-    if (self.feed.text) {
-        feedString = self.feed.text;
+    if (feed.text) {
+        feedString = feed.text;
     }
-    UIFont *feedFont = UMComFontNotoSansLightWithSafeSize(15);
-    CGRect feedTextRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(self.fakeTextView.frame.size.width, MAXFLOAT) font:feedFont string:feedString lineSpace:TextViewLineSpace];
-    self.fakeTextView.frame = CGRectMake(Cell.fakeTextView.frame.origin.x, totalHeight , self.fakeTextView.frame.size.width, feedTextRect.size.height);
-    self.fakeTextView.font = feedFont;
-    self.fakeTextView.lineSpace = TextViewLineSpace;
+    CGRect feedTextRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(self.cellSubviewCommonWidth, MAXFLOAT) font:FeedFont string:feedString lineSpace:TextViewLineSpace];
+    self.fakeTextView.frame = CGRectMake(self.fakeTextView.frame.origin.x, originHeigth , self.fakeTextView.frame.size.width, feedTextRect.size.height);
     NSMutableDictionary *feedClickTextDict = [NSMutableDictionary dictionaryWithCapacity:1];
     if (feed.topics.count > 0) {
         [feedClickTextDict setObject:feed.topics.array forKey:@"topics"];
@@ -321,102 +372,76 @@ static inline NSString * createTimeString(NSString * create_time)
     if (feed.related_user.count > 0) {
         [feedClickTextDict setObject:feed.related_user.array forKey:@"related_user"];
     }
+    self.fakeTextView.backgroundColor = [UIColor clearColor];
+    self.fakeTextView.font = FeedFont;
+    self.fakeTextView.lineSpace = TextViewLineSpace;
     [self.fakeTextView.clikTextDict addObject:feedClickTextDict];
-
     self.fakeTextView.runType = UMComMutiTextRunFeedContentType;
     self.fakeTextView.text = feedString;
-    self.fakeTextView.backgroundColor = [UIColor clearColor];
+    __weak UMComFeedsTableViewCell *weakSelf = self;
     self.fakeTextView.clickOnlinkText = ^(UMComMutiTextRun *run){
         [weakSelf clickInFeedTextWithObject:run];
     };
-    
-    totalHeight += self.fakeTextView.frame.size.height;
+
+}
+
+- (void)reloadFakeOriginTextViewWithFeed:(UMComFeed *)feed originHeigt:(CGFloat)originHeigth
+{
     NSMutableString *oringFeedString = [NSMutableString stringWithString:@""];
-    
-    float totalBgHeight = 0;
-    if (self.feed.origin_feed && !self.feed.origin_feed.isFault) {
-        NSString *originUserName = !feed.origin_feed.creator.isFault ? feed.origin_feed.creator.name : @"";
-        if ([self.feed.origin_feed.status intValue] >= FeedStatusDeleted) {
-            self.feed.origin_feed.text = UMComLocalizedString(@"Delete Content", @"该内容已被删除");
-            self.feed.origin_feed.images = [NSArray array];
-        }
-        [oringFeedString appendFormat:OriginUserNameString,originUserName,self.feed.origin_feed.text];
-        self.fakeOriginTextView.pointOffset = CGPointMake(0, OriginFeedHeightOffset);
-        CGRect originFeedRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(self.fakeOriginTextView.frame.size.width, MAXFLOAT) font:feedFont string:oringFeedString lineSpace:TextViewLineSpace];
-        self.fakeOriginTextView.frame = CGRectMake(self.fakeOriginTextView.frame.origin.x, OriginFeedOriginY, self.fakeOriginTextView.frame.size.width, originFeedRect.size.height + OriginFeedHeightOffset/2+4);
-        self.fakeOriginTextView.font = feedFont;
-        self.fakeOriginTextView.lineSpace = TextViewLineSpace;
-        self.fakeOriginTextView.runType = UMComMutiTextRunFeedContentType;
-        self.fakeOriginTextView.text = oringFeedString;
-        NSMutableDictionary *originFeedClickTextDict = [NSMutableDictionary dictionaryWithCapacity:1];
-        if (feed.origin_feed.topics.count > 0) {
-            [originFeedClickTextDict setObject:feed.origin_feed.topics.array forKey:@"topics"];
-        }
-        NSMutableArray *relatedUsers = [NSMutableArray arrayWithCapacity:1];
-        [relatedUsers addObject:feed.origin_feed.creator];
-        [relatedUsers addObject:feed.creator];
-        if (feed.origin_feed.related_user.count > 0) {
-            [relatedUsers addObjectsFromArray:feed.origin_feed.related_user.array];
-        }
-        [originFeedClickTextDict setObject:relatedUsers forKey:@"related_user"];
-        [self.fakeOriginTextView.clikTextDict addObject:originFeedClickTextDict];
-        
-        self.fakeOriginTextView.clickOnlinkText = ^(UMComMutiTextRun *run){
-            [weakSelf clickInFeedTextWithObject:run];
-        };
-        totalBgHeight += self.fakeOriginTextView.frame.size.height + OriginFeedOriginY;
-        self.fakeOriginTextView.hidden = NO;
-        UIImage *resizableImage = [[UIImage imageNamed:@"origin_image_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 50, 0, 0)];
-        self.imagesBackGroundView.image = resizableImage;
-    } else {
-        self.imagesBackGroundView.image = nil;
-        self.fakeOriginTextView.hidden = YES;
+    NSString *originUserName = !feed.origin_feed.creator.isFault ? feed.origin_feed.creator.name : @"";
+    if ([feed.origin_feed.status intValue] >= FeedStatusDeleted) {
+        feed.origin_feed.text = UMComLocalizedString(@"Delete Content", @"该内容已被删除");
+        feed.origin_feed.images = [NSArray array];
     }
-    
-    if (self.feed.location == nil) {
-        self.locationBackground.hidden = YES;
-    } else {
-        [self.locationLabel setText:self.feed.location];
-        self.locationBackground.hidden = NO;
-        self.locationBackground.frame = CGRectMake(self.locationBackground.frame.origin.x, totalBgHeight, self.locationBackground.frame.size.width, self.locationBackground.frame.size.height);
-        totalBgHeight += self.locationBackground.frame.size.height;
+    [oringFeedString appendFormat:OriginUserNameString,originUserName,feed.origin_feed.text];
+    self.fakeOriginTextView.pointOffset = CGPointMake(0, OriginFeedHeightOffset);
+    CGRect originFeedRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(self.cellSubviewCommonWidth, MAXFLOAT) font:FeedFont string:oringFeedString lineSpace:TextViewLineSpace];
+    self.fakeOriginTextView.frame = CGRectMake(self.fakeOriginTextView.frame.origin.x, OriginFeedOriginY, self.cellSubviewCommonWidth, originFeedRect.size.height + OriginFeedHeightOffset/2+4);
+    self.fakeOriginTextView.font = FeedFont;
+    self.fakeOriginTextView.lineSpace = TextViewLineSpace;
+    self.fakeOriginTextView.runType = UMComMutiTextRunFeedContentType;
+    self.fakeOriginTextView.text = oringFeedString;
+    NSMutableDictionary *originFeedClickTextDict = [NSMutableDictionary dictionaryWithCapacity:1];
+    if (feed.origin_feed.topics.count > 0) {
+        [originFeedClickTextDict setObject:feed.origin_feed.topics.array forKey:@"topics"];
     }
-    
-    NSDictionary *imagesArray =  self.feed.images;
- 
-    if (imagesArray.count == 0 && self.feed.origin_feed && !self.feed.origin_feed.isFault) {
-        imagesArray = self.feed.origin_feed.images;
+    NSMutableArray *relatedUsers = [NSMutableArray arrayWithCapacity:1];
+    [relatedUsers addObject:feed.origin_feed.creator];
+    [relatedUsers addObject:feed.creator];
+    if (feed.origin_feed.related_user.count > 0) {
+        [relatedUsers addObjectsFromArray:feed.origin_feed.related_user.array];
     }
+    [originFeedClickTextDict setObject:relatedUsers forKey:@"related_user"];
+    [self.fakeOriginTextView.clikTextDict addObject:originFeedClickTextDict];
+    __weak UMComFeedsTableViewCell *weakSelf = self;
+    self.fakeOriginTextView.clickOnlinkText = ^(UMComMutiTextRun *run){
+        [weakSelf clickInFeedTextWithObject:run];
+    };
+    self.fakeOriginTextView.hidden = NO;
+}
+
+- (void)reloadGridViewWithFeed:(UMComFeed *)feed originHeigt:(CGFloat)originHeigth imagesArr:(NSDictionary *)imagesArray
+{
     NSMutableArray *showImageArray = [[NSMutableArray alloc] init];
     for (NSString *imageDictionary in imagesArray) {
         [showImageArray addObject:@[[imageDictionary valueForKey:@"360"],[imageDictionary valueForKey:@"origin"]]];
     }
-    if ([imagesArray count] == 0) {
-        self.gridView.hidden = YES;
-    } else {
-        self.gridView.hidden = NO;
-        [self.gridView setImages:showImageArray placeholder:[UIImage imageNamed:@"image-placeholder"] cellPad:ImageSpace];
-       
-        if (self.feed.origin_feed  && !self.feed.origin_feed.isFault) {
-            self.gridView.frame = CGRectMake(2, totalBgHeight, self.gridView.frame.size.width, ceil((float)imagesArray.count/3) *  (Cell.gridView.frame.size.height+ImageSpace) + ImageSpace);
-        }else{
-            self.gridView.frame = CGRectMake(0,  totalBgHeight, self.gridView.frame.size.width, ceil((float)imagesArray.count/3) *  (Cell.gridView.frame.size.height+ImageSpace) + ImageSpace);
-        }
-        [self.gridView setPresentFatherViewController:self.tableView.feedTableViewController];
-        totalBgHeight += self.gridView.frame.size.height+2;
-        [self.gridView startDownload];
+    self.gridView.hidden = NO;
+    [self.gridView setImages:showImageArray placeholder:[UIImage imageNamed:@"image-placeholder"] cellPad:ImageSpace];
+    
+    if (feed.origin_feed  && !feed.origin_feed.isFault) {
+        self.gridView.frame = CGRectMake(2, originHeigth, self.cellSubviewCommonWidth, ceil((float)imagesArray.count/3) *  (ImageViewHeight+ImageSpace) + ImageSpace);
+    }else{
+        self.gridView.frame = CGRectMake(0,  originHeigth, self.cellSubviewCommonWidth, ceil((float)imagesArray.count/3) *  (ImageViewHeight+ImageSpace) + ImageSpace);
     }
+    [self.gridView setPresentFatherViewController:self.tableView.feedTableViewController];
+    [self.gridView startDownload];
+}
 
-    self.imagesBackGroundView.frame = CGRectMake(Cell.imagesBackGroundView.frame.origin.x, totalHeight, self.imagesBackGroundView.frame.size.width, totalBgHeight);
-    
-    totalHeight += self.imagesBackGroundView.frame.size.height;
-    
-    self.showEditBackGround.center = CGPointMake(self.showEditBackGround.center.x, totalHeight+self.showEditBackGround.frame.size.height/2);
-    self.editBackGround.center = CGPointMake(self.editBackGround.center.x,  self.showEditBackGround.center.y);
-    self.dateLabel.center = CGPointMake(self.dateLabel.center.x, totalHeight+self.dateLabel.frame.size.height/2 + DeltaHeight);
-    totalHeight += self.dateLabel.frame.size.height + DeltaHeight;
-    
-    NSInteger likeNum = self.feed.likes.count < ShowLikeNum ? self.feed.likes.count : ShowLikeNum;
+- (void)reloadLikeTextViewWithFeed:(UMComFeed *)feed originHeigt:(CGFloat)originHeigth likeNum:(int)likeNum
+{
+    self.likeListTextView.hidden = NO;
+    self.likeNumLabel.hidden = NO;
     NSMutableString *likeString = [NSMutableString stringWithString:@""];
     NSMutableArray *clikDicts = [NSMutableArray arrayWithCapacity:1];
     NSString *loginUid = [UMComSession sharedInstance].uid;
@@ -442,113 +467,72 @@ static inline NSString * createTimeString(NSString * create_time)
         }
     }
     [likeString appendString:@" "];
-
     self.likeListTextView.clikTextDict = clikDicts;
     self.likeListTextView.runType = UMComMutiTextRunLikeType;
+    __weak UMComFeedsTableViewCell *weakSelf = self;
     self.likeListTextView.clickOnlinkText = ^(UMComMutiTextRun  *run){
         if ([run isKindOfClass:[UMComMutiTextRunClickUser class]]) {
             UMComMutiTextRunClickUser *userRun = (UMComMutiTextRunClickUser *)run;
             [weakSelf turnToUserCenterWithUser:userRun.user];
         }
     };
+    self.likeListTextView.pointOffset = CGPointMake(0, LikeTextViewHeightOffset);
+    NSDictionary *likeRectDict = [UMComMutiStyleTextView rectWithSize:CGSizeMake(self.likeListTextView.frame.size.width, MAXFLOAT) font:UMComFontNotoSansLightWithSafeSize(14) AttString:likeString lineSpace:LikeViewLineSpace];
+    CGRect likeRect = CGRectFromString([likeRectDict valueForKey:@"rect"]);
+    CGFloat likeNumHeight = [[likeRectDict valueForKey:@"lineHeight"] floatValue];
+    CGFloat likeTextViewHeight = likeRect.size.height;
+    CGFloat lastLineWith = [[likeRectDict valueForKey:@"lastLineWidth"] floatValue];
+    if ((self.likeListTextView.frame.size.width - lastLineWith) < LikeNumWith) {
+        likeTextViewHeight += likeNumHeight;
+    }
+    self.likeNumLabel.text = [NSString stringWithFormat:@"%d",(int)likeNum];
+    self.likeListTextView.frame = CGRectMake(self.likeListTextView.frame.origin.x, 0, self.likeListTextView.frame.size.width, likeTextViewHeight);
+    self.likeNumLabel.frame = CGRectMake(self.likeListTextView.frame.size.width-LikeNumWith, likeTextViewHeight-likeNumHeight+1, LikeNumWith, likeNumHeight);
+    self.likeImageBgVIew.hidden = NO;
+    self.likeImageBgVIew.frame = CGRectMake(self.likeImageBgVIew.frame.origin.x, originHeigth+DeltaHeight, self.likeImageBgVIew.frame.size.width, self.likeListTextView.frame.size.height);
+    self.likeListTextView.font = UMComFontNotoSansLightWithSafeSize(14);
+    self.likeListTextView.lineSpace = LikeViewLineSpace;
+    self.likeListTextView.text = likeString;
     if (self.like) {
         [self.likeButton setImage:[UIImage imageNamed:@"like+x"] forState:UIControlStateNormal];
     } else {
         [self.likeButton setImage:[UIImage imageNamed:@"likex"] forState:UIControlStateNormal];
     }
-    if (likeNum == 0) {
-        self.likeListTextView.hidden = YES;
-        self.likeImageBgVIew.hidden = YES;
-        self.likeNumLabel.hidden =  YES;
-
-        totalHeight += DeltaHeight;
-    } else{
-        self.likeListTextView.hidden = NO;
-        self.likeNumLabel.hidden = NO;
-        self.likeListTextView.pointOffset = CGPointMake(0, LikeTextViewHeightOffset);
-        NSDictionary *likeRectDict = [UMComMutiStyleTextView rectWithSize:CGSizeMake(self.likeListTextView.frame.size.width, MAXFLOAT) font:UMComFontNotoSansLightWithSafeSize(14) AttString:likeString lineSpace:LikeViewLineSpace];
-        CGRect likeRect = CGRectFromString([likeRectDict valueForKey:@"rect"]);
-        int likesNum = (int)feed.likes.count;
-        CGFloat likeNumWith = 10;
-        CGFloat likeNumHeight = [[likeRectDict valueForKey:@"lineHeight"] floatValue];
-        CGFloat likeTextViewHeight = likeRect.size.height;
-        if (likesNum >= 10) {
-            likeNumWith = 20;
-        }
-        CGFloat lastLineWith = [[likeRectDict valueForKey:@"lastLineWidth"] floatValue];
-        if ((self.likeListTextView.frame.size.width - lastLineWith) < likeNumWith) {
-            likeTextViewHeight += likeNumHeight;
-        }
-        self.likeNumLabel.text = [NSString stringWithFormat:@"%d",likesNum];
-        self.likeListTextView.frame = CGRectMake(self.likeListTextView.frame.origin.x, 0, self.likeListTextView.frame.size.width, likeTextViewHeight);
-        self.likeNumLabel.frame = CGRectMake(self.likeListTextView.frame.size.width-likeNumWith, likeTextViewHeight-likeNumHeight+1, likeNumWith, likeNumHeight);
-        self.likeImageBgVIew.hidden = NO;
-        self.likeImageBgVIew.frame = CGRectMake(self.likeImageBgVIew.frame.origin.x, totalHeight+DeltaHeight, self.likeImageBgVIew.frame.size.width, self.likeListTextView.frame.size.height);
-
-        totalHeight += self.likeListTextView.frame.size.height+DeltaHeight;
-    }
-    self.likeListTextView.font = UMComFontNotoSansLightWithSafeSize(14);
-    self.likeListTextView.lineSpace = LikeViewLineSpace;
-    self.likeListTextView.text = likeString;
-    
-    if (self.feed.comments.count > 0 && self.feed.likes.count > 0) {
-        if (!self.seperateView) {
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(self.likeImageBgVIew.frame.origin.x, self.likeImageBgVIew.frame.origin.y + self.likeListTextView.frame.size.height, self.likeImageBgVIew.frame.size.width, 0.5)];
-            view.backgroundColor = [UMComTools colorWithHexString:@"#e7e7e7"];
-            self.seperateView = view;
-            [self.contentView addSubview:self.seperateView];
-        } else {
-            self.seperateView.frame = CGRectMake(self.likeImageBgVIew.frame.origin.x, self.likeImageBgVIew.frame.origin.y + self.likeImageBgVIew.frame.size.height,self.likeImageBgVIew.frame.size.width, 0.5);
-        }
-        self.seperateView.hidden = NO;
-    } else {
-        self.seperateView.hidden = YES;
-    }
-    
-    if (self.feed.comments.count == 0) {
-        self.commentTableView.hidden = YES;
-    } else {
-
-        BOOL isShowAllComment = [(UMComFeedsTableView *)self.tableView isShowAllComment:(int)self.indexPath.row];
-        if (!isShowAllComment && self.feed.comments.count >= ShowCommentsNum && self.feed.comment_navigator) {
-            self.reloadComments = [[self.feed.comments array] subarrayWithRange:NSMakeRange(0,ShowCommentsNum)];
-        } else{
-            self.reloadComments = self.feed.comments.array;
-        }
-        self.commentCellHeightArr = [UMComFeedsTableViewCell commentCellHeightArrWithComments:self.reloadComments withFrameWidth:self.commentTableView.frame.size.width - CommentTableViewDeltaWidth isShowAllComment:isShowAllComment feed:feed];
-        [self.commentTableView reloadData];
-        self.commentTableView.hidden = NO;
-        self.commentTableView.frame = CGRectMake(self.commentTableView.frame.origin.x, totalHeight, self.commentTableView.frame.size.width, self.commentTableView.contentSize.height);
-        totalHeight += self.commentTableView.contentSize.height;
-    }
-    
-    [self.acounTypeLabel removeFromSuperview];
-    [self.contentView addSubview:self.acounTypeLabel];
-    self.acounTypeLabel.font = [UIFont systemFontOfSize:8.0f];
-    if ([feed.type integerValue] == 1) {
-        self.acounTypeLabel.hidden = NO;
-        self.acounTypeLabel.text = @"公告";
-    }else{
-        self.acounTypeLabel.hidden = YES;
-        self.acounTypeLabel.text = @"";
-    }
 }
+
+
+- (void)reloadCommentTableViewWithFeed:(UMComFeed *)feed originHeigt:(CGFloat)originHeigth
+{
+    BOOL isShowAllComment = [(UMComFeedsTableView *)self.tableView isShowAllComment:(int)self.indexPath.row];
+    if (!isShowAllComment && feed.comments.count >= ShowCommentsNum && feed.comment_navigator) {
+        self.reloadComments = [[feed.comments array] subarrayWithRange:NSMakeRange(0,ShowCommentsNum)];
+    } else{
+        self.reloadComments = feed.comments.array;
+    }
+    self.commentCellHeightArr = [UMComFeedsTableViewCell commentCellHeightArrWithComments:self.reloadComments withFrameWidth:self.cellSubviewCommonWidth - CommentTableViewDeltaWidth isShowAllComment:isShowAllComment feed:feed];
+    [self.commentTableView reloadData];
+    self.commentTableView.hidden = NO;
+    self.commentTableView.frame = CGRectMake(self.commentTableView.frame.origin.x, originHeigth, self.cellSubviewCommonWidth, self.commentTableView.contentSize.height);
+}
+
+/****************************reload cell views end *****************************/
+
+
+/****************************get cell height start *****************************/
 
 + (float)getCellHeightWithFeed:(UMComFeed *)feed isShowComment:(BOOL)isShowComment tableViewWidth:(float)viewWidth
 {
-    float totalHeight = Cell.userNameLabel.frame.size.height + DeltaHeight;
+    float totalHeight = UserNameLabelViewHeight + DeltaHeight;
     NSString * feedSting = @"";
     if (feed.text) {
         feedSting = feed.text;
         CGRect fitRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(viewWidth - TableViewDeltaWidth, MAXFLOAT) font:UMComFontNotoSansLightWithSafeSize(15) string:feedSting lineSpace:TextViewLineSpace];
-        
         totalHeight = fitRect.size.height;
     }
 
     UMComFeed *origin_feed = nil;
     if (feed.origin_feed && !feed.origin_feed.isDeleted && !feed.origin_feed.isFault) {
         origin_feed = feed.origin_feed;
-      
     }
     if (origin_feed) {
         
@@ -556,7 +540,6 @@ static inline NSString * createTimeString(NSString * create_time)
             origin_feed.text = UMComLocalizedString(@"Delete Content", @"该内容已被删除");
             origin_feed.images = [NSArray array];
         }
-        
         UMComUser * origin_user = feed.origin_feed.creator;
         NSMutableString * originText = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:OriginUserNameString,origin_user.name,feed.origin_feed.text]];
         CGRect originTextRect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(viewWidth-TableViewDeltaWidth-FeedAndOriginFeedDeltaWidth, MAXFLOAT) font:UMComFontNotoSansLightWithSafeSize(15) string:originText lineSpace:TextViewLineSpace];
@@ -567,11 +550,11 @@ static inline NSString * createTimeString(NSString * create_time)
         images = origin_feed.images;
     }
     if(images.count > 0) {
-        totalHeight += ceil((float)(images.count)/3)* (Cell.gridView.frame.size.height + ImageSpace)+ImageSpace;
+        totalHeight += ceil((float)(images.count)/3)* (ImageViewHeight + ImageSpace)+ImageSpace;
     }
     
     if (feed.location) {
-        totalHeight += Cell.locationBackground.frame.size.height;
+        totalHeight += LocationBackgroundViewHeight;
     }
     if(feed.likes.count > 0) {
         NSMutableString * likeString = [[NSMutableString alloc] initWithString:@""];
@@ -584,22 +567,15 @@ static inline NSString * createTimeString(NSString * create_time)
         [likeString appendString:@" "];
         NSDictionary *likeRectDict = [UMComMutiStyleTextView rectWithSize:CGSizeMake(viewWidth-TableViewDeltaWidth - LikeViewDeltaWidth, MAXFLOAT) font:UMComFontNotoSansLightWithSafeSize(14) AttString:likeString lineSpace:LikeViewLineSpace];
         CGRect likeRect = CGRectFromString([likeRectDict valueForKey:@"rect"]);
-        int likesNum = (int)feed.likes.count;
-        CGFloat likeNumWith = 10;
         CGFloat likeNumHeight = [[likeRectDict valueForKey:@"lineHeight"] floatValue];
         CGFloat likeTextViewHeight = likeRect.size.height;
-        if (likesNum >= 10) {
-            likeNumWith = 20;
-        }
         CGFloat shortestWith = [[likeRectDict valueForKey:@"lastLineWidth"] floatValue];
-        if ((viewWidth - TableViewDeltaWidth - shortestWith) < likeNumWith) {
+        if ((viewWidth - TableViewDeltaWidth - shortestWith) < LikeNumWith) {
             likeTextViewHeight += likeNumHeight;
         }
-
         CGFloat height = likeTextViewHeight;
         totalHeight += height+DeltaHeight;
     }
-    
     if (feed.comments.count > 0) {
         NSArray *reloadComments = nil;
         if (!isShowComment && feed.comments.count >= ShowCommentsNum && feed.comment_navigator ) {
@@ -619,6 +595,7 @@ static inline NSString * createTimeString(NSString * create_time)
     return totalHeight;
 }
 
+/****************************get cell height start *****************************/
 
 
 -(IBAction)onClickEdit:(UIButton *)button
@@ -772,7 +749,7 @@ static inline NSString * createTimeString(NSString * create_time)
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
         [cell.contentView addSubview:label];
-        cell.backgroundColor = Cell.originTextView.backgroundColor;
+        cell.backgroundColor = self.fakeOriginTextView.backgroundColor;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickGetMore:)];
         [cell.contentView addGestureRecognizer:tap];
         return cell;
@@ -833,12 +810,10 @@ static inline NSString * createTimeString(NSString * create_time)
         }else if ([run isKindOfClass:[UMComMutiTextRunComment class]]){
             UMComMutiTextRunComment *commentRun = (UMComMutiTextRunComment *)run;
             [[UMComReplyAction action] performActionAfterLogin:nil viewController:self.tableView.viewController completion:^(NSArray *data, NSError *error) {
-                
                 [(UMComFeedsTableView *)self.tableView presentEditView:commentRun.comment selectedCell:self];
             }];
         }
     };
-
     if ([comment.creator.gender intValue] == 0) {
         [cell.profileImageView setPlaceholderImage:[UIImage imageNamed:@"female"]];
     } else{
@@ -866,27 +841,7 @@ static inline NSString * createTimeString(NSString * create_time)
 {
     NSMutableArray *heightArr = [NSMutableArray array];
     for (UMComComment *comment in reloadComments) {
-        NSMutableString * replayStr = [NSMutableString stringWithString:@""];
-        NSString *commentUserName = @"";
-        if (comment.creator.name) {
-            commentUserName = comment.creator.name;
-        }
-        NSString *commentReplyName = @"";
-        if (comment.reply_user.name) {
-            commentReplyName = comment.reply_user.name;
-        }
-        UIFont *font = UMComFontNotoSansLightWithSafeSize(13);
-        if (comment.reply_user) {
-            [replayStr appendFormat:@"%@ 回复 %@",commentUserName,commentReplyName];
-           
-        } else {
-            [replayStr appendString:commentUserName];
-        }
-        if (comment.content) {
-            [replayStr appendFormat:@"：%@",comment.content];
-        }
-        CGRect rect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(width, MAXFLOAT) font:font string:replayStr lineSpace:CommentViewLineSpace];
-        float height = rect.size.height + ComTextViewHeightOffset/2;
+        float height = [[self class] commentHeight:comment viewWidth:width];
         [heightArr addObject:[NSNumber numberWithFloat:height]];
     }
     if (!isShowAllComment && feed.comments.count >= ShowCommentsNum && feed.comment_navigator) {
@@ -895,6 +850,31 @@ static inline NSString * createTimeString(NSString * create_time)
     return heightArr;
 }
 
+
++ (CGFloat)commentHeight:(UMComComment *)comment viewWidth:(CGFloat)viewWidth
+{
+    NSMutableString * replayStr = [NSMutableString stringWithString:@""];
+    NSString *commentUserName = @"";
+    if (comment.creator.name) {
+        commentUserName = comment.creator.name;
+    }
+    NSString *commentReplyName = @"";
+    if (comment.reply_user.name) {
+        commentReplyName = comment.reply_user.name;
+    }
+    UIFont *font = UMComFontNotoSansLightWithSafeSize(13);
+    if (comment.reply_user) {
+        [replayStr appendFormat:@"%@ 回复 %@",commentUserName,commentReplyName];
+        
+    } else {
+        [replayStr appendString:commentUserName];
+    }
+    if (comment.content) {
+        [replayStr appendFormat:@"：%@",comment.content];
+    }
+    CGRect rect = [UMComMutiStyleTextView boundingRectWithSize:CGSizeMake(viewWidth, MAXFLOAT) font:font string:replayStr lineSpace:CommentViewLineSpace];
+    return rect.size.height + ComTextViewHeightOffset/2;
+}
 
 
 @end

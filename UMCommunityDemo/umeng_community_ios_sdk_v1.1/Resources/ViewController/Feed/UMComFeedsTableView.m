@@ -21,7 +21,10 @@
     BOOL _loadingMore;
 }
 
+@property (nonatomic, strong) UILabel *noRecommendTip;
+@property (nonatomic, strong) UILabel *noticeLabel;
 
+@property (nonatomic, assign) CGFloat lastPosition;
 
 @end
 
@@ -30,10 +33,9 @@
 @implementation UMComFeedsTableView
 {
     BOOL keyboardHiden;
-    UILabel *noticeLabel;
-    UILabel *noRecommendTip;
-    
+    UMComFeedsTableView *weakSelf;
 }
+
 static int HeaderOffSet = -90;//-120
 
 - (void)initTableView
@@ -67,6 +69,16 @@ static int HeaderOffSet = -90;//-120
     if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
         [self setLayoutMargins:UIEdgeInsetsZero];
     }
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height/2-20, self.frame.size.width,40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.text = @"暂时没有消息咯";
+    label.textAlignment = NSTextAlignmentCenter;
+    self.noRecommendTip = label;
+    self.noRecommendTip.hidden = YES;
+    [self addSubview:label];
+    
+    weakSelf = self;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -178,7 +190,6 @@ static int HeaderOffSet = -90;//-120
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //2015.01.27 djx add [用户输入内容长度判断] start
     if (textField.text == nil || textField.text.length == 0) {
          [[[UIAlertView alloc] initWithTitle:UMComLocalizedString(@"Sorry",@"抱歉") message:UMComLocalizedString(@"Empty_Text",@"内容不能为空") delegate:nil cancelButtonTitle:UMComLocalizedString(@"OK",@"好") otherButtonTitles:nil] show];
         return NO;
@@ -205,16 +216,16 @@ static int HeaderOffSet = -90;//-120
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (string.length != 0 && textField.text.length >= kCommentLenght) {
-        if (!noticeLabel) {
-            noticeLabel = [[UILabel alloc]initWithFrame:textField.frame];
-            [textField.superview addSubview:noticeLabel];
-            noticeLabel.text = [NSString stringWithFormat:@"评论内容不能超过%d个字符",kCommentLenght];
-            noticeLabel.backgroundColor = [UIColor clearColor];
-            noticeLabel.textAlignment = NSTextAlignmentCenter;
+        if (!self.noticeLabel) {
+            self.noticeLabel = [[UILabel alloc]initWithFrame:textField.frame];
+            [textField.superview addSubview:self.noticeLabel];
+            self.noticeLabel.text = [NSString stringWithFormat:@"评论内容不能超过%d个字符",kCommentLenght];
+            self.noticeLabel.backgroundColor = [UIColor clearColor];
+            self.noticeLabel.textAlignment = NSTextAlignmentCenter;
      
         }
         string=@"";
-        noticeLabel.hidden = NO;
+        self.noticeLabel.hidden = NO;
         self.commentTextField.hidden = YES;
         [self performSelector:@selector(hidenNoticeLabel) withObject:nil afterDelay:0.8f];
         return NO;
@@ -224,7 +235,7 @@ static int HeaderOffSet = -90;//-120
 
 - (void)hidenNoticeLabel
 {
-    noticeLabel.hidden = YES;
+    self.noticeLabel.hidden = YES;
     self.commentTextField.hidden = NO;
 }
 
@@ -273,35 +284,22 @@ static int HeaderOffSet = -90;//-120
     [feedTableViewController.fetchFeedsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         _loadingMore = NO;
         [feedTableViewController.indicatorView stopAnimating];
-        self.resultArray = [NSMutableArray arrayWithArray:data];
-        [self.showCommentDictionary removeAllObjects];
-        [self.heightDictionary removeAllObjects];
-        if (data.count > 0) {
-            noRecommendTip.hidden = YES;
-            self.footView.backgroundColor = TableViewSeparatorRGBColor;
-        }else{
-            if (error) {
-                noRecommendTip.hidden = YES;
-                [UMComShowToast fetchFeedFail:error];
-            }else{
-                if ([feedTableViewController.fetchFeedsController isKindOfClass:[UMComRecommendFeedsRequest class]]) {
-                    if (noRecommendTip == nil) {
-                        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height/2-20, self.frame.size.width,40)];
-                        label.backgroundColor = [UIColor clearColor];
-                        label.text = @"暂时没有推荐消息咯";
-                        label.textAlignment = NSTextAlignmentCenter;
-                        [self addSubview:label];
-                        noRecommendTip = label;
-                    }else{
-                        noRecommendTip.hidden = NO;
-                    }
-  
-                }else{
-                    noRecommendTip.hidden = YES;
-                }
-                
+        
+        self.noRecommendTip.hidden = YES;
+        if (!error) {
+            self.resultArray = [NSMutableArray arrayWithArray:data];
+            [self.showCommentDictionary removeAllObjects];
+            [self.heightDictionary removeAllObjects];
+            
+            if (data.count > 0) {
+                self.footView.backgroundColor = TableViewSeparatorRGBColor;
+            } else {
+                self.footView.backgroundColor = [UIColor clearColor];
+                self.noRecommendTip.hidden = NO;
             }
+        } else {
             self.footView.backgroundColor = [UIColor clearColor];
+            [UMComShowToast fetchFeedFail:error];
         }
         [self reloadData];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -380,6 +378,19 @@ static int HeaderOffSet = -90;//-120
     else if (self.resultArray.count >= kFetchLimit && offset + self.superview.frame.size.height > self.contentSize.height){
         [self.footerIndicatorView startAnimating];
     }
+    if (scrollView.contentOffset.y >0 && scrollView.contentOffset.y>weakSelf.lastPosition+5) {
+        if (weakSelf.scrollViewDidScroll) {
+            weakSelf.scrollViewDidScroll(NO);
+        }
+    }else{
+        if (scrollView.contentOffset.y < weakSelf.lastPosition-5) {
+            if (weakSelf.scrollViewDidScroll) {
+                weakSelf.scrollViewDidScroll(YES);
+            }
+        }
+    }
+    weakSelf.lastPosition = scrollView.contentOffset.y;
+
 }
 
 

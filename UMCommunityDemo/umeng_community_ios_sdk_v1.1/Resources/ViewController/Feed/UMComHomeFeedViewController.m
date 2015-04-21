@@ -13,6 +13,8 @@
 #import "UMComFeedsTableView.h"
 #import "UMComAction.h"
 
+#import "UMComPageControlView.h"
+
 #define kTagRecommend 100
 #define kTagAll 101
 
@@ -31,7 +33,7 @@
 
 
 @property (nonatomic, strong) UIButton *titleBt;
-@property (nonatomic, strong) UIPageControl *titlePageControl;
+@property (nonatomic, strong) UMComPageControlView *titlePageControl;
 
 @end
 
@@ -58,27 +60,22 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{UITextAttributeFont:UMComFontNotoSansDemiWithSafeSize(18)}];
     
     //创建控件
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, self.navigationController.navigationBar.frame.size.height)];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 40, self.navigationController.navigationBar.frame.size.height)];
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    titleButton.frame =CGRectMake(0, 5, titleView.frame.size.width, titleView.frame.size.height/2);
+    CGFloat titleHeight = titleView.frame.size.height/6*5;
+    titleButton.frame =CGRectMake(0,0, titleView.frame.size.width, titleHeight);
     [titleButton setTitle:@"全部" forState:UIControlStateNormal];
     titleButton.backgroundColor = [UIColor clearColor];
     [titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [titleButton addTarget:self action:@selector(transitionViewControllers:) forControlEvents:UIControlEventTouchUpInside];
     self.titleBt = titleButton;
     
-    UIPageControl *titlePageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height/2, titleView.frame.size.width, titleView.frame.size.height/2)];
-    titlePageControl.currentPage = 1;
-    titlePageControl.numberOfPages = 2;
-    titlePageControl.pageIndicatorTintColor = [UMComTools colorWithHexString:FontColorGray];
-    [titlePageControl addTarget:self action:@selector(transitionViewControllers:) forControlEvents:UIControlEventValueChanged];
-      titlePageControl.currentPageIndicatorTintColor = [UMComTools colorWithHexString:FontColorBlue];
+    UMComPageControlView *titlePageControl = [[UMComPageControlView alloc]initWithFrame:CGRectMake(5, titleHeight-8, 30, 7) totalPages:2 currentPage:1];
+    titlePageControl.currentPage = 0;
     [titleView addSubview:titleButton];
     [titleView addSubview:titlePageControl];
     self.titlePageControl = titlePageControl;
     [self.navigationItem setTitleView:titleView];
-    
     
     UISwipeGestureRecognizer *leftWwip = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(transitionViewControllers:)];
     leftWwip.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -88,6 +85,10 @@
     rightSwip.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightSwip];
     
+    self.recommendViewController = [[UMComAllFeedViewController alloc]init];
+    
+    [self.view addSubview:self.recommendViewController.view];
+    [self addChildViewController:self.recommendViewController];
     
     //创建子ViewController
     self.allFeedViewController = [[UMComAllFeedViewController alloc]init];
@@ -95,10 +96,6 @@
     [self.view addSubview:self.allFeedViewController.view];
     [self addChildViewController:self.allFeedViewController];
     
-    self.recommendViewController = [[UMComAllFeedViewController alloc]init];
-    self.recommendViewController.fetchFeedsController = [[UMComRecommendFeedsRequest alloc]initWithCount:BatchSize];
-    [self.view addSubview:self.recommendViewController.view];
-    [self addChildViewController:self.recommendViewController];
     
     if(self.navigationController.viewControllers.count > 1 || self.presentingViewController){
         [self.allFeedViewController.feedsTableView setViewController:self];
@@ -120,6 +117,8 @@
     [self.editButton setImage:[UIImage imageNamed:@"new"] forState:UIControlStateNormal];
     [self.editButton setImage:[UIImage imageNamed:@"new+"] forState:UIControlStateSelected];
     [self.editButton addTarget:self action:@selector(onClickEdit:) forControlEvents:UIControlEventTouchUpInside];
+    [self setEditButtonAnimation];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,7 +130,7 @@
     }else{
         self.titlePageControl.currentPage = 0;
     }
-    [self transitionViewControllers:nil];
+//    [self transitionViewControllers:nil];
     self.editButton.frame = CGRectMake(selfViewSize.width-70, selfViewSize.height-self.navigationController.navigationBar.frame.size.height, 50, 50);
     [[UIApplication sharedApplication].keyWindow addSubview:self.editButton];
 }
@@ -163,12 +162,22 @@
             tempFromViewController = self.allFeedViewController;
             self.currentViewController = self.recommendViewController;
             disappearFrame = CGRectMake(-selfViewSize.width, 0, selfViewSize.width, selfViewSize.height);
+            
+            if (self.recommendViewController.fetchFeedsController == nil) {
+                self.recommendViewController.fetchFeedsController = [[UMComRecommendFeedsRequest alloc]initWithCount:BatchSize];
+                [self.recommendViewController refreshAllData];
+            }
         }
     }else{
         if (self.titlePageControl.currentPage == 0) {
             tempFromViewController = self.allFeedViewController;
             self.currentViewController = self.recommendViewController;
             disappearFrame = CGRectMake(-selfViewSize.width, 0, selfViewSize.width, selfViewSize.height);
+            
+            if (self.recommendViewController.fetchFeedsController == nil) {
+                self.recommendViewController.fetchFeedsController = [[UMComRecommendFeedsRequest alloc]initWithCount:BatchSize];
+                [self.recommendViewController refreshAllData];
+            }
             
         }else if (self.titlePageControl.currentPage == 1){
             
@@ -186,7 +195,6 @@
 
 - (void)transitionWithFromViewController:(UMComAllFeedViewController *)fromViewController disAppearViewFrame:(CGRect)disappearFrame
 {
-//    [UIView setAnimationsEnabled:YES];
     [self transitionFromViewController:fromViewController toViewController:self.currentViewController duration:0.5 options:UIViewAnimationOptionTransitionNone animations:^{
         didTransition = NO;
         if (fromViewController == self.currentViewController) {
@@ -204,6 +212,7 @@
             self.titlePageControl.currentPage = 2;
         }
         self.tempfeedTableView = fromViewController.feedsTableView;
+        [self setEditButtonAnimation];
     } completion:^(BOOL finished) {
         self.currentViewController = fromViewController;
         didTransition = YES;
@@ -211,9 +220,24 @@
 
 }
 
+- (void)setEditButtonAnimation
+{
+    __weak UMComHomeFeedViewController *weakSelf = self;
+    self.tempfeedTableView.scrollViewDidScroll = ^(BOOL isShowEditedBt){
+        if (!isShowEditedBt) {
+            [UIView animateWithDuration:0.5 animations:^{
+                weakSelf.editButton.center = CGPointMake(weakSelf.editButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height+weakSelf.editButton.frame.size.height);
+            }];
+        }else{
+            [UIView animateWithDuration:0.5 animations:^{
+                weakSelf.editButton.center = CGPointMake(weakSelf.editButton.center.x, [UIApplication sharedApplication].keyWindow.bounds.size.height-80);
+            }];
+        }
+    };
+}
+
 -(IBAction)onClickClose:(id)sender
 {
-//    [UIView setAnimationsEnabled:YES];
     if ([self.navigationController isKindOfClass:[UMComNavigationController class]]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
@@ -224,10 +248,10 @@
 
 -(IBAction)onClickProfile:(id)sender
 {
-    
     [[UMComUserCenterAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
     }];
 }
+
 - (void)onClickFind:(UIButton *)sender
 {
     [[UMComFindAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {

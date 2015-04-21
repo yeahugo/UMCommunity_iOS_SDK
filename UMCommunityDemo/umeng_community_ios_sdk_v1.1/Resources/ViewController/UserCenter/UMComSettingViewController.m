@@ -54,7 +54,14 @@
 
 -(void)onClickClose
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.navigationController.viewControllers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark UITableViewDataSource
@@ -119,6 +126,13 @@
 - (IBAction)userLogoutAction:(id)sender {
     [[UMComSession sharedInstance] userLogout];
     [[NSNotificationCenter defaultCenter] postNotificationName:UserLogoutSucceed object:nil];
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    if (self.navigationController.viewControllers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
+
 }
 @end

@@ -25,10 +25,6 @@
 
 -(id)initWithTopic:(UMComTopic *)topic;
 
-@property (weak, nonatomic) IBOutlet UIButton *editButton;
-
-- (IBAction)onClickEdit:(id)sender;
-
 
 
 - (IBAction)onClickTopicFeedsButton:(id)sender;
