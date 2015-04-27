@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>UMCommunity Reference</title>
+
+	<link rel="stylesheet" href="css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="index.html">UMCommunity </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="index.html">umeng</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="hierarchy.html">Hierarchy</a></li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview-contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">UMCommunity Reference</h1>
+
+					
+					<div class="section section-overview index-overview">
+						
+						
+						<h1>介绍</h1>
+
+<p>本文档主要介绍SDK数据API的使用，其中数据API分为读取数据和写入数据。</p>
+
+<h1>读取社区数据</h1>
+
+<p>获取社区内容类全部继承自<a href="Classes/UMComPullRequest.html"><code>UMComPullRequest</code></a>,下面以获取用户的所有Feed为例介绍如何使用,</p>
+
+<p>不同的UMComPullRequest子类对应自己的初始化方法：</p>
+
+<pre><code>    UMComAllFeedsRequest *allFeedRequest = [[UMComAllFeedsRequest alloc] initWithCount:20];
+</code></pre>
+
+<p>从服务器获取所有feed,返回的数据为coredata对象组成的NSArray</p>
+
+<pre><code>    [allFeedRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+//返回消息、结果、是否有下一页
+        NSLog(@"feeds is %@",data);
+    }];
+</code></pre>
+
+<p>从本地core data缓存的feed数据:</p>
+
+<pre><code>    [allFeedRequest fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
+//返回消息、结果
+        NSLog(@"feeds is %@",data);
+    }];
+</code></pre>
+
+<p>下面从服务器获取下一页的数据：</p>
+
+<pre><code>    UMComAllFeedsRequest *allFeedRequest = [[UMComAllFeedsRequest alloc] initWithCount:20];
+    [allFeedRequest fetchNextPageFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+    //返回消息、结果、是否有下一页
+        NSLog(@"feeds is %@",data);
+    }];
+</code></pre>
+
+<h2>获取Feed</h2>
+
+<h3>获取全部Feed</h3>
+
+<p>获取全部Feed使用类<a href="Classes/UMComAllFeedsRequest.html"><code>UMComAllFeedsRequest</code></a></p>
+
+<h3>获取某一话题对应的Feed</h3>
+
+<p>获取某一话题的Feed，用<a href="Classes/UMComTopicFeedsRequest.html"><code>UMComTopicFeedsRequest</code></a>
+初始化方法为：</p>
+
+<pre><code>    NSString * topicId = @"542110a00bbbaf8ca917859b";
+    UMComTopicFeedsRequest *topicFeed = [[UMComTopicFeedsRequest alloc] initWithTopicId:topic count:1000];
+</code></pre>
+
+<h3>获取某用户发表的Feed</h3>
+
+<p>使用类<a href="Classes/UMComUserFeedsRequest.html"><code>UMComUserFeedsRequest</code></a>,初始化方法为：</p>
+
+<pre><code>    NSString *uid = @"54212bff0bbbafb1189283e6";
+    UMComUserFeedsRequest *userFeeds = [[UMComUserFeedsRequest alloc] initWithUid:uid count:BatchSize];
+</code></pre>
+
+<h2>获取用户信息</h2>
+
+<h3>获取用户粉丝信息</h3>
+
+<p>使用类<a href="Classes/UMComFansRequest.html"><code>UMComFansRequest</code></a>,初始化方法为：</p>
+
+<pre><code>    UMComFansRequest *fansController = [[UMComFansRequest alloc] initWithUid:@"54212bff0bbbafb1189283e6" count:100];
+</code></pre>
+
+<h3>获取用户关注信息</h3>
+
+<p>使用类<code>UMComFollowersRequest</code>,初始化方法为：</p>
+
+<pre><code>    UMComFollowersRequest *followersController = [[UMComFollowersRequest alloc] initWithUid:@"54212bff0bbbafb1189283e6" count:100];
+</code></pre>
+
+<h3>获取用户详情信息</h3>
+
+<p>使用类<a href="Classes/UMComUserProfileRequest.html"><code>UMComUserProfileRequest</code></a>,初始化方法为：</p>
+
+<pre><code>    NSString *uid = @"54212bff0bbbafb1189283e6";
+    UMComUserProfileRequest *userProfile = [[UMComUserProfileRequest alloc] initWithUid:uid];
+</code></pre>
+
+<h2>获取话题信息</h2>
+
+<h3>获取所有话题</h3>
+
+<p>使用类<a href="Classes/UMComAllTopicsRequest.html"><code>UMComAllTopicsRequest</code></a>,初始化方法：</p>
+
+<pre><code>    UMComAllTopicsRequest *allTopicsRequest = [[UMComAllTopicsRequest alloc] initWithCount:1000];
+</code></pre>
+
+<h3>获取用户关注话题</h3>
+
+<p>使用类<code>UMComUserTopicsRequest</code>,初始化方法：
+<code>
+    UMComUserTopicsRequest *userTopics = [[UMComUserTopicsRequest alloc] initWithUid:uid count:1000];
+</code></p>
+
+<h1>上传数据</h1>
+
+<h2>使用第三方账号登陆完成后，上传用户资料</h2>
+
+<p>使用类<a href="Classes/UMComLoginManager.html"><code>UMComLoginManager</code></a></p>
+
+<pre><code>    UMComUserAccount *userAccount = [[UMComUserAccount alloc] init];
+    userAccount.usid = @"用户id";
+    userAccount.snsPlatformName = sns平台来源名; //例如sina，qq，wxsession
+    userAccount.token = @"登录token";
+    userAccount.name = @"昵称";
+    [UMComLoginManager finishLoginWithAccount:account completion:^(NSArray *data, NSError *error) {
+        [UMComLoginManager finishDismissViewController:self data:data error:error];
+    }];
+</code></pre>
+
+<h2>上传Feed数据</h2>
+
+<p>使用类<code>UMComCreateFeedRequest</code></p>
+
+<pre><code>    UMComFeedEntity *feedEntity = [[UMComFeedEntity alloc] init];
+    NSString *dateString = [[NSDate date] description];
+    NSString *feedString = [NSString stringWithFormat:@"测试发送feed消息 %@",dateString];
+    feedEntity.text = feedString;
+    [UMComCreateFeedRequest postWithFeed:feedEntity completion:^(NSError *error) {
+    }];
+</code></pre>
+
+<h2>上传评论</h2>
+
+<p>使用类 <a href="Classes/UMComCommentFeedRequest.html"><code>UMComCommentFeedRequest</code></a></p>
+
+<h2>点赞或者取消点赞</h2>
+
+<p>点赞或者取消点赞使用类<a href="Classes/UMComLikeFeedRequest.html"><code>UMComLikeFeedRequest</code></a></p>
+
+<h2>转发</h2>
+
+<p>使用类<a href="Classes/UMComForwardFeedReqeust.html"><code>UMComForwardFeedReqeust</code></a></p>
+
+<h2>添加关注某人</h2>
+
+<p>使用类<a href="Classes/UMComFollowUserRequest.html"><code>UMComFollowUserRequest</code></a></p>
+
+<h2>添加关注某话题</h2>
+
+<p>使用类 <a href="Classes/UMComFollowTopicRequest.html"><code>UMComFollowTopicRequest</code></a></p>
+
+<h2>更新用户资料</h2>
+
+<p>使用类<a href="Classes/UMComUpdateProfileRequest.html"><code>UMComUpdateProfileRequest</code></a></p>
+						
+						
+					</div>
+					
+
+					<div class="index-container">
+						
+
+						
+						<div class="index-column">
+							<h2 class="index-title">Class References</h2>
+							<ul>
+								
+								<li><a href="Classes/UMComAllFeedsRequest.html">UMComAllFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComAllTopicsRequest.html">UMComAllTopicsRequest</a></li>
+								
+								<li><a href="Classes/UMComCommentFeedRequest.html">UMComCommentFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComCreateFeedRequest.html">UMComCreateFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComDeleteFeedRequest.html">UMComDeleteFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComFansRequest.html">UMComFansRequest</a></li>
+								
+								<li><a href="Classes/UMComFeedCommentsRequest.html">UMComFeedCommentsRequest</a></li>
+								
+								<li><a href="Classes/UMComFeedEntity.html">UMComFeedEntity</a></li>
+								
+								<li><a href="Classes/UMComFeedLikesRequest.html">UMComFeedLikesRequest</a></li>
+								
+								<li><a href="Classes/UMComFollowTopicRequest.html">UMComFollowTopicRequest</a></li>
+								
+								<li><a href="Classes/UMComFollowUserRequest.html">UMComFollowUserRequest</a></li>
+								
+								<li><a href="Classes/UMComFollowersRequest.html">UMComFollowersRequest</a></li>
+								
+								<li><a href="Classes/UMComForwardFeedReqeust.html">UMComForwardFeedReqeust</a></li>
+								
+								<li><a href="Classes/UMComLikeFeedRequest.html">UMComLikeFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComLoginManager.html">UMComLoginManager</a></li>
+								
+								<li><a href="Classes/UMComLoginRequest.html">UMComLoginRequest</a></li>
+								
+								<li><a href="Classes/UMComMessageManager.html">UMComMessageManager</a></li>
+								
+								<li><a href="Classes/UMComOneFeedRequest.html">UMComOneFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComPullRequest.html">UMComPullRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendFeedsRequest.html">UMComRecommendFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendTopicUsersRequest.html">UMComRecommendTopicUsersRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendTopicsRequest.html">UMComRecommendTopicsRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendUsersRequest.html">UMComRecommendUsersRequest</a></li>
+								
+								<li><a href="Classes/UMComSearchTopicRequest.html">UMComSearchTopicRequest</a></li>
+								
+								<li><a href="Classes/UMComSpamFeedRequest.html">UMComSpamFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComTopicFeedsRequest.html">UMComTopicFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComUnreadFeedCountRequest.html">UMComUnreadFeedCountRequest</a></li>
+								
+								<li><a href="Classes/UMComUpdateProfileImageRequest.html">UMComUpdateProfileImageRequest</a></li>
+								
+								<li><a href="Classes/UMComUpdateProfileRequest.html">UMComUpdateProfileRequest</a></li>
+								
+								<li><a href="Classes/UMComUserAccount.html">UMComUserAccount</a></li>
+								
+								<li><a href="Classes/UMComUserFeedsRequest.html">UMComUserFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComUserProfileRequest.html">UMComUserProfileRequest</a></li>
+								
+								<li><a href="Classes/UMComUserTopicsRequest.html">UMComUserTopicsRequest</a></li>
+								
+								<li><a href="Classes/UMCommunity.html">UMCommunity</a></li>
+								
+							</ul>
+						</div>
+						
+
+						
+						<div class="index-column">
+							
+							<h2 class="index-title">Protocol References</h2>
+							<ul>
+								
+								<li><a href="Protocols/UMComPullResultDelegate.html">UMComPullResultDelegate</a></li>
+								
+							</ul>
+							
+
+							
+
+							
+						</div>
+						
+					</div>
+
+					<footer>
+						<div class="footer-copyright">
+							
+							<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-04-21</p>
+							
+							
+							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+							
+						</div>
+					</footer>
+				</main>
+			</div>
+		</div>
+	</article>
+
+	<script src="js/script.js"></script>
+</body>
+</html>
