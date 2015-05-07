@@ -198,6 +198,22 @@
 		D540A5B01AB9ACEB007063E6 /* UMCommViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */; };
 		D5462FC71AE6159F00957649 /* UMCommunityStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = D5462FC61AE6159F00957649 /* UMCommunityStrings.strings */; };
 		D56E21B11AB9B6EB00D7E13B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */; };
+		D5739C0F1AFB5AFA003CA120 /* UMComHorizontalTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C0B1AFB5AFA003CA120 /* UMComHorizontalTableView.m */; };
+		D5739C101AFB5AFA003CA120 /* UMComSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C0D1AFB5AFA003CA120 /* UMComSearchViewController.m */; };
+		D5739C111AFB5AFA003CA120 /* UMComSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5739C0E1AFB5AFA003CA120 /* UMComSearchViewController.xib */; };
+		D5739C141AFB5B31003CA120 /* UMComImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C131AFB5B31003CA120 /* UMComImageView.m */; };
+		D5739C1B1AFB5B7F003CA120 /* UMComFeedStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C161AFB5B7F003CA120 /* UMComFeedStyle.m */; };
+		D5739C1C1AFB5B7F003CA120 /* UMComPageControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C181AFB5B7F003CA120 /* UMComPageControlView.m */; };
+		D5739C1D1AFB5B7F003CA120 /* UMComSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C1A1AFB5B7F003CA120 /* UMComSearchBar.m */; };
+		D5739C221AFB5BA7003CA120 /* UMComUserCenterCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C1F1AFB5BA7003CA120 /* UMComUserCenterCollectionView.m */; };
+		D5739C231AFB5BA7003CA120 /* UMComUserCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C211AFB5BA7003CA120 /* UMComUserCollectionViewCell.m */; };
+		D5739C2E1AFB5D82003CA120 /* all_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5739C281AFB5D82003CA120 /* all_more@2x.png */; };
+		D5739C2F1AFB5D82003CA120 /* circle_friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5739C291AFB5D82003CA120 /* circle_friends@2x.png */; };
+		D5739C301AFB5D82003CA120 /* kuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5739C2A1AFB5D82003CA120 /* kuang@2x.png */; };
+		D5739C311AFB5D82003CA120 /* left_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5739C2B1AFB5D82003CA120 /* left_frame@2x.png */; };
+		D5739C321AFB5D82003CA120 /* right_item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5739C2C1AFB5D82003CA120 /* right_item@2x.png */; };
+		D5739C331AFB5D82003CA120 /* search_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5739C2D1AFB5D82003CA120 /* search_frame@2x.png */; };
+		D5739C351AFB5D9E003CA120 /* midle_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5739C341AFB5D9E003CA120 /* midle_frame@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -545,6 +561,30 @@
 		D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMCommViewController.xib; sourceTree = "<group>"; };
 		D5462FC61AE6159F00957649 /* UMCommunityStrings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = UMCommunityStrings.strings; path = Resources/UMCommunityStrings.strings; sourceTree = "<group>"; };
 		D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D5739C0A1AFB5AFA003CA120 /* UMComHorizontalTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMComHorizontalTableView.h; path = Search/UMComHorizontalTableView.h; sourceTree = "<group>"; };
+		D5739C0B1AFB5AFA003CA120 /* UMComHorizontalTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMComHorizontalTableView.m; path = Search/UMComHorizontalTableView.m; sourceTree = "<group>"; };
+		D5739C0C1AFB5AFA003CA120 /* UMComSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMComSearchViewController.h; path = Search/UMComSearchViewController.h; sourceTree = "<group>"; };
+		D5739C0D1AFB5AFA003CA120 /* UMComSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMComSearchViewController.m; path = Search/UMComSearchViewController.m; sourceTree = "<group>"; };
+		D5739C0E1AFB5AFA003CA120 /* UMComSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UMComSearchViewController.xib; path = Search/UMComSearchViewController.xib; sourceTree = "<group>"; };
+		D5739C121AFB5B31003CA120 /* UMComImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMComImageView.h; path = umeng_community_ios_sdk_v1.1/Resources/UiLib/UMImageView/UMComImageView.h; sourceTree = SOURCE_ROOT; };
+		D5739C131AFB5B31003CA120 /* UMComImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMComImageView.m; path = umeng_community_ios_sdk_v1.1/Resources/UiLib/UMImageView/UMComImageView.m; sourceTree = SOURCE_ROOT; };
+		D5739C151AFB5B7F003CA120 /* UMComFeedStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComFeedStyle.h; sourceTree = "<group>"; };
+		D5739C161AFB5B7F003CA120 /* UMComFeedStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComFeedStyle.m; sourceTree = "<group>"; };
+		D5739C171AFB5B7F003CA120 /* UMComPageControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComPageControlView.h; sourceTree = "<group>"; };
+		D5739C181AFB5B7F003CA120 /* UMComPageControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComPageControlView.m; sourceTree = "<group>"; };
+		D5739C191AFB5B7F003CA120 /* UMComSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComSearchBar.h; sourceTree = "<group>"; };
+		D5739C1A1AFB5B7F003CA120 /* UMComSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComSearchBar.m; sourceTree = "<group>"; };
+		D5739C1E1AFB5BA7003CA120 /* UMComUserCenterCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComUserCenterCollectionView.h; sourceTree = "<group>"; };
+		D5739C1F1AFB5BA7003CA120 /* UMComUserCenterCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComUserCenterCollectionView.m; sourceTree = "<group>"; };
+		D5739C201AFB5BA7003CA120 /* UMComUserCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComUserCollectionViewCell.h; sourceTree = "<group>"; };
+		D5739C211AFB5BA7003CA120 /* UMComUserCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComUserCollectionViewCell.m; sourceTree = "<group>"; };
+		D5739C281AFB5D82003CA120 /* all_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all_more@2x.png"; sourceTree = "<group>"; };
+		D5739C291AFB5D82003CA120 /* circle_friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle_friends@2x.png"; sourceTree = "<group>"; };
+		D5739C2A1AFB5D82003CA120 /* kuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kuang@2x.png"; sourceTree = "<group>"; };
+		D5739C2B1AFB5D82003CA120 /* left_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_frame@2x.png"; sourceTree = "<group>"; };
+		D5739C2C1AFB5D82003CA120 /* right_item@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right_item@2x.png"; sourceTree = "<group>"; };
+		D5739C2D1AFB5D82003CA120 /* search_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_frame@2x.png"; sourceTree = "<group>"; };
+		D5739C341AFB5D9E003CA120 /* midle_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "midle_frame@2x.png"; sourceTree = "<group>"; };
 		D5FD803E1AC27A690062953D /* UMCommunityDemo.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UMCommunityDemo.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -690,6 +730,13 @@
 		D514199F1ADF8A1700E41B94 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D5739C341AFB5D9E003CA120 /* midle_frame@2x.png */,
+				D5739C281AFB5D82003CA120 /* all_more@2x.png */,
+				D5739C291AFB5D82003CA120 /* circle_friends@2x.png */,
+				D5739C2A1AFB5D82003CA120 /* kuang@2x.png */,
+				D5739C2B1AFB5D82003CA120 /* left_frame@2x.png */,
+				D5739C2C1AFB5D82003CA120 /* right_item@2x.png */,
+				D5739C2D1AFB5D82003CA120 /* search_frame@2x.png */,
 				D51419A01ADF8A1700E41B94 /* ##+x@2x.png */,
 				D51419A11ADF8A1700E41B94 /* ##x@2x.png */,
 				D51419A21ADF8A1700E41B94 /* @+x@2x.png */,
@@ -784,6 +831,7 @@
 		D51419F11ADF8A1800E41B94 /* UiLib */ = {
 			isa = PBXGroup;
 			children = (
+				D5739C051AFB5A91003CA120 /* UMImageView */,
 				D51419F21ADF8A1800E41B94 /* Button */,
 				D51419F71ADF8A1800E41B94 /* GridView */,
 				D5141A001ADF8A1800E41B94 /* Label */,
@@ -889,6 +937,7 @@
 		D5141A251ADF8A1800E41B94 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D5739C091AFB5AC8003CA120 /* Search */,
 				D5141A261ADF8A1800E41B94 /* Edit */,
 				D5141A431ADF8A1800E41B94 /* Feed */,
 				D5141A671ADF8A1800E41B94 /* Find */,
@@ -939,6 +988,12 @@
 		D5141A431ADF8A1800E41B94 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				D5739C151AFB5B7F003CA120 /* UMComFeedStyle.h */,
+				D5739C161AFB5B7F003CA120 /* UMComFeedStyle.m */,
+				D5739C171AFB5B7F003CA120 /* UMComPageControlView.h */,
+				D5739C181AFB5B7F003CA120 /* UMComPageControlView.m */,
+				D5739C191AFB5B7F003CA120 /* UMComSearchBar.h */,
+				D5739C1A1AFB5B7F003CA120 /* UMComSearchBar.m */,
 				D5141A441ADF8A1800E41B94 /* UMComAllFeedViewController.h */,
 				D5141A451ADF8A1800E41B94 /* UMComAllFeedViewController.m */,
 				D5141A461ADF8A1800E41B94 /* UMComAllFeedViewController.xib */,
@@ -1011,6 +1066,10 @@
 		D5141A7C1ADF8A1800E41B94 /* UserCenter */ = {
 			isa = PBXGroup;
 			children = (
+				D5739C1E1AFB5BA7003CA120 /* UMComUserCenterCollectionView.h */,
+				D5739C1F1AFB5BA7003CA120 /* UMComUserCenterCollectionView.m */,
+				D5739C201AFB5BA7003CA120 /* UMComUserCollectionViewCell.h */,
+				D5739C211AFB5BA7003CA120 /* UMComUserCollectionViewCell.m */,
 				D5141A7D1ADF8A1800E41B94 /* UMComMessageSettingViewController.h */,
 				D5141A7E1ADF8A1800E41B94 /* UMComMessageSettingViewController.m */,
 				D5141A7F1ADF8A1800E41B94 /* UMComMessageSettingViewController.xib */,
@@ -1227,6 +1286,28 @@
 			name = frameworks;
 			sourceTree = "<group>";
 		};
+		D5739C051AFB5A91003CA120 /* UMImageView */ = {
+			isa = PBXGroup;
+			children = (
+				D5739C121AFB5B31003CA120 /* UMComImageView.h */,
+				D5739C131AFB5B31003CA120 /* UMComImageView.m */,
+			);
+			name = UMImageView;
+			path = ../../../../../UMCommunity_New/UMCommunity/UiLib/UMImageView;
+			sourceTree = "<group>";
+		};
+		D5739C091AFB5AC8003CA120 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				D5739C0A1AFB5AFA003CA120 /* UMComHorizontalTableView.h */,
+				D5739C0B1AFB5AFA003CA120 /* UMComHorizontalTableView.m */,
+				D5739C0C1AFB5AFA003CA120 /* UMComSearchViewController.h */,
+				D5739C0D1AFB5AFA003CA120 /* UMComSearchViewController.m */,
+				D5739C0E1AFB5AFA003CA120 /* UMComSearchViewController.xib */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1328,6 +1409,7 @@
 				D5141AD91ADF8A1800E41B94 /* image-placeholder@2x.png in Resources */,
 				D5141B231ADF8A1800E41B94 /* UMComFriendsTableViewController.xib in Resources */,
 				D5141B691ADF8A1800E41B94 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				D5739C311AFB5D82003CA120 /* left_frame@2x.png in Resources */,
 				D5141AFC1ADF8A1800E41B94 /* user_recommend@2x.png in Resources */,
 				D5141AEF1ADF8A1800E41B94 /* setting+x@2x.png in Resources */,
 				D5141ADE1ADF8A1800E41B94 /* new@2x.png in Resources */,
@@ -1352,7 +1434,9 @@
 				D540A5A51AB9A456007063E6 /* iPhone6Portrait.png in Resources */,
 				D5141AC21ADF8A1800E41B94 /* FZLanTingHei-L-GBK-M.TTF in Resources */,
 				D5462FC71AE6159F00957649 /* UMCommunityStrings.strings in Resources */,
+				D5739C351AFB5D9E003CA120 /* midle_frame@2x.png in Resources */,
 				D5141B4B1ADF8A1800E41B94 /* UMComNavigationController.xib in Resources */,
+				D5739C2F1AFB5D82003CA120 /* circle_friends@2x.png in Resources */,
 				D5141B441ADF8A1800E41B94 /* UMComTableViewCell.xib in Resources */,
 				D5141B601ADF8A1800E41B94 /* UMShareEditViewController.xib in Resources */,
 				D5141AD51ADF8A1800E41B94 /* find@2x.png in Resources */,
@@ -1371,6 +1455,7 @@
 				D5141B2F1ADF8A1800E41B94 /* UMComFeedDetailViewController.xib in Resources */,
 				D5141B011ADF8A1800E41B94 /* ♂.png in Resources */,
 				D5141AD71ADF8A1800E41B94 /* huangguanx@2x.png in Resources */,
+				D5739C331AFB5D82003CA120 /* search_frame@2x.png in Resources */,
 				D5141B541ADF8A1800E41B94 /* UMComUserCenterViewController.xib in Resources */,
 				D5141B2B1ADF8A1800E41B94 /* UMComAllFeedViewController.xib in Resources */,
 				D5141AE31ADF8A1800E41B94 /* pin3x@2x.png in Resources */,
@@ -1379,16 +1464,20 @@
 				D5141AC41ADF8A1800E41B94 /* ##x@2x.png in Resources */,
 				D5141B021ADF8A1800E41B94 /* ♂x@2x.png in Resources */,
 				D5141AE71ADF8A1800E41B94 /* qingtongx@2x.png in Resources */,
+				D5739C301AFB5D82003CA120 /* kuang@2x.png in Resources */,
 				D5141AE51ADF8A1800E41B94 /* profile+@2x.png in Resources */,
 				D5141AC61ADF8A1800E41B94 /* @x@2x.png in Resources */,
 				D5141B2D1ADF8A1800E41B94 /* UMComEditBackGroundView.xib in Resources */,
+				D5739C2E1AFB5D82003CA120 /* all_more@2x.png in Resources */,
 				D5141AFE1ADF8A1800E41B94 /* wechatx@2x.png in Resources */,
 				D5141B211ADF8A1800E41B94 /* UMComEditViewController.xib in Resources */,
 				D5141ACD1ADF8A1800E41B94 /* camerax@2x.png in Resources */,
 				D5141B291ADF8A1800E41B94 /* UMComLocationTableViewController.xib in Resources */,
+				D5739C321AFB5D82003CA120 /* right_item@2x.png in Resources */,
 				D5141D761ADFA48A00E41B94 /* LoginViewController.xib in Resources */,
 				D5141B251ADF8A1800E41B94 /* UMComFriendTableViewCell.xib in Resources */,
 				D5141AEA1ADF8A1800E41B94 /* repo+x@2x.png in Resources */,
+				D5739C111AFB5AFA003CA120 /* UMComSearchViewController.xib in Resources */,
 				D5141AC91ADF8A1800E41B94 /* Backx@2x.png in Resources */,
 				D5141B4F1ADF8A1800E41B94 /* UMComProfileSettingController.xib in Resources */,
 				D5141ADA1ADF8A1800E41B94 /* like+x@2x.png in Resources */,
@@ -1438,8 +1527,11 @@
 				D5141B121ADF8A1800E41B94 /* UMImagePickerGroupCell.m in Sources */,
 				D5141B431ADF8A1800E41B94 /* UMComTableViewCell.m in Sources */,
 				D5141B501ADF8A1800E41B94 /* UMComSettingViewController.m in Sources */,
+				D5739C1C1AFB5B7F003CA120 /* UMComPageControlView.m in Sources */,
 				D5141B051ADF8A1800E41B94 /* UMComGridView.m in Sources */,
+				D5739C221AFB5BA7003CA120 /* UMComUserCenterCollectionView.m in Sources */,
 				D5141B031ADF8A1800E41B94 /* UMComBarButtonItem.m in Sources */,
+				D5739C0F1AFB5AFA003CA120 /* UMComHorizontalTableView.m in Sources */,
 				D5141B141ADF8A1800E41B94 /* UMComGridTableViewCell.m in Sources */,
 				D5141B241ADF8A1800E41B94 /* UMComFriendTableViewCell.m in Sources */,
 				D5141B091ADF8A1800E41B94 /* UMComLabel.m in Sources */,
@@ -1451,6 +1543,7 @@
 				D5141B0C1ADF8A1800E41B94 /* UMAssetsCollectionCell.m in Sources */,
 				D5141B161ADF8A1800E41B94 /* UMComiToast.m in Sources */,
 				D5141B1B1ADF8A1800E41B94 /* UMComAddedImageCellView.m in Sources */,
+				D5739C231AFB5BA7003CA120 /* UMComUserCollectionViewCell.m in Sources */,
 				D5141B151ADF8A1800E41B94 /* UMComGridTableViewCellOne.m in Sources */,
 				D5141B061ADF8A1800E41B94 /* UMComGridViewerController.m in Sources */,
 				D5141D751ADFA48A00E41B94 /* LoginViewController.m in Sources */,
@@ -1487,18 +1580,22 @@
 				D5141B371ADF8A1800E41B94 /* UMComFilterTopicsViewCell.m in Sources */,
 				D5141B201ADF8A1800E41B94 /* UMComEditViewController.m in Sources */,
 				D5141B481ADF8A1800E41B94 /* UMComLoginViewController.m in Sources */,
+				D5739C1B1AFB5B7F003CA120 /* UMComFeedStyle.m in Sources */,
 				D5141B3B1ADF8A1800E41B94 /* UMComMutiStyleTextView.m in Sources */,
 				D5141B081ADF8A1800E41B94 /* UMImageProgressView.m in Sources */,
+				D5739C101AFB5AFA003CA120 /* UMComSearchViewController.m in Sources */,
 				D5141B1C1ADF8A1800E41B94 /* UMComAddedImageView.m in Sources */,
 				D5141B321ADF8A1800E41B94 /* UMComFeedsTableView.m in Sources */,
 				D5141B521ADF8A1800E41B94 /* UMComUserCenterTableDelegate.m in Sources */,
 				D5141B071ADF8A1800E41B94 /* UMComProgressView.m in Sources */,
 				D5141B0E1ADF8A1800E41B94 /* UMAssetsCollectionController.m in Sources */,
+				D5739C141AFB5B31003CA120 /* UMComImageView.m in Sources */,
 				D5141B551ADF8A1800E41B94 /* UMComUsersTableCell.m in Sources */,
 				D5141B401ADF8A1800E41B94 /* UMComFindTableViewCell.m in Sources */,
 				D5141B3D1ADF8A1800E41B94 /* UMComTableViewController.m in Sources */,
 				D5141B301ADF8A1800E41B94 /* UMComFeedsCommentTableViewCell.m in Sources */,
 				D5141B111ADF8A1800E41B94 /* UMImagePickerController.m in Sources */,
+				D5739C1D1AFB5B7F003CA120 /* UMComSearchBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

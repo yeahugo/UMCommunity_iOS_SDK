@@ -15,8 +15,10 @@
 #import "LoginViewController.h"
 
 #define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
-//#define UMengCommunityAppkey @"4eaee02c527015373b000003"
+//#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+#define UMengCommunityAppkey @"4eaee02c527015373b000003"
+//#define UMengCommunityAppkey @"55112be9fd98c573ce0006e3"
+
 #define UMengLoginAppkey UMengCommunityAppkey
 
 @implementation UMAppDelegate
@@ -31,7 +33,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-//    [UMCommunity openLog:YES];
+    [UMCommunity openLog:YES];
     //Message
     [UMComMessageManager setAppkey:UMengMessageAppkey];
     [UMComMessageManager startWithOptions:launchOptions];
