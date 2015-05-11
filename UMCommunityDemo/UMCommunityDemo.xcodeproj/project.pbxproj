@@ -197,6 +197,7 @@
 		D540A5AF1AB9ACEB007063E6 /* UMCommViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D540A5AD1AB9ACEB007063E6 /* UMCommViewController.m */; };
 		D540A5B01AB9ACEB007063E6 /* UMCommViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */; };
 		D5462FC71AE6159F00957649 /* UMCommunityStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = D5462FC61AE6159F00957649 /* UMCommunityStrings.strings */; };
+		D56B174A1B00AABA001DE112 /* UIViewController+UMComAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = D56B17491B00AABA001DE112 /* UIViewController+UMComAddition.m */; };
 		D56E21B11AB9B6EB00D7E13B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */; };
 		D5739C0F1AFB5AFA003CA120 /* UMComHorizontalTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C0B1AFB5AFA003CA120 /* UMComHorizontalTableView.m */; };
 		D5739C101AFB5AFA003CA120 /* UMComSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5739C0D1AFB5AFA003CA120 /* UMComSearchViewController.m */; };
@@ -560,6 +561,8 @@
 		D540A5AD1AB9ACEB007063E6 /* UMCommViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMCommViewController.m; sourceTree = "<group>"; };
 		D540A5AE1AB9ACEB007063E6 /* UMCommViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMCommViewController.xib; sourceTree = "<group>"; };
 		D5462FC61AE6159F00957649 /* UMCommunityStrings.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = UMCommunityStrings.strings; path = Resources/UMCommunityStrings.strings; sourceTree = "<group>"; };
+		D56B17481B00AABA001DE112 /* UIViewController+UMComAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+UMComAddition.h"; sourceTree = "<group>"; };
+		D56B17491B00AABA001DE112 /* UIViewController+UMComAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+UMComAddition.m"; sourceTree = "<group>"; };
 		D56E21B01AB9B6EB00D7E13B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D5739C0A1AFB5AFA003CA120 /* UMComHorizontalTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMComHorizontalTableView.h; path = Search/UMComHorizontalTableView.h; sourceTree = "<group>"; };
 		D5739C0B1AFB5AFA003CA120 /* UMComHorizontalTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMComHorizontalTableView.m; path = Search/UMComHorizontalTableView.m; sourceTree = "<group>"; };
@@ -937,6 +940,8 @@
 		D5141A251ADF8A1800E41B94 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D56B17481B00AABA001DE112 /* UIViewController+UMComAddition.h */,
+				D56B17491B00AABA001DE112 /* UIViewController+UMComAddition.m */,
 				D5739C091AFB5AC8003CA120 /* Search */,
 				D5141A261ADF8A1800E41B94 /* Edit */,
 				D5141A431ADF8A1800E41B94 /* Feed */,
@@ -1595,6 +1600,7 @@
 				D5141B3D1ADF8A1800E41B94 /* UMComTableViewController.m in Sources */,
 				D5141B301ADF8A1800E41B94 /* UMComFeedsCommentTableViewCell.m in Sources */,
 				D5141B111ADF8A1800E41B94 /* UMImagePickerController.m in Sources */,
+				D56B174A1B00AABA001DE112 /* UIViewController+UMComAddition.m in Sources */,
 				D5739C1D1AFB5B7F003CA120 /* UMComSearchBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
