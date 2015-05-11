@@ -10,8 +10,6 @@
 	<string>UMCommunityDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>931DB71DCA9D4121006034044BFA1764270AC37E</key>
-		<string>gitlab.alibaba-inc.com:umeng-wsq/umeng_community_ios.git</string>
 		<key>F90E67CD0393E88BD121087709512236ECDA7015</key>
 		<string>http://github.umeng.com/yeahugo/umeng_community_ios_sdk.git</string>
 	</dict>
@@ -19,8 +17,6 @@
 	<string>UMCommunityDemo/UMCommunityDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>931DB71DCA9D4121006034044BFA1764270AC37E</key>
-		<string>../../../../UMCommunity_New</string>
 		<key>F90E67CD0393E88BD121087709512236ECDA7015</key>
 		<string>../../..</string>
 	</dict>
@@ -32,14 +28,6 @@
 	<string>F90E67CD0393E88BD121087709512236ECDA7015</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>931DB71DCA9D4121006034044BFA1764270AC37E</string>
-			<key>IDESourceControlWCCName</key>
-			<string>UMCommunity_New</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
