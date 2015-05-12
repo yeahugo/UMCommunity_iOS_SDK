@@ -69,6 +69,10 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
 - (void)refreshAllData
 {
     [self.indicatorView startAnimating];

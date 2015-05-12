@@ -211,6 +211,7 @@
         self.recommendUsersVc.viewController = self;
         [self.view addSubview:self.recommendUsersVc.view];
         self.recommendUsersVc.view.frame = CGRectMake(self.feedsTableView.frame.size.width, feedViewOriginY, self.feedsTableView.frame.size.width, self.feedsTableView.frame.size.height);
+        self.recommendUsersVc.indicatorView.center = CGPointMake(self.recommendUsersVc.view.frame.size.width/2, self.recommendUsersVc.view.frame.size.height/2);
     }
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.feedsTableView.frame = CGRectMake(-self.feedsTableView.frame.size.width, feedViewOriginY, self.feedsTableView.frame.size.width, self.feedsTableView.frame.size.height);
