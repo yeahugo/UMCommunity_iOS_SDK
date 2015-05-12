@@ -237,7 +237,7 @@
     self.forwardFeedBackground.hidden = YES;
     self.editToolView.hidden = YES;
 
-
+    [self showPlaceHolderLabelWithTextView:self.realTextView];
 }
 
 - (BOOL)isIos7AndLater
@@ -686,12 +686,8 @@
 - (void)textViewDidChangeSelection:(UITextView *)textView
 {
     self.seletedRange = textView.selectedRange;
-    if (textView.text.length > 0 && ![@" " isEqualToString:textView.text]) {
-        self.placeholderLabel.hidden = YES;
-//        [self.placeholderLabel removeFromSuperview];
-    }else{
-        self.placeholderLabel.hidden = NO;
-    }
+    [self showPlaceHolderLabelWithTextView:textView];
+
 }
 
 - (void)textViewDidChange:(UITextView *)textView
@@ -700,13 +696,18 @@
     if ([self isIos7AndLater]) {
         [self.textStorage update];
     }
+    [self showPlaceHolderLabelWithTextView:textView];
+}
+
+
+- (void)showPlaceHolderLabelWithTextView:(UITextView *)textView
+{
     if (textView.text.length > 0 && ![@" " isEqualToString:textView.text]) {
         self.placeholderLabel.hidden = YES;
     }else{
         self.placeholderLabel.hidden = NO;
     }
 }
-
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     if (textView.text.length == 0) {

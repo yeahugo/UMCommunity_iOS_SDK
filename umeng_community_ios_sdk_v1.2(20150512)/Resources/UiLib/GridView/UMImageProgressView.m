@@ -96,15 +96,18 @@
 {
     self.progressView.hidden = YES;
     self.thumImageView.hidden = YES;
-    [self resetSizeWithURLImage:imageView];
-    
     UIScrollView * zoomView = (UIScrollView *)self.superview;
-    zoomView.maximumZoomScale = 5;
+    [self resetSizeWithURLImage:imageView];
+        if ([self.superview isKindOfClass:[UIScrollView class]]) {
+        zoomView.maximumZoomScale = 5;
+    }
 }
 - (void)umcomImageViewFailedToLoadImage:(UMComImageView *)imageView error:(NSError *)error
 {
     UIScrollView * zoomView = (UIScrollView *)self.superview;
-    zoomView.maximumZoomScale = 1;
+    if ([self.superview isKindOfClass:[UIScrollView class]]) {
+        zoomView.maximumZoomScale = 1;
+    }
     self.progressView.hidden = YES;
     [UMComShowToast fetchFeedFail:error];
 }
@@ -117,6 +120,7 @@
             UMComImageView *thumImageView = [[[UMComImageView imageViewClassName] alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
             thumImageView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2-40);
             thumImageView.hidden = YES;
+            thumImageView.needCutOff = YES;
             [self addSubview:thumImageView];
             self.thumImageView = thumImageView;
             self.progressView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2+40);
@@ -133,10 +137,19 @@
 - (void)resetSizeWithURLImage:(UMComImageView *)imageView
 {
     self.thumImageView.hidden = YES;
-    CGSize viewSize = [UIScreen mainScreen].bounds.size;
-    CGSize imageSize = imageView.image.size;
-    int height = viewSize.width * imageSize.height / imageSize.width;
-    imageView.frame = CGRectMake(0,viewSize.height/2-height/2, viewSize.width, height);
+    UIScrollView * zoomView = (UIScrollView *)self.superview;
+    if ([self.superview isKindOfClass:[UIScrollView class]] && zoomView.zoomScale > 1) {
+//        zoomView.zoomScale = 1;
+    }else{
+        CGSize viewSize = [UIScreen mainScreen].bounds.size;
+        CGSize imageSize = imageView.image.size;
+        int height = viewSize.width * imageSize.height / imageSize.width;
+        imageView.frame = CGRectMake(0,viewSize.height/2-height/2, viewSize.width, height);
+        
+    }
+
+//    NSLog(@"imageView center is :%@",NSStringFromCGPoint(imageView.center));
+
 }
 
 
