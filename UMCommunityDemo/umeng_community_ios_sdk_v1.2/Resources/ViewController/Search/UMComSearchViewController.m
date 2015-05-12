@@ -37,7 +37,7 @@
     }
     
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-160, 30)];
-    searchBar.placeholder = UMComLocalizedString(@"Search", @"搜索");
+    searchBar.placeholder = UMComLocalizedString(@"Enter user or content key words", @"请输入用户或内容关键字");
     searchBar.backgroundImage = [[UIImage alloc] init];
     searchBar.delegate = self;
     [self.navigationItem setTitleView:searchBar];

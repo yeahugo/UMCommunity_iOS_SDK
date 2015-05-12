@@ -56,7 +56,7 @@
 - (UMComSearchBar *)creatSearchBar
 {
      UMComSearchBar *searchBar = [[UMComSearchBar alloc] initWithFrame:CGRectMake(0, -0.3, self.view.frame.size.width, 40)];
-    searchBar.placeholder = UMComLocalizedString(@"Search", @"搜索");
+    searchBar.placeholder = UMComLocalizedString(@"Search user and content", @"搜索用户和内容");
     searchBar.delegate = self;
     return searchBar;
 }
@@ -137,6 +137,7 @@
     self.filterTopicsViewController.view.frame = rightDisAppearFrame;
     [self addChildViewController:self.filterTopicsViewController];
     self.topicSearchBar = [self creatSearchBar];
+    self.topicSearchBar.placeholder = UMComLocalizedString(@"Search topics", @"搜索话题");
     __weak UMComHomeFeedViewController *weakSelf = self;
     self.filterTopicsViewController.scrollViewScroll = ^(UIScrollView *scrollView){
         [weakSelf.topicSearchBar resignFirstResponder];
@@ -161,12 +162,11 @@
     currentViewFrame = CGRectMake(0, 0, selfViewSize.width, selfViewSize.height);
     leftDisAppearFrame = CGRectMake(-selfViewSize.width, 0, selfViewSize.width, selfViewSize.height);
     rightDisAppearFrame = CGRectMake(selfViewSize.width, 0, selfViewSize.width, selfViewSize.height);
-    self.currentViewController.view.frame = CGRectMake(0, 0, selfViewSize.width, selfViewSize.height);
+//    self.currentViewController.view.frame = CGRectMake(0, 0, selfViewSize.width, selfViewSize.height);
+    [self resetAllViewControllerViewsSize:selfViewSize];
     if (self.allFeedViewController == self.currentViewController) {
         self.allFeedViewController.feedsTableView.tableHeaderView = [self creatSearchBar];
     }
-    self.recommendViewController.view.frame = rightDisAppearFrame;
-    self.filterTopicsViewController.view.frame = rightDisAppearFrame;
     if (self.titlePageControl.currentPage == 2) {
         self.editButton.hidden = YES;
     }else{
@@ -177,6 +177,13 @@
     originOffset = self.navigationController.navigationBar.frame.origin;
     self.findButton.center = CGPointMake(selfViewSize.width-23.5, self.findButton.center.y);
     self.findButton.hidden = NO;
+}
+
+- (void)resetAllViewControllerViewsSize:(CGSize)size
+{
+    self.allFeedViewController.view.frame = CGRectMake(self.allFeedViewController.view.frame.origin.x, self.allFeedViewController.view.frame.origin.y, size.width, size.height);
+    self.filterTopicsViewController.view.frame = CGRectMake(self.filterTopicsViewController.view.frame.origin.x, self.filterTopicsViewController.view.frame.origin.y, size.width, size.height);
+    self.recommendViewController.view.frame = CGRectMake(self.recommendViewController.view.frame.origin.x, self.recommendViewController.view.frame.origin.y, size.width, size.height);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
