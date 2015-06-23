@@ -14,11 +14,12 @@
 #import "UMSocialWechatHandler.h"
 #import "LoginViewController.h"
 #import "UMComNavigationController.h"
+#import <objc/runtime.h>
 
 #define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
-//#define UMengCommunityAppkey @"4eaee02c527015373b000003"
-//#define UMengCommunityAppkey @"55112be9fd98c573ce0006e3"
+//#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+//#define UMengCommunityAppkey @"557670c367e58eb5390038ed"
+#define UMengCommunityAppkey @"4eaee02c527015373b000003"
 
 #define UMengLoginAppkey UMengCommunityAppkey
 
@@ -38,17 +39,16 @@ void uncaughtExceptionHandler(NSException *exception) {
     //Message
     [UMComMessageManager setAppkey:UMengMessageAppkey];
     [UMComMessageManager startWithOptions:launchOptions];
-    
     [UMCommunity setWithAppKey:UMengCommunityAppkey];
     
     //下面实现自定义登录
 //    LoginViewController *loginViewControler =[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
 //    [UMComLoginManager setLoginHandler:loginViewControler];
     //设置微信AppId、appSecret，分享url
-    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+    [UMSocialWechatHandler setWXAppId:@"wx96110a1e3af63a39" appSecret:@"c60e3d3ff109a5d17013df272df99199" url:@"http://www.umeng.com/social"];
     
     //设置分享到QQ互联的appId和appKey
-    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+    [UMSocialQQHandler setQQWithAppId:@"1104606393" appKey:@"X4BAsJAVKtkDQ1zQ" url:@"http://www.umeng.com/social"];
     [UMComLoginManager setAppKey:UMengLoginAppkey];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -56,9 +56,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    UMComNavigationController *communityController = [UMCommunity getFeedsModalViewController];
+    UINavigationController *communityController = [UMCommunity getFeedsModalViewController];
     self.window.rootViewController = communityController;
-    
     return YES;
 }
 
