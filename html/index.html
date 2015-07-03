@@ -105,28 +105,71 @@
     UMComUserFeedsRequest *userFeeds = [[UMComUserFeedsRequest alloc] initWithUid:uid count:BatchSize];
 </code></pre>
 
+<h3>获取附近的Feed</h3>
+
+<p>使用类<a href="Classes/UMComNearbyFeedsRequest.html"><code>UMComNearbyFeedsRequest</code></a>,初始化方法为：</p>
+
+<pre><code>    CLLocation *location = [[CLLocation alloc] initWithLatitude:39.974 longitude:116.35683];
+    UMComNearbyFeedsRequest *nearbyFeed = [[UMComNearbyFeedsRequest alloc] initWithLocation:location count:100];
+</code></pre>
+
+<h3>获取一条Feed的所有评论</h3>
+
+<p>使用类 <a href="Classes/UMComFeedCommentsRequest.html"><code>UMComFeedCommentsRequest</code></a>,</p>
+
+<pre><code>    UMComFeedCommentsRequest *commentsController = [[UMComFeedCommentsRequest alloc] initWithFeedId:feedId order:commentorderByTimeAsc count:100];
+    [commentsController fetchRequestFromServer:nil];
+</code></pre>
+
+<h3>获取一条Feed的所有喜欢</h3>
+
+<p>使用类<code>UMComFeedLikesRequest</code></p>
+
+<pre><code>    UMComFeedLikesRequest *likesController = [[UMComFeedLikesRequest alloc] initWithFeedId:feedId count:100];
+    [likesController fetchRequestFromServer:nil];
+</code></pre>
+
+<h3>搜索Feed</h3>
+
+<p>使用类<a href="Classes/UMComSearchFeedRequest.html"><code>UMComSearchFeedRequest</code></a></p>
+
+<pre><code>    UMComSearchFeedRequest * searchFeeds = [[UMComSearchFeedRequest alloc] initWithKeywords:keyword count:TotalTopicSize];
+    [searchFeeds fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        //        XCTAssertGreaterThan(data.count, 0);
+        XCTAssertNotNil(data);
+        [expect fulfill];
+    }];
+</code></pre>
+
 <h2>获取用户信息</h2>
 
 <h3>获取用户粉丝信息</h3>
 
-<p>使用类<a href="Classes/UMComFansRequest.html"><code>UMComFansRequest</code></a>,初始化方法为：</p>
+<p>使用类<code>UMComFansRequest</code>,初始化方法为：</p>
 
 <pre><code>    UMComFansRequest *fansController = [[UMComFansRequest alloc] initWithUid:@"54212bff0bbbafb1189283e6" count:100];
 </code></pre>
 
 <h3>获取用户关注信息</h3>
 
-<p>使用类<code>UMComFollowersRequest</code>,初始化方法为：</p>
+<p>使用类<a href="Classes/UMComFollowersRequest.html"><code>UMComFollowersRequest</code></a>,初始化方法为：</p>
 
 <pre><code>    UMComFollowersRequest *followersController = [[UMComFollowersRequest alloc] initWithUid:@"54212bff0bbbafb1189283e6" count:100];
 </code></pre>
 
 <h3>获取用户详情信息</h3>
 
-<p>使用类<a href="Classes/UMComUserProfileRequest.html"><code>UMComUserProfileRequest</code></a>,初始化方法为：</p>
+<p>使用类<code>UMComUserProfileRequest</code>,初始化方法为：</p>
 
 <pre><code>    NSString *uid = @"54212bff0bbbafb1189283e6";
     UMComUserProfileRequest *userProfile = [[UMComUserProfileRequest alloc] initWithUid:uid];
+</code></pre>
+
+<h3>获取用户相册</h3>
+
+<p>使用类<code>UMComUserAlbumRequest</code>,初始化方法为：</p>
+
+<pre><code>    UMComUserAlbumRequest *userAlbums = [[UMComUserAlbumRequest alloc] initWithCount:100 fuid:@"54212bff0bbbafb1189283e6"];
 </code></pre>
 
 <h2>获取话题信息</h2>
@@ -144,6 +187,14 @@
 <code>
     UMComUserTopicsRequest *userTopics = [[UMComUserTopicsRequest alloc] initWithUid:uid count:1000];
 </code></p>
+
+<h3>获取未读Feed条数</h3>
+
+<p>使用类<a href="Classes/UMComUnreadFeedCountRequest.html"><code>UMComUnreadFeedCountRequest</code></a>,</p>
+
+<pre><code>    [UMComUnreadFeedCountRequest fetchUnreadFeedCountWithResult:^(NSArray *data, NSError *error) {
+    }];
+</code></pre>
 
 <h1>上传数据</h1>
 
@@ -175,27 +226,79 @@
 
 <h2>上传评论</h2>
 
-<p>使用类 <a href="Classes/UMComCommentFeedRequest.html"><code>UMComCommentFeedRequest</code></a></p>
+<p>使用类 <code>UMComCommentFeedRequest</code></p>
+
+<pre><code>    [UMComCommentFeedRequest postWithSourceFeedId:feedId commentContent:@"测试评论功能" replyUserId:nil completion:nil];
+</code></pre>
 
 <h2>点赞或者取消点赞</h2>
 
-<p>点赞或者取消点赞使用类<a href="Classes/UMComLikeFeedRequest.html"><code>UMComLikeFeedRequest</code></a></p>
+<p>点赞或者取消点赞使用类<code>UMComLikeFeedRequest</code></p>
+
+<pre><code>    [UMComLikeFeedRequest postLikeWithFeedId:feedId  completion:nil];
+</code></pre>
 
 <h2>转发</h2>
 
-<p>使用类<a href="Classes/UMComForwardFeedReqeust.html"><code>UMComForwardFeedReqeust</code></a></p>
+<p>使用类<code>UMComForwardFeedReqeust</code></p>
+
+<pre><code>    UMComFeedEntity *newEntity = [[UMComFeedEntity alloc] init];
+    newEntity.text = @"测试转发消息";
+    [UMComForwardFeedReqeust forwardWithFeedId:feedId newFeed:newEntity completion:nil];
+</code></pre>
 
 <h2>添加关注某人</h2>
 
 <p>使用类<a href="Classes/UMComFollowUserRequest.html"><code>UMComFollowUserRequest</code></a></p>
 
+<pre><code>    NSString *uid = @"542230c90bbbafe6c8d81f79";
+    [UMComFollowUserRequest postFollowerWithUserId:uid completion:nil];
+</code></pre>
+
 <h2>添加关注某话题</h2>
 
-<p>使用类 <a href="Classes/UMComFollowTopicRequest.html"><code>UMComFollowTopicRequest</code></a></p>
+<p>使用类 <code>UMComFollowTopicRequest</code></p>
+
+<pre><code>    NSString *topicId = @"541fe6f40bbbaf4f41f7aa3f";
+    [UMComFollowTopicRequest postFollowerWithTopicId:topicId completion:nil];
+</code></pre>
 
 <h2>更新用户资料</h2>
 
 <p>使用类<a href="Classes/UMComUpdateProfileRequest.html"><code>UMComUpdateProfileRequest</code></a></p>
+
+<pre><code>    UMComUserAccount *userAccount = [[UMComUserAccount alloc] init];
+    userAccount.name = @"元宝";
+    [UMComUpdateProfileRequest updateWithUser:userAccount completion:nil];
+</code></pre>
+
+<h2>删除Feed</h2>
+
+<p>使用类<a href="Classes/UMComDeleteFeedRequest.html"><code>UMComDeleteFeedRequest</code></a></p>
+
+<pre><code>    [UMComDeleteFeedRequest deleteWithFeedId:feedId completion:nil];
+</code></pre>
+
+<h2>举报Feed</h2>
+
+<p>使用类<a href="Classes/UMComSpamFeedRequest.html"><code>UMComSpamFeedRequest</code></a></p>
+
+<pre><code>    [UMComSpamFeedRequest spamWithFeedId:feedId completion:nil];
+</code></pre>
+
+<h2>删除comment</h2>
+
+<p>使用类<a href="Classes/UMComCommentFeedRequest.html"><code>UMComCommentFeedRequest</code></a></p>
+
+<pre><code>    [UMComCommentFeedRequest postDeleteWithComment:commmentId feedId:feedId completion:nil];
+</code></pre>
+
+<h2>举报comment</h2>
+
+<p>使用类<a href="Classes/UMComCommentFeedRequest.html"><code>UMComCommentFeedRequest</code></a></p>
+
+<pre><code>    [UMComCommentFeedRequest postSpamWithComment:commentId completion:nil];
+</code></pre>
 						
 						
 					</div>
@@ -265,6 +368,8 @@
 								
 								<li><a href="Classes/UMComSearchUserRequest.html">UMComSearchUserRequest</a></li>
 								
+								<li><a href="Classes/UMComShareStaticsRequest.html">UMComShareStaticsRequest</a></li>
+								
 								<li><a href="Classes/UMComSpamFeedRequest.html">UMComSpamFeedRequest</a></li>
 								
 								<li><a href="Classes/UMComTopicFeedsRequest.html">UMComTopicFeedsRequest</a></li>
@@ -312,7 +417,7 @@
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-06-18</p>
+							<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-07-03</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>

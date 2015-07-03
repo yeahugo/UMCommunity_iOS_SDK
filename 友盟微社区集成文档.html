@@ -19,7 +19,7 @@ AssertsLibrary.framework</p>
 <ol>
 <li>修改xcode编译选项在Other Linker Flags 增加-all_load选项</li>
 <li>在xcode的info.plist添加一项<code>NSLocationAlwaysUsageDescription</code> 为True</li>
-<li>若要qq登录的功能，需要添加xcode的一项url scheme：tencent+QQ 开放平台的应用appid，例如tencent100424468 。还有添加领一下url scheme：“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FC5B14”。另外需要在你的工程的info.plist设置Bundle display name。</li>
+<li>若要qq登录的功能，需要添加xcode的一项url scheme：tencent+QQ 开放平台的应用appid，例如tencent100424468 。还有添加一下url scheme：“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FC5B14”。另外需要在你的工程的info.plist设置Bundle display name。</li>
 <li>若要微信登录的功能，需要添加一项xcode的url scheme为微信appid，例如wxd930ea5d5a258f4f</li>
 </ol>
 <h1>添加集成代码</h1>

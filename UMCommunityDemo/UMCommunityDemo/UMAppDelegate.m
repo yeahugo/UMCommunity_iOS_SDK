@@ -16,11 +16,10 @@
 #import "UMComNavigationController.h"
 #import <objc/runtime.h>
 
-#define UMengMessageAppkey @"54605af9fd98c597b3000d4e"
-//#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 //#define UMengCommunityAppkey @"557670c367e58eb5390038ed"
-#define UMengCommunityAppkey @"4eaee02c527015373b000003"
-
+//#define UMengCommunityAppkey @"4eaee02c527015373b000003"
+//#define UMengCommunityAppkey @"557664b467e58e8fa8002518"
 #define UMengLoginAppkey UMengCommunityAppkey
 
 @implementation UMAppDelegate
@@ -34,19 +33,26 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    
+        
     [UMCommunity openLog:YES];
     //Message
-    [UMComMessageManager setAppkey:UMengMessageAppkey];
-    [UMComMessageManager startWithOptions:launchOptions];
     [UMCommunity setWithAppKey:UMengCommunityAppkey];
-    
+    [UMComMessageManager startWithOptions:launchOptions];
+    NSDictionary *notificationDict = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if ([notificationDict valueForKey:@"umwsq"]) {
+        if ([notificationDict valueForKey:@"aps"]) // 点击推送进入
+        {
+            [UMComMessageManager didReceiveRemoteNotification:notificationDict];
+        }
+    } else {
+        //使用你的消息通知处理
+    }
+
     //下面实现自定义登录
 //    LoginViewController *loginViewControler =[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
 //    [UMComLoginManager setLoginHandler:loginViewControler];
     //设置微信AppId、appSecret，分享url
     [UMSocialWechatHandler setWXAppId:@"wx96110a1e3af63a39" appSecret:@"c60e3d3ff109a5d17013df272df99199" url:@"http://www.umeng.com/social"];
-    
     //设置分享到QQ互联的appId和appKey
     [UMSocialQQHandler setQQWithAppId:@"1104606393" appKey:@"X4BAsJAVKtkDQ1zQ" url:@"http://www.umeng.com/social"];
     [UMComLoginManager setAppKey:UMengLoginAppkey];
@@ -58,6 +64,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     UINavigationController *communityController = [UMCommunity getFeedsModalViewController];
     self.window.rootViewController = communityController;
+    
     return YES;
 }
 
@@ -79,7 +86,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [UMComMessageManager didReceiveRemoteNotification:userInfo];
+    if ([userInfo valueForKey:@"umwsq"]) {
+        [UMComMessageManager didReceiveRemoteNotification:userInfo];
+    } else {
+        //使用你自己的消息推送处理
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
