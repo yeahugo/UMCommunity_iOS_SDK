@@ -14,8 +14,9 @@
 #import "UMComHttpPagesManager.h"
 
 typedef enum {
-    commentorderByTimeDesc = 0,
-    commentorderByTimeAsc = 1
+    commentorderByDefault = 0,
+    commentorderByTimeDesc = 1,
+    commentorderByTimeAsc = 2
 
 }UMComCommentOrderType;
 

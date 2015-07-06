@@ -26,4 +26,7 @@
 - (void)customObj:(id)obj clickOnImageView:(UIImageView *)feed complitionBlock:(void (^)(UIViewController *currentViewController))block;
 - (void)customObj:(id)obj clikeOnMoreButton:(id)param;
 
+- (void)customObj:(id)obj clickOnFollowTopic:(UMComTopic *)topic;
+- (void)customObj:(id)obj clickOnFollowUser:(UMComUser *)user;
+
 @end

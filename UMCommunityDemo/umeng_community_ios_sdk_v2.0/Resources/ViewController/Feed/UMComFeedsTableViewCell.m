@@ -53,17 +53,7 @@
 }
 
 
-- (void)drawRect:(CGRect)rect
-{
-    UIColor *color = TableViewSeparatorRGBColor;
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
-    CGContextFillRect(context, rect);
-    
-    CGContextSetStrokeColorWithColor(context, color.CGColor);
-    CGContextStrokeRect(context, CGRectMake(0, rect.size.height - TableViewCellSpace, rect.size.width, TableViewCellSpace));
-}
+
 
 /****************************reload cell views start *****************************/
 - (void)reloadFeedWithfeedStyle:(UMComFeedStyle *)feedStyle tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -111,7 +101,6 @@
         [self.delegate customObj:self  clickOnLikeFeed:self.feed];
     }
 }
-//
 -(void)onClickForward:(UITapGestureRecognizer *)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(customObj:clickOnForward:)]) {

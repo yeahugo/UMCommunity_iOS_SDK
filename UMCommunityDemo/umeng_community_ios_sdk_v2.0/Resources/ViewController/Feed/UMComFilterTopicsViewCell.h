@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UMComClickActionDelegate.h"
 
 @class UMComTopic,UMComImageView;
 
@@ -15,13 +15,21 @@
 @property (nonatomic,strong) IBOutlet UILabel *labelName;
 @property (nonatomic,strong) IBOutlet UILabel *labelDesc;
 @property (nonatomic,strong) IBOutlet UIButton *butFocuse;
+
+@property (nonatomic,strong) UMComTopic *topic;
+
+
 @property (nonatomic,strong) UMComImageView *topicIcon;
 
 @property (nonatomic,assign) BOOL isRecommendTopic;
 
 @property (nonatomic, copy) void (^clickOnTopic)(UMComTopic *topic);
 
+@property (nonatomic, weak) id<UMComClickActionDelegate>delegate;
+
 - (void)setWithTopic:(UMComTopic *)topic;
+
+- (void)setFocused:(BOOL)focused;
 
 - (IBAction)actionFocuse:(id)sender;
 @end

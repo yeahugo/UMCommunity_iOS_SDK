@@ -13,7 +13,7 @@
 #import "UMComShowToast.h"
 #import "UIViewController+UMComAddition.h"
 
-@interface UMComUserRecommendViewController ()
+@interface UMComUserRecommendViewController ()<UMComClickActionDelegate>
 
 @property (nonatomic, strong) UMComPullRequest *fetchRequest;
 
@@ -57,13 +57,13 @@
     self.tableView.dataSource = self;
 
     if (self.userDataSourceType == UMComSearchUser) {
-        [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+        [self setBackButtonWithImage];
         [self setTitleViewWithTitle:UMComLocalizedString(@"user_search", @"搜索用户")];
         [self.indicatorView removeFromSuperview];
         [self.tableView reloadData];
  
     }else if (self.userDataSourceType == UMComLikeUser){
-        [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+        [self setBackButtonWithImage];
         [self setTitleViewWithTitle:UMComLocalizedString(@"like_user", @"喜欢用户")];
         [self.indicatorView removeFromSuperview];
         [self.tableView reloadData];
@@ -85,7 +85,7 @@
     if (self.userDataSourceType == UMComReccommentUser) {
         self.fetchRequest = [[UMComRecommendUsersRequest alloc]initWithCount:BatchSize];
         [self requestRecommendUsers];
-        [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+        [self setBackButtonWithImage];
         [self setTitleViewWithTitle: UMComLocalizedString(@"user_recommend", @"用户推荐")];
         
     }else if(self.userDataSourceType == UMComTopicHotUser){
@@ -115,7 +115,7 @@
 {
     static NSString *cellId = @"UserRecommendCell";
     UMComUserRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
-
+    cell.delegate = self;
     UMComUser *user = self.userList[indexPath.row];
     [cell displayWithUser:user userType:self.userDataSourceType];
     __weak UMComUserRecommendViewController *weakSelf = self;
@@ -191,6 +191,18 @@
 }
 
 
+
+#pragma mark - UMComClickActionDelegate
+- (void)customObj:(UMComUserRecommendCell *)cell clickOnFollowUser:(UMComUser *)user
+{
+    UIViewController *paramViewController = self;
+    if (self.viewController) {
+        paramViewController = self.viewController;
+    }
+    [[UMComAction action] performActionAfterLogin:nil viewController:paramViewController completion:^(NSArray *data, NSError *error) {
+        [cell focusUserAfterLoginSucceed];
+    }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

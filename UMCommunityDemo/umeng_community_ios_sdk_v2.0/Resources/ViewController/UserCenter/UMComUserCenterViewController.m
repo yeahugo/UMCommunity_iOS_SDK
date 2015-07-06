@@ -67,6 +67,9 @@
 {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUserProfile) name:UpdateUserProfileSuccess object:nil];
+    if ([self.user.uid isEqualToString:[UMComSession sharedInstance].uid]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataFromServer) name:kNotificationPostFeedResult object:nil];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -77,13 +80,14 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UpdateUserProfileSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
 - (void)viewDidLoad {
 
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+//    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+    [self setBackButtonWithImage];
     [self setTitleViewWithTitle:self.user.name];
     self.topLine.frame = CGRectMake(0, 0, self.topLine.frame.size.width, 0.3);
     self.topLine.backgroundColor = TableViewSeparatorRGBColor;
@@ -263,7 +267,7 @@
     [self.feedNumber setText:[user.feed_count description]];
     [self.followerNumber setText:[user.following_count description]];
     [self.fanNumber setText:[user.fans_count description]];
-    BOOL isFollow = [user.is_follow boolValue];
+    BOOL isFollow = [user.has_followed boolValue];
     if (isFollow) {
         [self.focus setTitle:UMComLocalizedString(@"Has_Focused",@"取消关注") forState:UIControlStateNormal];
         self.feedViewModel.isFocus = YES;

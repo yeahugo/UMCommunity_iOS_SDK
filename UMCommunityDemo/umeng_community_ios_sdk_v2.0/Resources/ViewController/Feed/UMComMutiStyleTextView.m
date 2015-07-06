@@ -25,6 +25,13 @@
     return self;
 }
 
+- (void)dealloc
+{
+    if (_framesetterRef) {
+        CFRelease(_framesetterRef);
+    }
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -38,8 +45,6 @@
 {
     self.attributedText = styleTextView.attributedText;
     self.framesetterRef = styleTextView.framesetterRef;
-    self.frameRef = styleTextView.frameRef;
-    self.pathRef = styleTextView.pathRef;
     self.runs = styleTextView.runs;
     [self setNeedsDisplay];
 }
@@ -113,21 +118,19 @@
     CGPathAddRect(pathRef, NULL, viewRect);
 
     CTFrameRef frameRef = CTFramesetterCreateFrame(self.framesetterRef, CFRangeMake(0, 0), pathRef, nil);
-    self.frameRef = frameRef;
-    
     //通过context在frame中描画文字内容
-    CTFrameDraw(self.frameRef, contextRef);
+    CTFrameDraw(frameRef, contextRef);
     [self.runRectDictionary removeAllObjects];
-    [self setRunsKeysToRunRect];
+    [self setRunsKeysToRunRectWithFrameRef:frameRef];
     CGPathRelease(pathRef);
     CFRelease(frameRef);
 }
 
-- (void)setRunsKeysToRunRect
+- (void)setRunsKeysToRunRectWithFrameRef:(CTFrameRef)frameRef
 {
-    CFArrayRef lines = CTFrameGetLines(self.frameRef);
+    CFArrayRef lines = CTFrameGetLines(frameRef);
     CGPoint lineOrigins[CFArrayGetCount(lines)];
-    CTFrameGetLineOrigins(self.frameRef, CFRangeMake(0, 0), lineOrigins);
+    CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), lineOrigins);
     
     for (int i = 0; i < CFArrayGetCount(lines); i++)
     {
@@ -305,10 +308,8 @@
     
     CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
     self.framesetterRef = setterRef;
-    CTFrameRef frameRef = CTFramesetterCreateFrame(_framesetterRef, CFRangeMake(0, 0), pathRef, nil);
-    self.frameRef = frameRef;
-    self.pathRef = pathRef;
-    CFArrayRef lines = CTFrameGetLines(_frameRef);
+    CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, nil);
+    CFArrayRef lines = CTFrameGetLines(frameRef);
     
     lineIndex = CFArrayGetCount(lines);
     lineCount = (int)lineIndex;
@@ -316,7 +317,6 @@
     CTLineRef lineRef;
     if (lineIndex > 1)
     {
-        
         for (int i = 0; i <lineIndex ; i++)
         {
             lineRef= CFArrayGetValueAtIndex(lines, i);
@@ -338,8 +338,6 @@
             {
                 height += (lineAscent + lineDescent + linespace);
             }
-            
-//            CFRelease(lineRef);
         }
         width = size.width;
     }
@@ -349,7 +347,6 @@
         CGRect rect = CTLineGetBoundsWithOptions(lineRef,kCTLineBoundsExcludeTypographicShifts);
         shortestLineWith = rect.size.width;
         self.lineHeight = rect.size.height + linespace;
-
         width = rect.size.width;
         CGFloat lineAscent;
         CGFloat lineDescent;
@@ -358,7 +355,6 @@
         
         height += (lineAscent + lineDescent + lineLeading + linespace);
         height = height;
-//        CFRelease(lineRef);
     }
     
     CGRect rect = CGRectMake(0,0,width,height);
@@ -369,7 +365,6 @@
     self.attributedText = attString;
     CGPathRelease(pathRef);
     CFRelease(frameRef);
-//    CFRelease(setterRef);
 }
 
 

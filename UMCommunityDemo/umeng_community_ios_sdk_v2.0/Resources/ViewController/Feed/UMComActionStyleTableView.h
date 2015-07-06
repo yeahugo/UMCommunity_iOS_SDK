@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) UMComFeed *feed;
 
+@property (nonatomic, assign) NSInteger selectedIndex;
+
 @property (nonatomic, copy) void (^didSelectedAtIndexPath)(UMComActionStyleTableView *actionStyleView, NSIndexPath *indexPath);
 - (void)setImageNameList:(NSArray *)imageNameList titles:(NSArray *)titles;
 @end

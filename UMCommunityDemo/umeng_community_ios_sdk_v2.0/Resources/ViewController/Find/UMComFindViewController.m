@@ -13,6 +13,8 @@
 #import "UMComAllFeedViewController.h"
 #import "UMComSettingViewController.h"
 #import "UIViewController+UMComAddition.h"
+#import "UMComUserCenterViewController.h"
+#import "UMComSession.h"
 
 @interface UMComFindViewController ()
 
@@ -22,7 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
+//    [self setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
+    [self setBackButtonWithImage];
     [self setTitleViewWithTitle:UMComLocalizedString(@"find", @"发现")];
 //    self.title = UMComLocalizedString(@"find", @"发现");
     [self.tableView registerNib:[UINib nibWithNibName:@"UMComFindTableViewCell" bundle:nil] forCellReuseIdentifier:@"FindTableViewCell"];
@@ -137,7 +140,8 @@
 {
     UMComAllFeedViewController *friendViewController = [[UMComAllFeedViewController alloc]init];
     friendViewController.fetchFeedsController = [[UMComFriendFeedsRequest alloc]initWithCount:BatchSize];
-    [friendViewController setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
+    [self setBackButtonWithImage];
+//    [friendViewController setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
     [friendViewController setTitleViewWithTitle:UMComLocalizedString(@"circle_friends", @"好友圈")];
     [self.navigationController pushViewController:friendViewController animated:YES];
 }
@@ -157,8 +161,10 @@
 
 - (void)tranToUserCenter
 {
-    [[UMComUserCenterAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
-    }];
+    UMComUserCenterViewController *userCenterViewController = [[UMComUserCenterViewController alloc] initWithUser:[UMComSession sharedInstance].loginUser];
+    [self.navigationController pushViewController:userCenterViewController animated:YES];
+//    [[UMComUserCenterAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
+//    }];
 
 }
 - (void)tranToSetting

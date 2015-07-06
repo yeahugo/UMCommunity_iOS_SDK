@@ -78,7 +78,11 @@
     [self.genderPicker selectRow:gender inComponent:0 animated:NO];
     
     [self setRightButtonWithTitle:UMComLocalizedString(@"Save",@"保存") action:@selector(onClickSave)];
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
+    [self setBackButtonWithImage];
+//    if (self.navigationController.viewControllers.count <= 1) {
+//        [self setLeftButtonWithImageName:UMComLocalizedString(@"Backx",@"返回") action:@selector(onClickClose)];
+//    }
+//    [self setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
     [self setTitleViewWithTitle:UMComLocalizedString(@"ProfileSetting", @"帐号设置")];
     
     UITapGestureRecognizer *userImageGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickChangeUserImage)];
@@ -340,7 +344,7 @@
     userAccount.name = self.nameField.text;
     userAccount.gender = [NSNumber numberWithInteger:[self.genderPicker selectedRowInComponent:0]];
     
-    //如果从登录页面因为用户名错误，直接跳转到设置页面，先进性登录注册
+    //如果从登录页面因为用户名错误，直接跳转到设置页面，先进行登录注册
     if (self.registerError) {
         UMComUserAccount *loginUserAccount = [UMComSession sharedInstance].currentUserAccount;
         loginUserAccount.name = self.nameField.text;
@@ -375,7 +379,7 @@
                     }];
                 }
             } else {
-                [UMComShowToast updateProfileFail:error];
+                [UMComShowToast registerError:error];
                 NSLog(@"update user profile fail!!");
             }
         }];

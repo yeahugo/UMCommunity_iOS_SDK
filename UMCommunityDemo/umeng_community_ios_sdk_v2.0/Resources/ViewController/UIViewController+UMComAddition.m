@@ -27,12 +27,13 @@ const char tipLabelKey;
         self.navigationItem.leftBarButtonItem = backButtonItem;
     }
 }
-- (void)setBackButtonWithImageName:(NSString *)imageName
+- (void)setBackButtonWithImage
 {
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0) {
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 7.0 || self.navigationController.viewControllers.count <= 1) {
         self.navigationController.navigationItem.leftBarButtonItem = nil;
-        UIBarButtonItem *backButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:imageName target:self action:@selector(goBack)];
+        UMComBarButtonItem *backButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:@"Backx" target:self action:@selector(goBack)];
         backButtonItem.customView.frame = CGRectMake(0, 0, 40, 35);
+        backButtonItem.customButtonView.frame = CGRectMake(5, 0, 20, 20);
         self.navigationItem.leftBarButtonItem = backButtonItem;
     }
 }
@@ -45,8 +46,9 @@ const char tipLabelKey;
 }
 - (void)setLeftButtonWithImageName:(NSString *)imageName action:(SEL)action
 {
-    UIBarButtonItem *backButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:imageName target:self action:@selector(goBack)];
+    UMComBarButtonItem *backButtonItem = [[UMComBarButtonItem alloc] initWithNormalImageName:imageName target:self action:@selector(goBack)];
     backButtonItem.customView.frame = CGRectMake(0, 0, 40, 35);
+    backButtonItem.customButtonView.frame = CGRectMake(0, 0, 20, 20);
     self.navigationItem.leftBarButtonItem = backButtonItem;
 }
 
@@ -150,6 +152,7 @@ const char tipLabelKey;
     if (!tipLabel) {
        tipLabel = [self creatTipLabelWithTitle:title];
     }
+    tipLabel.text = title;
     tipLabel.frame = CGRectMake(0, -40, tipLabel.frame.size.width, tipLabel.frame.size.height);
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         tipLabel.frame = CGRectMake(0, 0, tipLabel.frame.size.width, tipLabel.frame.size.height);

@@ -28,8 +28,9 @@
     [self.portrait addGestureRecognizer:tapPortrait];
     [self.contentView addSubview:self.portrait];
     UITapGestureRecognizer *tapCommentContent = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapOnCommentContent)];
-    [self.commentTextView addGestureRecognizer:tapCommentContent];
+    [self.contentView addGestureRecognizer:tapCommentContent];
     [self.timeLabel setTextColor:[UMComTools colorWithHexString:FontColorGray]];
+    self.commentTextView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)reloadWithComment:(UMComComment *)comment commentStyleView:(UMComMutiStyleTextView *)styleView
@@ -60,7 +61,7 @@
         };
     }
     if (comment.create_time) {
-        self.timeLabel.text = comment.create_time;
+        self.timeLabel.text = createTimeString(comment.create_time);
     }
 }
 

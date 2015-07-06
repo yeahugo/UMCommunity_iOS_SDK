@@ -22,15 +22,9 @@
 
 @property (nonatomic, copy) NSString *uid;
 
-@property (nonatomic, copy) NSString *open_id;
-
 @property (nonatomic, copy) NSString *appkey;
 
-@property (nonatomic, copy) NSString *user_profile_id;
-
 @property (nonatomic, strong) NSDictionary *baseHeader;//含当前uid
-
-@property (nonatomic, copy) NSString *feedID;
 
 @property (nonatomic, strong) NSMutableArray *focus_topics;
 
@@ -39,9 +33,6 @@
 @property (nonatomic, strong) UMComUser *loginUser;
 
 @property (nonatomic, assign) BOOL isFocus;
-
-@property (nonatomic, strong) UMComFeed *commentFeed;
-
 @property (nonatomic, assign) BOOL isNetworkAvaible;
 
 @property (nonatomic, strong) UMComUserAccount *currentUserAccount;

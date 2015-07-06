@@ -58,7 +58,8 @@ static NSArray *groupTypes;
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
         [self.navigationItem setLeftBarButtonItem:cancelButton animated:NO];
     }else{
-        [self setBackButtonWithTitle:UMComLocalizedString(@"cancel", @"取消")];
+        [self setBackButtonWithImage];
+//        [self setBackButtonWithTitle:UMComLocalizedString(@"cancel", @"取消")];
     }
 
 }

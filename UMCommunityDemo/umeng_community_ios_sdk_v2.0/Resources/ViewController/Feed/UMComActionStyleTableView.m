@@ -42,6 +42,8 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.contentView.layer.cornerRadius = 4;
     cell.layer.cornerRadius = 4;
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
     if (indexPath.row == 0) {
         if (self.titles.count > 0 && self.imageNames > 0) {
             NSString *title = [self.titles objectAtIndex:0];
@@ -51,14 +53,14 @@
             [cell.contentView addSubview:cellView];
         }
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, cell.contentView.frame.size.height-10, tableView.frame.size.width, 7)];
-        view.backgroundColor = [UIColor whiteColor];
+        view.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:view];
     }else if (indexPath.row == 1){
         cell.contentView.backgroundColor = TableViewSeparatorRGBColor;
         
     }else if (indexPath.row == 2){
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0,0, tableView.frame.size.width, 7)];
-        view.backgroundColor = [UIColor whiteColor];
+        view.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:view];
         if (self.titles.count > 1 && self.imageNames.count > 1) {
             NSString *title = [self.titles objectAtIndex:1];
@@ -86,10 +88,11 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 20, 20)];
     imageView.image = [UIImage imageNamed:imageName];
     [cellView addSubview:imageView];
-    
+    cellView.backgroundColor = [UIColor clearColor];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 0, 40, 40)];
     label.font = UMComFontNotoSansLightWithSafeSize(17);
     label.textColor = [UMComTools colorWithHexString:FontColorGray];
+    label.backgroundColor = [UIColor clearColor];
     [cellView addSubview:label];
     label.text = title;
     return cellView;
@@ -128,7 +131,7 @@
     if (self.didSelectedAtIndexPath) {
         self.didSelectedAtIndexPath(self,indexPath);
     }
-    
+    self.selectedIndex = indexPath.row;
 }
 
 

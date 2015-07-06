@@ -40,7 +40,7 @@ static const CGFloat kLikeViewHeight = 30;
 static const CGFloat kCommentLenght = 140;
 static const NSString * Permission_delete_content = @"permission_delete_content";
 
-@interface UMComFeedDetailViewController ()<UITextFieldDelegate, UMComClickActionDelegate, UMComClickActionDelegate,UIScrollViewDelegate>
+@interface UMComFeedDetailViewController ()<UITextFieldDelegate, UMComClickActionDelegate, UMComClickActionDelegate,UIScrollViewDelegate,UIAlertViewDelegate>
 
 #pragma mark - property
 @property (nonatomic, copy) NSString *feedId;
@@ -52,6 +52,8 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 @property (nonatomic, strong) UMComPullRequest *fetchFeedsController;
 
 @property (nonatomic, strong) UMComPullRequest *fetchLikeRequest;
+
+@property (nonatomic, strong) UMComFeedCommentsRequest *fecthCommentRequest;
 
 @property (nonatomic, strong) UMComFeedStyle *feedStyle;
 
@@ -83,6 +85,7 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     BOOL isViewDidAppear;
     BOOL isrefreshLikeFinish;
     BOOL isrefreshCommentFinish;
+    BOOL isHaveNextPage;
     OperationType operationType;
 }
 #pragma mark - UIViewController method
@@ -96,6 +99,7 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         isViewDidAppear = NO;
         isrefreshLikeFinish = NO;
         isrefreshCommentFinish = NO;
+        isHaveNextPage = NO;
     }
     return self;
 }
@@ -106,8 +110,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     if (self) {
         self.feedId = feedId;
         self.commentId = commentId;
-        [self getFetchedResultsController];
-
     }
     return self;
 }
@@ -118,7 +120,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     if (self) {
         self.feedId = feed.feedID;
         self.showType = type;
-        [self getFetchedResultsController];
     }
     return self;
 }
@@ -133,14 +134,17 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
 - (void)fetchOnFeedFromServer
 {
+    if (!self.fetchFeedsController) {
+        [self getFetchedResultsController];
+    }
     [self.fetchFeedsController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
         if ([data isKindOfClass:[NSArray class]] && data.count > 0) {
-            self.feed = data.firstObject;
+            self.feed = data[0];
             [self reloadViewsWithFeed:self.feed];
         }
         [self.fetchFeedsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
             if ([data isKindOfClass:[NSArray class]] && data.count > 0) {
-                self.feed = data.firstObject;
+                self.feed = data[0];
                 [self reloadViewsWithFeed:self.feed];
             }
             [self refreshFeedsLike:self.feed.feedID];
@@ -197,8 +201,10 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     [self setTitleViewWithTitle:UMComLocalizedString(@"Feed_Detail_Title", @"正文内容")];
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
-
+    [self setBackButtonWithImage];
+    if (self.navigationController.viewControllers.count <= 1) {
+        [self setLeftButtonWithImageName:@"Backx" action:@selector(goBack)];
+    }
     [self setRightButtonWithImageName:@"um_diandiandian" action:@selector(onClickHandlButton:)];
     self.mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-40)];
     self.mainScrollView.scrollsToTop = YES;
@@ -227,13 +233,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
     [self creatCommentTextField];
     
-    if (!self.feed) {
-        [self fetchOnFeedFromServer];
-    }else{
-        [self reloadLikeImageView:self.feed];
-        [self refreshFeedsLike:self.feed.feedID];
-        [self refreshFeedsComments:self.feed.feedID];
-    }
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissAllEditView)];
     [self.view addGestureRecognizer:tapGestureRecognizer];
     
@@ -243,7 +242,14 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     self.topLine.backgroundColor = [UIColor clearColor];
     [self.view bringSubviewToFront:self.tableControlView];
     self.menuView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
+    
+    if (!self.feed) {
+        [self fetchOnFeedFromServer];
+    }else{
+        [self reloadLikeImageView:self.feed];
+        [self refreshFeedsLike:self.feed.feedID];
+        [self refreshFeedsComments:self.feed.feedID];
+    }
 }
 
 - (void)reloadLikeImageView:(UMComFeed *)feed
@@ -261,9 +267,7 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 #pragma mark - private Method
 - (void)reloadViewsWithFeed:(UMComFeed *)feed
 {
-    if (!self.feedStyle) {
-        self.feedStyle = [UMComFeedStyle feedStyleWithFeed:feed viewWidth:self.view.frame.size.width feedType:feedDetailType];
-    }
+    self.feedStyle = [UMComFeedStyle feedStyleWithFeed:feed viewWidth:self.view.frame.size.width feedType:feedDetailType];
     [self.feedContentView reloadDetaiViewWithFeedStyle:self.feedStyle viewWidth:self.mainScrollView.frame.size.width];
 
     if (self.likeListView.likeList.count > 0) {
@@ -322,8 +326,12 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
 - (void)refreshFeedsComments:(NSString *)feedId
 {
-    UMComFeedCommentsRequest *allCommentsController = [[UMComFeedCommentsRequest alloc] initWithFeedId:feedId order:commentorderByTimeDesc count:TotalCommentsSize];
-    [allCommentsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+    if (!self.fecthCommentRequest) {
+        self.fecthCommentRequest = [[UMComFeedCommentsRequest alloc] initWithFeedId:feedId order:commentorderByTimeAsc count:BatchSize];
+        
+    }
+    [self.fecthCommentRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        isHaveNextPage = haveNextPage;
         isrefreshCommentFinish = YES;
         if (!error) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -383,6 +391,32 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     }
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    CGFloat offset = scrollView.contentOffset.y;
+    if (offset > 0 && scrollView.contentOffset.y > scrollView.contentSize.height - (scrollView.frame.size.height - 65)){
+        [[UMComCommentOperationAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
+            [self.fecthCommentRequest fetchNextPageFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+                if (!error) {
+                    isHaveNextPage = haveNextPage;
+                    NSMutableArray *tempData = [NSMutableArray array];
+                    [tempData addObjectsFromArray:self.commentTableView.reloadComments];
+                    [tempData addObjectsFromArray:data];
+                    [self.commentTableView reloadCommentTableViewArrWithComments:tempData];
+                    int commentCount = [self.feed.comments_count intValue];
+                    if (commentCount < tempData.count) {
+                        commentCount = (int)tempData.count;
+                    }
+                    self.showType = UMComShowFromClickDefault;
+                    self.feed.comments_count = [NSNumber numberWithInt:commentCount];
+                    [self.commentTableView reloadData];
+                    [self reloadViewsWithFeed:self.feed];
+                }
+            }];
+        }];
+    }
+}
+
 #pragma mark - showActionView
 - (void)onClickHandlButton:(UIButton *)sender
 {
@@ -437,6 +471,7 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
 - (void)tableView:(UMComActionStyleTableView *)actionStyleView didSelectRowAtIndexPath:(NSIndexPath *)indexPath type:(OperationType)type
 {
+    operationType = type;
     if (indexPath.row != 1 && indexPath.row != 3) {
         if (type == FeedType) {
             [self dealWithFeedActionWithIndex:indexPath.row];
@@ -445,15 +480,18 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         }
     }
 }
+
+
 - (void)dealWithCommentActionWithIndex:(NSInteger)index
 {
     [self hiddenShareListView];
     if (index == 0) {
         UMComComment  *comment = self.commentTableView.selectedComment;
         if ([self isPermission_delete_content] || [comment.creator.uid isEqualToString:[UMComSession sharedInstance].loginUser.uid]) {
-            [self deleteCommentWithCommentId:comment.commentID];
+            [self showSureActionMessage:UMComLocalizedString(@"sure to deleted comment", @"确定要删除这条评论？")];
+          
         }else{
-            [self spamCommentWithCommentId:comment.commentID];
+            [self showSureActionMessage:UMComLocalizedString(@"sure to spam comment", @"确定要举报这条评论？")];
         }
     }else if (index == 2){
         [self presentReplyView:self.commentTableView.selectedComment];
@@ -461,6 +499,51 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 }
 
 
+- (void)dealWithFeedActionWithIndex:(NSInteger)index
+{
+    [self hiddenShareListView];
+
+    if (index == 0) {
+        if ([self isPermission_delete_content]) {
+            [self showSureActionMessage:UMComLocalizedString(@"sure to deleted comment", @"确定要删除这条消息？")];
+        }else{
+            [self showSureActionMessage:UMComLocalizedString(@"sure to spam comment", @"确定要举报这条消息？")];
+        }
+    }else if (index == 2){
+        [self customObj:nil clickOnCopy:self.feed];
+    }else{
+        
+    }
+}
+
+#pragma mark - UIAlertView
+- (void)showSureActionMessage:(NSString *)message
+{
+
+    [[[UIAlertView alloc]initWithTitle:nil message:message delegate:self cancelButtonTitle:UMComLocalizedString(@"cancel", @"取消") otherButtonTitles:UMComLocalizedString(@"YES", @"是"), nil] show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        if (operationType == FeedType) {
+            if ([self isPermission_delete_content]) {
+                [self deletedFeed:self.feed];
+            }else{
+                [self hiddenShareListView];
+                [self spamFeed:self.feed];
+            }
+        }else{
+            UMComComment  *comment = self.commentTableView.selectedComment;
+            if ([self isPermission_delete_content] || [comment.creator.uid isEqualToString:[UMComSession sharedInstance].loginUser.uid]) {
+                [self deleteCommentWithCommentId:comment.commentID];
+                
+            }else{
+                [self spamCommentWithCommentId:comment.commentID];
+            }
+        }
+    }
+}
 - (void)deleteCommentWithCommentId:(NSString *)commentId
 {
     [UMComCommentFeedRequest postDeleteWithComment:commentId feedId:self.feed.feedID completion:^(id responseObject, NSError *error) {
@@ -482,36 +565,21 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 - (void)spamCommentWithCommentId:(NSString *)commentId
 {
     [UMComCommentFeedRequest postSpamWithComment:commentId completion:^(id responseObject, NSError *error) {
-     
+        [UMComShowToast spamComment:error];
     }];
 
 }
 
-- (void)dealWithFeedActionWithIndex:(NSInteger)index
-{
-    if (index == 0) {
-        if ([self isPermission_delete_content]) {
-            [self clickOnDeleted:self.feed];
-        }else{
-            [self hiddenShareListView];
-            [self clickOnSpam:self.feed];
-        }
-    }else if (index == 2){
-        [self hiddenShareListView];
-        [self customObj:nil clickOnCopy:self.feed];
-    }else{
-        [self hiddenShareListView];
-    }
-}
-- (void)clickOnSpam:(UMComFeed *)feed
+- (void)spamFeed:(UMComFeed *)feed
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [UMComSpamFeedRequest spamWithFeedId:feed.feedID completion:^(NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
         [UMComShowToast spamSuccess:error];
     }];
 }
-- (void)clickOnDeleted:(UMComFeed *)feed
+- (void)deletedFeed:(UMComFeed *)feed
 {
     if (!feed) {
         return;
@@ -521,8 +589,9 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [UMComDeleteFeedRequest deleteWithFeedId:feed.feedID completion:^(NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         feed.status = @(FeedStatusDeleted);
         [self hidenaActionTableView];
         [UMComShowToast deletedFail:error];
@@ -580,11 +649,13 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     if ([self.commentTextField becomeFirstResponder]) {
         [self dismissAllEditView];
     }
-//    [self onClickHandlButton:nil];
 }
 
 - (void)customObj:(id)obj clickOnOriginFeedText:(UMComFeed *)feed
 {
+    if (feed.isDeleted || [feed.status intValue] >= FeedStatusDeleted) {
+        return;
+    }
     [self transitionToFeedDetailViewControllerWithFeed:feed showType:UMComShowFromClickFeedText];
 }
 
@@ -624,7 +695,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         return;
     }
     if (feed.isDeleted || [feed.status intValue] == 2) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:FeedDeletedFinish object:self.feed];
         return;
     }
     [[UMComForwardAction action] performActionAfterLogin:feed viewController:self completion:nil];
@@ -844,9 +914,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 {
     
     [self fetchOnFeedFromServer];
-//    int forword_count = [self.feed.forward_count intValue]+1;
-//    self.feed.forward_count = @(forword_count);
-//    [self.forwarTitleLabel setText:[NSString stringWithFormat:@"转发(%d)",[self.feed.forward_count intValue]]];
 
 }
 

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "UMComTools.h"
 
+@class UMComFeed;
+
 @protocol UMComLoginDelegate <NSObject>
 
 - (void)setAppKey:(NSString *)appKey;
@@ -17,4 +19,7 @@
 
 - (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(LoadDataCompletion)loginCompletion;
 
+- (void)didSelectPlatform:(NSString *)platformName
+                     feed:(UMComFeed *)feed
+           viewController:(UIViewController *)viewControlller;
 @end

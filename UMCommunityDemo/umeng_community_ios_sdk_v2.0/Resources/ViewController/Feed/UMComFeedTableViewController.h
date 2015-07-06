@@ -22,4 +22,5 @@
 
 
 - (void)refreshAllData;
+- (void)refreshDataFromServer;
 @end

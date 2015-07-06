@@ -24,10 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+//    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+    [self setBackButtonWithImage];
     [self setTitleViewWithTitle:UMComLocalizedString(@"Setting", @"设置")];
-//    [self.navigationController.navigationBar setTitleTextAttributes:@{UITextAttributeFont:UMComFontNotoSansDemiWithSafeSize(18)}];
-//    [self.navigationItem setTitle:UMComLocalizedString(@"Setting", @"设置")];
 //    
     [self.settingTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"SettingCell"];
     self.logoutButton.layer.borderColor = [UIColor colorWithRed:76.0/255 green:145.0/255 blue:226.0/255 alpha:1].CGColor;

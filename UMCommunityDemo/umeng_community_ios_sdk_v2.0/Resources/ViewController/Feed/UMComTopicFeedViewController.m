@@ -50,9 +50,7 @@
     CALayer * downButtonLayer = [self.followButton layer];
     
     UIColor *bcolor = [UIColor colorWithRed:15.0/255.0 green:121.0/255.0 blue:254.0/255.0 alpha:1];
-    
     [downButtonLayer setBorderWidth:0.5];
-    
     if([self isInclude:self.topic]){
         [downButtonLayer setBorderColor:[bcolor CGColor]];
         [self.followButton setTitleColor:bcolor forState:UIControlStateNormal];
@@ -79,7 +77,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+    [self setBackButtonWithImage];
     [self setTitleViewWithTitle:self.topic.name];
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -146,7 +144,8 @@
     
     self.editedButton.center = CGPointMake(self.view.frame.size.width-DeltaRight, [UIApplication sharedApplication].keyWindow.bounds.size.height-DeltaBottom);
     
-    [[UIApplication sharedApplication].keyWindow addSubview:self.editedButton];    
+    [[UIApplication sharedApplication].keyWindow addSubview:self.editedButton];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshDataFromServer) name:kNotificationPostFeedResult object:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -154,18 +153,26 @@
     self.feedsTableView.hidden = YES;
     self.recommendUsersVc.view.hidden = YES;
     [self.editedButton removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationPostFeedResult object:nil];
+
 }
 
 
 -(IBAction)onClickFollow:(id)sender
 {
     __weak UMComTopicFeedViewController *weakSelf = self;
-    [self.topic setFocused:![self.topic isFocus] block:^(NSError * error) {
-        if (!error) {
-            [weakSelf setFocused:[weakSelf.topic isFocus]];
-        }else{
-            [UMComShowToast focusTopicFail:error];
-        }
+    [[UMComAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
+        [self.topic setFocused:![self.topic isFocus] block:^(NSError * error) {
+            if (!error) {
+                [weakSelf setFocused:[weakSelf.topic isFocus]];
+            }else{
+                if (error.code == 30001) {
+                    [[UMComSession sharedInstance].focus_topics addObject:weakSelf.topic];
+                    [weakSelf setFocused:YES];
+                }
+                [UMComShowToast focusTopicFail:error];
+            }
+        }];
     }];
 }
 

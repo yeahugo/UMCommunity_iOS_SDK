@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UMComLoginViewModel.h"
 
 @interface UMComLoginViewController : UIViewController
-
-@property (nonatomic, strong) UMComLoginViewModel *loginViewModel;
 
 @property (nonatomic, weak) IBOutlet UIButton *sinaLoginButton;
 @property (nonatomic, weak) IBOutlet UIButton *qqLoginButton;

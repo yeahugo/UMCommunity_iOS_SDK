@@ -56,7 +56,7 @@ static UMComImageView *_instance = nil;
 - (void)setImageURL:(NSString *)imageURLString placeHolderImage:(UIImage *)placeHolderImage
 {
     if (imageURLString) {
-        NSURL *url = [[NSURL alloc] initWithString:imageURLString];
+        NSURL *url = [NSURL URLWithString:imageURLString];
         [super setImageURL:url];
         if (!self.isCacheImage) {
             self.placeholderImage = placeHolderImage;

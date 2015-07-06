@@ -2,13 +2,12 @@
 //  UMComUser.h
 //  UMCommunity
 //
-//  Created by umeng on 15/6/10.
-//  Copyright (c) 2015年 Umeng. All rights reserved.
+//  Created by Gavin Ye on 7/1/15.
+//  Copyright (c) 2015 Umeng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
 #import "UMComManagedObject.h"
 
 @class UMComAlbum, UMComComment, UMComFeed, UMComLike, UMComLoginUser, UMComTopic, UMComUser;
@@ -25,18 +24,18 @@
 @property (nonatomic, retain) NSNumber * following_count;
 @property (nonatomic, retain) NSNumber * gender;
 @property (nonatomic, retain) id icon_url;
-@property (nonatomic, retain) NSNumber * is_follow;
+@property (nonatomic, retain) NSNumber * has_followed;
 @property (nonatomic, retain) NSNumber * is_recommend;
 @property (nonatomic, retain) NSNumber * level;
 @property (nonatomic, retain) NSString * level_title;
 @property (nonatomic, retain) NSNumber * like_count;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) id permissions;
 @property (nonatomic, retain) NSNumber * post_count;
 @property (nonatomic, retain) NSNumber * score;
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * uid;
-@property (nonatomic, retain) id permissions;
 @property (nonatomic, retain) UMComAlbum *album;
 @property (nonatomic, retain) NSSet *comment;
 @property (nonatomic, retain) NSOrderedSet *fans;

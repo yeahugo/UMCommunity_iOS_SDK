@@ -15,8 +15,10 @@
 #import "UMComShowToast.h"
 #import "UIViewController+UMComAddition.h"
 #import "UMComComment.h"
+#import "UMComTopic+UMComManagedObject.h"
+#import "UMComAction.h"
 
-@interface UMComFilterTopicsViewController ()
+@interface UMComFilterTopicsViewController ()<UMComClickActionDelegate>
 
 @property (strong,nonatomic) NSArray *filteredCacheTopicsArray;
 @property (strong,nonatomic) NSArray *filteredResponseTopicsArray;
@@ -61,7 +63,8 @@
     if (self.topicRequestType == allTopicType) {
 
     }else if (self.topicRequestType == recommendTopicType){
-        [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+//        [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+        [self setBackButtonWithImage];
         [self setTitleViewWithTitle:UMComLocalizedString(@"user_topic_recommend", @"话题推荐")];
         if (self.isShowNextButton == YES) {
             UMComBarButtonItem *rightButtonItem = [[UMComBarButtonItem alloc] initWithTitle:UMComLocalizedString(@"NextStep",@"下一步") target:self action:@selector(onClickNext)];
@@ -133,7 +136,7 @@
     if (cell == nil) {
         cell = [[UMComFilterTopicsViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
+    cell.delegate = self;
     if([self.searchText length]>0)
     {
         if([self.filteredResponseTopicsArray count]>0)
@@ -333,6 +336,22 @@
         [self requestAllTopicsArray];
     }
     [self.tableView reloadData];
+}
+
+#pragma mark - UMComClickActionDelegate
+- (void)customObj:(UMComFilterTopicsViewCell *)cell clickOnFollowTopic:(UMComTopic *)topic
+{
+    __weak UMComFilterTopicsViewCell *wealCell = cell;
+    [[UMComAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
+        BOOL isFocus = [topic isFocus];
+        [cell.topic setFocused:!isFocus block:^(NSError * error) {
+            if (!error) {
+                [wealCell setFocused:[topic isFocus]];
+            } else {
+                [UMComShowToast focusTopicFail:error];
+            }
+        }];
+    }];
 }
 
 @end

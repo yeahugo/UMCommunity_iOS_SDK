@@ -22,6 +22,8 @@
 
 + (void)spamSuccess:(NSError *)error;
 
++ (void)spamComment:(NSError *)error;
+
 + (void)loginFail:(NSError *)error;
 
 + (void)createCommentFail:(NSError *)error;
@@ -36,7 +38,6 @@
 
 + (void)fetchMoreFeedFail:(NSError *)error;
 
-+ (void)updateProfileFail:(NSError *)error;
 
 + (void)fetchFailWithNoticeMessage:(NSString *)message;
 

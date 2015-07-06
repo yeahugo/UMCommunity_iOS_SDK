@@ -17,7 +17,10 @@
 #define kUserNameSensitive 10012
 #define kUserDelete 10002
 #define kUserNameRepeat 10013
-#define kUserNameWrongCharater 10009
+
+#define kUserNameWrongCharater 10009   //sdk本地检测是否有非法字符
+#define kUserNameWrongName 10016        //服务器返回是否有非法字符
+#define kTokenInvalid 50003
 
 @interface UMComLoginManager : NSObject
 

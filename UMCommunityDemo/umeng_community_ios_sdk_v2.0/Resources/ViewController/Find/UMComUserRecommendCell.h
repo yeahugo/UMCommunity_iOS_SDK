@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UMComTableViewCell.h"
+#import "UMComClickActionDelegate.h"
 
 typedef enum {
     UMComReccommentUser = 0,
@@ -30,6 +31,11 @@ typedef enum {
 @property (nonatomic, strong) UMComUser *user;
 @property (nonatomic, assign) UMComUserType userType;
 @property (nonatomic, copy) void (^onClickAtCellViewAction)(UMComUser *user);
+
+@property (nonatomic, weak) id <UMComClickActionDelegate> delegate;
+
 - (void)displayWithUser:(UMComUser *)user userType:(UMComUserType)userType;
+
+- (void)focusUserAfterLoginSucceed;
 
 @end

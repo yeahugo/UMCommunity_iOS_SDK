@@ -215,9 +215,10 @@ typedef void (^PostResponseResultResponse)(id responseObject, NSError *error);
 /**
  获取未读消息个数
  
+ @parma seq 返回的消息流列表第一个消息的seq属性值
  @param result 结果
  */
-+ (void)fetchUnreadFeedCountWithResult:(PostResponseResultResponse)result;
++ (void)fetchUnreadFeedCountWithSeq:(NSNumber *)seq result:(PostResponseResultResponse)result;
 
 @end
 
@@ -266,5 +267,17 @@ typedef void (^PostResponseResultResponse)(id responseObject, NSError *error);
  @param result 结果
  */
 + (void)postDisFollowerWithTopicId:(NSString *)topicId completion:(PostResultResponse)result;
+
+@end
+
+/**
+ 发送统计分享次数
+ 
+ @param feedId 分享成功的feedId
+ @param result 结果
+ */
+@interface UMComShareStaticsRequest : NSObject
+
++ (void)postShareStaticsWithPlatformName:(NSString *)platform feedId:(NSString *)feedId completion:(PostResultResponse)result;
 
 @end

@@ -87,7 +87,7 @@
 #pragma mark comments
 
 //获取未读feed消息数
-+ (void)feedCount:(void (^)(id responseObject,NSError *error))response;
++ (void)feedCountWithSeq:(NSNumber *)seq resultBlock:(void (^)(id responseObject,NSError *error))response;
 
 //获取所有评论
 + (void)feedCommentsWithURL:(NSString *)feedCommentsURL response:(void (^)(id responseObject,NSError *error))response;

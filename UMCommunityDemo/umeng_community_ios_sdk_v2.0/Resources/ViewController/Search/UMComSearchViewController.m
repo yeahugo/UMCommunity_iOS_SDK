@@ -19,6 +19,7 @@
 #import "UMComFeedDetailViewController.h"
 #import "UMComFeedsTableViewCell.h"
 #import "UMComFeedsTableView.h"
+#import "UMComTopicFeedViewController.h"
 
 
 @interface UMComSearchViewController ()<UISearchBarDelegate,UMComFeedsTableViewDelegate,UMComClickActionDelegate>
@@ -241,7 +242,8 @@
 
 - (void)customObj:(id)obj clickOnTopic:(UMComTopic *)topic
 {
-    [[UMComTopicFeedAction action] performActionAfterLogin:topic viewController:self completion:nil];
+    UMComTopicFeedViewController *oneFeedViewController = [[UMComTopicFeedViewController alloc] initWithTopic:topic];
+    [self.navigationController  pushViewController:oneFeedViewController animated:YES];
 }
 - (void)customObj:(id)obj clickOnFeedText:(UMComFeed *)feed
 {

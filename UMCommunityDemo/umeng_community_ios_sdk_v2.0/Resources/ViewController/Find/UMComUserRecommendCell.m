@@ -78,15 +78,24 @@
     }else{
         self.genderImageView.image = [UIImage imageNamed:@"♂.png"];
     }
-    BOOL isFollow = [self.user.is_follow boolValue];
+    BOOL isFollow = [self.user.has_followed boolValue];
     [self changeFocusButton:self.focusButton isFollow:isFollow];
 }
 
 
 - (IBAction)onClickFocusButton:(id)sender {
   
+    if (self.delegate && [self.delegate respondsToSelector:@selector(customObj:clickOnFollowUser:)]) {
+        [self.delegate customObj:self clickOnFollowUser:self.user];
+    }
+
+}
+
+
+- (void)focusUserAfterLoginSucceed
+{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    BOOL isDelete = [self.user.is_follow boolValue];
+    BOOL isDelete = [self.user.has_followed boolValue];
     [UMComHttpManager userFollow:self.user.uid isDelete:isDelete response:^(id responseObject, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (!error) {
@@ -94,16 +103,16 @@
         }else{
             if (self.userType == UMComTopicHotUser) {
                 if (isDelete == NO) {
-                    if ([[[error.userInfo valueForKey:@"err_code"] description] isEqualToString:@"err_code"]) {
-                        [self changeFocusButton:self.focusButton isFollow:!YES];
+                    if (error.code == 10007) {
+                        [self changeFocusButton:self.focusButton isFollow:YES];
                     }else{
-                        
+                        [self changeFocusButton:self.focusButton isFollow:NO];
                     }
                 }else{
                 }
             }else{
                 if (isDelete == NO) {
-                    if ([[[error.userInfo valueForKey:@"NSLocalizedFailureReason"] description] isEqualToString:@"user has been followed"]) {
+                    if (error.code == 10007) {
                         [self changeFocusButton:self.focusButton isFollow:YES];
                     }else{
                         [self changeFocusButton:self.focusButton isFollow:NO];
@@ -111,7 +120,7 @@
                 }else{
                 }
             }
-
+            
             [UMComShowToast focusUserFail:error];
         }
     }];

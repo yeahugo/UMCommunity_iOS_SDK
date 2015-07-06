@@ -13,6 +13,7 @@
 #import "UMComAction.h"
 #import "UMComNavigationController.h"
 #import "UMComLoginManager.h"
+#import "UIViewController+UMComAddition.h"
 
 #define kTagRecommend 100
 #define kTagAll 101
@@ -58,6 +59,7 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    [self setBackButtonWithImage];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clearAndRefreshAllData) name:UserLoginSecceed object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clearAndRefreshAllData) name:UserLogoutSucceed object:nil];

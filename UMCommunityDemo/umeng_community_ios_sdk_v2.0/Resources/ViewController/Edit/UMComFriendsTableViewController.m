@@ -40,7 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
+//    [self setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
+    [self setBackButtonWithImage];
     [self setTitleViewWithTitle: UMComLocalizedString(@"FriendTitle",@"我的好友")];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"UMComFriendTableViewCell" bundle:nil] forCellReuseIdentifier:@"FriendTableViewCell"];

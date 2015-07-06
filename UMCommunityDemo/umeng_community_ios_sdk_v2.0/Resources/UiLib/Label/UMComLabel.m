@@ -10,7 +10,7 @@
 #import "UMComTools.h"
 
 @interface UMComLabel ()
-@property (nonatomic,strong) UIFont *font;
+//@property (nonatomic,strong) UIFont *font;
 @end
 
 @implementation UMComLabel

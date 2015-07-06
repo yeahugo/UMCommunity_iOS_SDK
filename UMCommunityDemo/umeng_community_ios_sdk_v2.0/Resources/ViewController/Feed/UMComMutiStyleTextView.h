@@ -54,9 +54,8 @@ typedef NS_OPTIONS(NSUInteger, UMComMutiTextRunTypeList)
 @property (nonatomic,assign) CGFloat               totalHeight;
 @property (nonatomic,assign) CGPoint               pointOffset;
 
-@property (nonatomic) CTFrameRef frameRef;
 @property (nonatomic) CTFramesetterRef framesetterRef;
-@property (nonatomic) CGMutablePathRef pathRef;
+
 
 @property (nonatomic,strong) NSArray *runs;
 @property (nonatomic,strong) NSMutableDictionary *runRectDictionary;
@@ -138,10 +137,10 @@ extern NSString * const UMComMutiTextRunAttributedName;
 
 
 //********************点击用户名CTRun*************************************
-@class UMComUser;
+//@class UMComUser;
 @interface UMComMutiTextRunClickUser : UMComMutiTextRun
 
-@property (nonatomic, strong) UMComUser *user;
+//@property (nonatomic, strong) UMComUser *user;
 
 + (NSArray *)runsForAttributedString:(NSMutableAttributedString *)attributedString withClickDicts:(NSArray *)dicts;
 
@@ -151,10 +150,10 @@ extern NSString * const UMComMutiTextRunAttributedName;
 
 
 //**********************************点击喜欢的人的姓名*************************************
-@class UMComLike;
+//@class UMComLike;
 @interface UMComMutiTextRunLike : UMComMutiTextRun
 
-@property (nonatomic, strong) UMComLike *like;
+//@property (nonatomic, strong) UMComLike *like;
 
 + (NSArray *)runsForAttributedString:(NSMutableAttributedString *)attributedString withClickDicts:(NSArray *)dicts;
 
@@ -162,10 +161,10 @@ extern NSString * const UMComMutiTextRunAttributedName;
 
 
 //******************评论*************************************
-@class UMComComment;
+//@class UMComComment;
 @interface UMComMutiTextRunComment : UMComMutiTextRun
 
-@property (nonatomic, strong) UMComComment *comment;
+//@property (nonatomic, strong) UMComComment *comment;
 
 + (NSArray *)runsForAttributedString:(NSMutableAttributedString *)attributedString withClickDicts:(NSArray *)dicts;
 
@@ -174,10 +173,10 @@ extern NSString * const UMComMutiTextRunAttributedName;
 
 //******************话题*************************************
 
-@class UMComTopic;
+//@class UMComTopic;
 @interface UMComMutiTextRunTopic : UMComMutiTextRun
 
-@property (nonatomic, strong) UMComTopic *topic;
+//@property (nonatomic, strong) UMComTopic *topic;
 
 + (NSArray *)runsForAttributedString:(NSMutableAttributedString *)attributedString topics:(NSArray *)topics;
 @end

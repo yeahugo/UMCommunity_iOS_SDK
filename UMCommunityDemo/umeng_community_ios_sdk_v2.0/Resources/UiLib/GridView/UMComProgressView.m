@@ -29,9 +29,16 @@
 		self.opaque = NO;
         
         self.schemeColor = color;
-        _progressColor = [UIColor colorWithCGColor:CGColorCreateCopyWithAlpha(color.CGColor, 1)];
-        _backgroundColor = [UIColor colorWithCGColor:CGColorCreateCopyWithAlpha(color.CGColor, 0.1)];
-        _textColor = [UIColor colorWithCGColor:CGColorCreateCopyWithAlpha(color.CGColor, 1)];
+        CGColorRef progressCGColor = CGColorCreateCopyWithAlpha(color.CGColor, 1);
+        CGColorRef backgroundCGColor = CGColorCreateCopyWithAlpha(color.CGColor, 0.1);
+        CGColorRef textCGColor = CGColorCreateCopyWithAlpha(color.CGColor, 1);
+        
+        _progressColor = [UIColor colorWithCGColor:progressCGColor];
+        _backgroundColor = [UIColor colorWithCGColor:backgroundCGColor];
+        _textColor = [UIColor colorWithCGColor:textCGColor];
+        CGColorRelease(progressCGColor);
+        CGColorRelease(backgroundCGColor);
+        CGColorRelease(textCGColor);
     }
     
     return  self;

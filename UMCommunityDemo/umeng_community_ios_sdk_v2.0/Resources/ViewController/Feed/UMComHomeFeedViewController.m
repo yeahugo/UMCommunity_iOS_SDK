@@ -186,6 +186,9 @@
     originOffset = self.navigationController.navigationBar.frame.origin;
     self.findButton.center = CGPointMake(selfViewSize.width-23.5, self.findButton.center.y);
     self.findButton.hidden = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self.allFeedViewController selector:@selector(refreshDataFromServer) name:kNotificationPostFeedResult object:nil];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -194,6 +197,8 @@
     self.editButton.hidden = YES;
     self.findButton.hidden = YES;
     [self hidenKeyBoard];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.allFeedViewController name:kNotificationPostFeedResult object:nil];
+
 }
 
 #pragma mark - searchBarDelelagte

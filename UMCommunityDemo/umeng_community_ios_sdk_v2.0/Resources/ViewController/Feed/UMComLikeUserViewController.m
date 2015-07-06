@@ -27,7 +27,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _haveNextPage = YES;
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+//    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+    [self setBackButtonWithImage];
     [self setTitleViewWithTitle:UMComLocalizedString(@"Like_User_List", @"点赞狂们")];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -62,6 +63,10 @@
         cell.nameLabel.text = user.name;
         cell.nameLabel.textColor = [UMComTools colorWithHexString:FontColorBlue];
         NSString *iconUrl = [user.icon_url valueForKey:@"240"];
+        CGFloat imageWidth = 25;
+        CGFloat imageOriginX = 15;
+        CGFloat imageOriginY = cell.frame.size.height/2-imageWidth/2;
+        cell.portrait.frame = CGRectMake(imageOriginX, imageOriginY, imageWidth, imageWidth);
         [cell.portrait setImageURL:iconUrl placeHolderImage:[UMComImageView placeHolderImageGender:user.gender.integerValue]];
     }
     return cell;
@@ -130,6 +135,7 @@
         [self.contentView addSubview:self.portrait];
         
         self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(imageOriginX+imageWidth+10, imageOriginY, self.contentView.frame.size.width-imageWidth-2*imageOriginX-10, imageWidth)];
+        self.nameLabel.backgroundColor = [UIColor clearColor];
         self.nameLabel.textColor = [UMComTools colorWithHexString:FontColorBlue];
         self.nameLabel.font = UMComFontNotoSansLightWithSafeSize(15);
         [self.contentView addSubview:self.nameLabel];

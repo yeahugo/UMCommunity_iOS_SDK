@@ -11,8 +11,8 @@
 @class UMComBarButtonItem,UMComShareCollectionView;
 
 @interface UIViewController (UMComAddition)
-- (void)setBackButtonWithTitle:(NSString *)title;
-- (void)setBackButtonWithImageName:(NSString *)imageName;
+//- (void)setBackButtonWithTitle:(NSString *)title;
+- (void)setBackButtonWithImage;
 
 - (void)setLeftButtonWithTitle:(NSString *)title action:(SEL)action;
 - (void)setLeftButtonWithImageName:(NSString *)imageName action:(SEL)action;

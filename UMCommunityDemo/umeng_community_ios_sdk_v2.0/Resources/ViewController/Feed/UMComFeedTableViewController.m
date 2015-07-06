@@ -19,6 +19,8 @@
 #import "UMComFeedsTableViewCell.h"
 #import "UMComFeedsTableView.h"
 #import "UMComPullRequest.h"
+#import "UMComTopicFeedViewController.h"
+#import "UMComFeedStyle.h"
 
 @interface UMComFeedTableViewController ()<NSFetchedResultsControllerDelegate,UITextFieldDelegate,UMComFeedsTableViewDelegate,UMComClickActionDelegate> {
     
@@ -37,7 +39,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -45,6 +46,7 @@
     [super viewWillDisappear:animated];
     [self.shareListView removeFromSuperview];
     [self.shadowBgView removeFromSuperview];
+
 }
 
 
@@ -81,57 +83,70 @@
     self.indicatorView.hidden = NO;
     [self.fetchFeedsController fetchRequestFromCoreData:^(NSArray *coreData, NSError *error) {
         if (coreData.count > 0) {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                NSMutableArray *feedData = [NSMutableArray arrayWithCapacity:1];
-                for (UMComFeed *feed in coreData) {
-                    if (!feed.isDeleted) {
-                        [feedData addObject:feed];
-                    }
+            NSMutableArray *feedData = [NSMutableArray arrayWithCapacity:1];
+            for (UMComFeed *feed in coreData) {
+                if (!feed.isDeleted) {
+                    [feedData addObject:feed];
                 }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.feedsTableView.resultArray = [NSMutableArray arrayWithArray:[self.feedsTableView dealWithFeedData:feedData]];
-                    [self.indicatorView stopAnimating];
-                    [self.feedsTableView reloadData];
-                });
-            });
-        }
-        [self refreshData:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-            [self.indicatorView stopAnimating];
-            if (data.count > 0) {
-                [self.feedsTableView dealWithFetchResult:data error:nil loadMore:NO haveNextPage:haveNextPage];
-                [self fecthUnreadFeedCount];
             }
-        }];
+//            self.feedsTableView.resultArray = [NSMutableArray arrayWithArray:[self.feedsTableView dealWithFeedData:feedData]];
+            [self.feedsTableView dealWithFetchResult:feedData error:error loadMore:NO haveNextPage:NO];
+            [self.indicatorView stopAnimating];
+//            [self.feedsTableView reloadData];
+        }
+        [self refreshDataFromServer];
     }];
 }
+
+
+- (void)refreshDataFromServer
+{
+    NSArray *tempArray = self.feedsTableView.resultArray;
+    [self refreshData:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        [self.indicatorView stopAnimating];
+        if (data.count > 0) {
+            [self showUnreadFeedWithCurrentFeedArray:tempArray compareArray:data];
+            [self.feedsTableView dealWithFetchResult:data error:error loadMore:NO haveNextPage:haveNextPage];
+        }
+    }];
+}
+
+- (void)showUnreadFeedWithCurrentFeedArray:(NSArray *)currentArr compareArray:(NSArray *)compareArr
+{
+    if ([self.fetchFeedsController isKindOfClass:[UMComAllFeedsRequest class]]) {
+        int unReadCount = (int)compareArr.count;
+        
+        for (UMComFeed *feed in compareArr) {
+            for (UMComFeedStyle *feedStyle in currentArr) {
+                if ([feed.feedID isEqualToString:feedStyle.feed.feedID]) {
+                    unReadCount -= 1;
+                    break;
+                }
+            }
+        }
+        if (unReadCount > 0) {
+            [self showTipLableFromTopWithTitle:[NSString stringWithFormat:@"%d条新内容",unReadCount]];
+        }
+    }
+}
+
 - (void)refreshData:(LoadServerDataCompletion)completion
 {
     if (!self.fetchFeedsController) {
         return;
     }
-    [self fecthUnreadFeedCount];
+    NSArray *tempArray = self.feedsTableView.resultArray;
     [self.fetchFeedsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-        completion(data,haveNextPage,error);
+        if (!error && [data isKindOfClass:[NSArray class]] && data.count > 0) {
+            [self showUnreadFeedWithCurrentFeedArray:tempArray compareArray:data];
     
+        }
+        completion(data,haveNextPage,error);
+
     }];
 }
 
-- (void)fecthUnreadFeedCount
-{
-    if ([self.fetchFeedsController isKindOfClass:[UMComAllFeedsRequest class]]) {
-        [UMComUnreadFeedCountRequest fetchUnreadFeedCountWithResult:^(id responseObject, NSError *error) {
-            
-            NSNumber *numCount = @0;
-            if ([responseObject isKindOfClass:[NSDictionary class]] && [responseObject valueForKey:@"unread_count"]) {
-                numCount = [responseObject valueForKey:@"unread_count"];
-            }
-            int count = [numCount intValue];
-            if (count > 0) {
-                [self showTipLableFromTopWithTitle:[NSString stringWithFormat:@"有%d个未读消息个数",count]];
-            }
-        }];
-    }
-}
+
 #pragma mark - UMComFeedsTableViewDelegate
 - (void)feedTableView:(UMComFeedsTableView *)feedTableView refreshData:(LoadServerDataCompletion)completion
 {
@@ -149,9 +164,6 @@
     }];
 }
 
-
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -167,7 +179,8 @@
 
 - (void)customObj:(id)obj clickOnTopic:(UMComTopic *)topic
 {
-    [[UMComTopicFeedAction action] performActionAfterLogin:topic viewController:self.myParentViewController completion:nil];
+    UMComTopicFeedViewController *oneFeedViewController = [[UMComTopicFeedViewController alloc] initWithTopic:topic];
+    [self.navigationController  pushViewController:oneFeedViewController animated:YES];
 }
 - (void)customObj:(id)obj clickOnFeedText:(UMComFeed *)feed
 {

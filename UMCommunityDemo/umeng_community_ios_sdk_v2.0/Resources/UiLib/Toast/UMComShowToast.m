@@ -27,6 +27,8 @@
         [self fetchFailWithNoticeMessage:UMComLocalizedString(@"Name_Repeat", @"用户名重复")];
     } else if (error.code == kUserNameWrongCharater){
         [self fetchFailWithNoticeMessage:UMComLocalizedString(@"Name_Wrong", @"用户名包含错误字符")];
+    } else if (error.code == kUserNameWrongName){
+        [self fetchFailWithNoticeMessage:UMComLocalizedString(@"Name_Error", @"用户名包含非法字符，请重新登录")];
     }
 }
 
@@ -67,24 +69,37 @@
     }
 }
 
-+ (void)updateProfileFail:(NSError *)error
-{
-    if (![self handleError:error] && error) {
-        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Sensitive words",@"用户名包含敏感词，更新失败")];
-    }
-}
-
 + (void)spamSuccess:(NSError *)error
 {
     if (![self handleError:error]){
         if (error) {
-            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Fail",@"举报消息失败")];
-        } else if(!error) {
+            if (error.code == 40002) {
+                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spammer_Has_Been_Created",@"你已经举报过了")];
+                
+            }else{
+                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Fail",@"举报消息失败")];
+            }
+        } else{
             [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Success",@"举报消息成功")];
         }
     }
 }
 
+
++ (void)spamComment:(NSError *)error
+{
+    if (![self handleError:error]){
+        if (error) {
+            if (error.code == 40002) {
+                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spammer_Has_Been_Created",@"你已经举报过了")];
+            }else{
+                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Comment_Fail",@"举报评论失败")];
+            }
+        } else{
+              [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Comment_Success",@"举报评论成功")];
+        }
+    }
+}
 
 + (BOOL)handleError:(NSError *)error
 {

@@ -14,14 +14,12 @@
 #import "UMComImageView.h"
 
 @interface UMComFilterTopicsViewCell()
-@property (nonatomic,strong) UMComTopic *topic;
 @end
 
 @implementation UMComFilterTopicsViewCell
 
 - (void)awakeFromNib {
     // Initialization code
-//    self.butFocuse.titleLabel.font = UMComFontNotoSansDemiWithSafeSize(13);
     self.labelName.textColor = [UMComTools colorWithHexString:FontColorBlue];
     self.isRecommendTopic = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didClickOnTopic)];
@@ -58,8 +56,6 @@
 
 - (void)setWithTopic:(UMComTopic *)topic
 {
-//    self.labelName.font = UMComFontNotoSansDemiWithSafeSize(16);
-//    self.labelDesc.font = UMComFontNotoSansDemiWithSafeSize(15);
     self.topicIcon.center = CGPointMake(self.topicIcon.center.x, self.contentView.frame.size.height/2);
     [self.topicIcon setImageURL:topic.icon_url placeHolderImage:[UIImage imageNamed:@"um_topic_icon"]];
     if ([topic isKindOfClass:[UMComTopic class]]) {
@@ -141,14 +137,17 @@
 
 -(IBAction)actionFocuse:(id)sender
 {
-    __weak UMComFilterTopicsViewCell *weakSelf = self;
-    BOOL isFocus = [self.topic isFocus];
-    [self.topic setFocused:!isFocus block:^(NSError * error) {
-        if (!error) {
-            [weakSelf setFocused:[weakSelf.topic isFocus]];
-        } else {
-            [UMComShowToast focusTopicFail:error];
-        }
-    }];
+//    __weak UMComFilterTopicsViewCell *weakSelf = self;
+//    BOOL isFocus = [self.topic isFocus];
+//    [self.topic setFocused:!isFocus block:^(NSError * error) {
+//        if (!error) {
+//            [weakSelf setFocused:[weakSelf.topic isFocus]];
+//        } else {
+//            [UMComShowToast focusTopicFail:error];
+//        }
+//    }];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(customObj:clickOnFollowTopic:)]) {
+        [self.delegate customObj:self clickOnFollowTopic:self.topic];
+    }
 }
 @end

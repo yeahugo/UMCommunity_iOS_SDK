@@ -35,7 +35,7 @@
     if (NO==[CLLocationManager locationServicesEnabled]) {
         UMLog(@"---------- 未开启定位");
     }
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
+    [self setBackButtonWithImage];
     [self setTitleViewWithTitle:UMComLocalizedString(@"LocationTitle",@"我的位置")];
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;

@@ -59,7 +59,8 @@ static inline NSRange getRangeForIndex(NSInteger index,NSInteger allcount)
             [self.navigationController.navigationBar setBarTintColor:[UMComTools colorWithHexString:@"#f7f7f8"]];
         }
         [self setRightButtonWithTitle:UMComLocalizedString(@"done", @"完成") action:@selector(done:)];
-        [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+        [self setBackButtonWithImage];
+//        [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
         [self setTitleViewWithTitle:UMComLocalizedString(@"Photo", @"相机胶卷")];
         [self.tableView registerClass:[UMAssetsCollectionCell class] forCellReuseIdentifier:@"CollectionCell"];
     }

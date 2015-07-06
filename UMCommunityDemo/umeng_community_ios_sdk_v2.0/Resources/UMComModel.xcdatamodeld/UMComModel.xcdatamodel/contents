@@ -36,6 +36,8 @@
         <attribute name="likes_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="origin_feed_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parent_feed_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seq" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="seq_recommend" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="share_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="share_link" optional="YES" attributeType="String" syncable="YES"/>
@@ -86,8 +88,8 @@
         <attribute name="feed_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="following_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="has_followed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="icon_url" optional="YES" attributeType="Transformable" valueTransformerName="ImageDictionary" syncable="YES"/>
-        <attribute name="is_follow" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="is_recommend" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="level_title" optional="YES" attributeType="String" syncable="YES"/>
@@ -114,7 +116,7 @@
     <elements>
         <element name="Album" positionX="-81" positionY="-18" width="128" height="135"/>
         <element name="Comment" positionX="45" positionY="-48" width="128" height="180"/>
-        <element name="Feed" positionX="-162" positionY="-135" width="128" height="495"/>
+        <element name="Feed" positionX="-162" positionY="-135" width="128" height="525"/>
         <element name="Like" positionX="70" positionY="261" width="128" height="30"/>
         <element name="LoginUser" positionX="108" positionY="-168" width="128" height="105"/>
         <element name="Topic" positionX="178" positionY="69" width="128" height="225"/>

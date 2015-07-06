@@ -2,8 +2,8 @@
 //  UMComFeed.h
 //  UMCommunity
 //
-//  Created by Gavin Ye on 6/17/15.
-//  Copyright (c) 2015 Umeng. All rights reserved.
+//  Created by umeng on 15/6/25.
+//  Copyright (c) 2015年 Umeng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -32,13 +32,15 @@
 @property (nonatomic, retain) NSNumber * likes_count;
 @property (nonatomic, retain) NSString * location;
 @property (nonatomic, retain) NSString * origin_feed_id;
+@property (nonatomic, retain) NSNumber * seq;
+@property (nonatomic, retain) NSNumber * seq_recommend;
 @property (nonatomic, retain) NSNumber * share_count;
 @property (nonatomic, retain) NSString * share_link;
 @property (nonatomic, retain) NSNumber * source_mark;
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSNumber * type;
-@property (nonatomic, retain) NSNumber * seq_recommend;
+@property (nonatomic, retain) NSString * parent_feed_id;
 @property (nonatomic, retain) NSOrderedSet *comments;
 @property (nonatomic, retain) UMComUser *creator;
 @property (nonatomic, retain) NSSet *forward_feeds;

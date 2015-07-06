@@ -20,7 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+//    [self setBackButtonWithTitle:UMComLocalizedString(@"Back", @"返回")];
+    [self setBackButtonWithImage];
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }

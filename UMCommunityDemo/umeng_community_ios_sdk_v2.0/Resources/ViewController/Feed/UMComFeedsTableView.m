@@ -15,8 +15,6 @@
 #import "UMComShowToast.h"
 #import "UMComAction.h"
 #import "UMComFeedStyle.h"
-//#import "UMComComment.h"
-//#import "UMComFeedsTableViewCell.h"
 
 @interface UMComFeedsTableView()
 {
@@ -58,7 +56,7 @@ static int HeaderOffSet = -90;//-120
     }
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self creatNoFeedTip];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postFeedComplete:) name:kNotificationPostFeedResult object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(forwardFeedFinish:) name:kNotificationPostFeedResult object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedDeletedFinishAction:) name:FeedDeletedFinish object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentOperationFinishAction:) name:CommentOperationFinish object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(likeOperationFinishAction:) name:LikeOperationFinish object:nil];
@@ -245,12 +243,10 @@ static int HeaderOffSet = -90;//-120
     self.noFeedTip.hidden = YES;
     if (!error) {
         if (data.count > 0) {
-                NSArray *feedStyleArray = [self dealWithFeedData:data];
-                    [self.resultArray addObjectsFromArray:feedStyleArray];
-                    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
-                        self.footView.backgroundColor = TableViewSeparatorRGBColor;
-                    }
-                    [self reloadData];
+            NSArray *feedStyleArray = [self dealWithFeedData:data];
+            [self.resultArray addObjectsFromArray:feedStyleArray];
+            self.footView.backgroundColor = TableViewSeparatorRGBColor;
+            [self reloadData];
         }else {
             self.noFeedTip.hidden = NO;
             self.footView.backgroundColor = [UIColor clearColor];
@@ -304,16 +300,20 @@ static int HeaderOffSet = -90;//-120
 
 #pragma mark -
 
--(void)postFeedComplete:(NSNotification *)notification
+-(void)forwardFeedFinish:(NSNotification *)notification
 {
-    [self refreshData];
-
+    if ([notification.object isKindOfClass:[UMComFeed class]]) {
+        UMComFeed *feed = (UMComFeed *)notification.object;
+        [self reloadOriginFeedAfterForwardFeed:feed];
+    }
 }
+
+
 - (void)feedDeletedFinishAction:(NSNotification *)notification
 {
     if ([notification.object isKindOfClass:[UMComFeed class]]) {
         UMComFeed *feed = (UMComFeed *)notification.object;
-        [self reloadOriginFeed:feed];
+        [self reloadOriginFeedAfterDeletedFeed:feed];
         [self.resultArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             UMComFeedStyle *feedStyle = self.resultArray[idx];
             
@@ -326,11 +326,36 @@ static int HeaderOffSet = -90;//-120
     }
 }
 
-- (void)reloadOriginFeed:(UMComFeed *)feed
+- (void)reloadOriginFeedAfterDeletedFeed:(UMComFeed *)feed
 {
     for (UMComFeedStyle *feedStyle in self.resultArray) {
-        if ([feed.feedID isEqualToString:feedStyle.feed.origin_feed.feedID]) {
-            [feedStyle resetWithFeed:feedStyle.feed];
+        UMComFeed *currentFeed = feedStyle.feed;
+        if ([feed.feedID isEqualToString:currentFeed.origin_feed.feedID]) {
+            [feedStyle resetWithFeed:currentFeed];
+        }
+        
+        if ([currentFeed.feedID isEqualToString:feed.parent_feed_id] || [currentFeed.feedID isEqualToString:feed.origin_feed.feedID]) {
+            NSInteger forwardNum = [currentFeed.forward_count integerValue];
+            if (forwardNum > 0) {
+                currentFeed.forward_count = @(forwardNum-1);
+            }else{
+                currentFeed.forward_count = @0;
+            }
+            [feedStyle resetWithFeed:currentFeed];
+        }
+    }
+    [self reloadData];
+}
+
+
+- (void)reloadOriginFeedAfterForwardFeed:(UMComFeed *)feed
+{
+    for (UMComFeedStyle *feedStyle in self.resultArray) {
+        UMComFeed *currentFeed = feedStyle.feed;
+        if ([currentFeed.feedID isEqualToString:feed.feedID] || [currentFeed.feedID isEqualToString:feed.origin_feed.feedID]) {
+            NSInteger forwardNum = [currentFeed.forward_count integerValue];
+            currentFeed.forward_count = @(forwardNum+1);
+            [feedStyle resetWithFeed:currentFeed];
         }
     }
     [self reloadData];
@@ -357,7 +382,6 @@ static int HeaderOffSet = -90;//-120
     [self.resultArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UMComFeedStyle *feedStyle = self.resultArray[idx];
         if ([feed.feedID isEqualToString:feedStyle.feed.feedID]) {
-//            feedStyle = [UMComFeedStyle feedStyleWithFeed:feedStyle.feed viewWidth:self.frame.size.width feedType:feedCellType];
             [feedStyle resetWithFeed:feed];
             [self reloadRowAtIndex:[NSIndexPath indexPathForRow:idx inSection:0]];
             *stop = YES;

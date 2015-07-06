@@ -42,7 +42,7 @@ static NSInteger kPadY = 0;
 @property (nonatomic) Class registerCellClass;
 @property (nonatomic) Class registerCellOneClass;
 @property (nonatomic,strong) NSArray *dataArray;
-@property (nonatomic,strong) NSMutableArray  *cellViews;
+//@property (nonatomic,strong) NSMutableArray  *cellViews;
 @end
 @implementation UMComGridTableViewCell
 
@@ -83,7 +83,7 @@ static NSInteger kPadY = 0;
         // Initialization code
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        self.cellViews = [[NSMutableArray alloc] init];
+//        self.cellViews = [[NSMutableArray alloc] init];
         
         
     }
@@ -105,9 +105,9 @@ static NSInteger kPadY = 0;
     if(![dataArray count]){
         return;
     }
-    for (UIView *subView in self.cellViews) {
-        [subView removeFromSuperview];
-    }
+//    for (UIView *subView in self.cellViews) {
+//        [subView removeFromSuperview];
+//    }
     self.dataArray = dataArray;
     
     @autoreleasepool{
@@ -126,7 +126,7 @@ static NSInteger kPadY = 0;
                 [one setWithData:self.dataArray[i]];
                 [one setTag:i+kTagPad];
                 [self addSubview:one];
-                [self.cellViews addObject:one];
+//                [self.cellViews addObject:one];
                 
                 // 给Grid添加单击手势
                 UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleWithTap:)];
