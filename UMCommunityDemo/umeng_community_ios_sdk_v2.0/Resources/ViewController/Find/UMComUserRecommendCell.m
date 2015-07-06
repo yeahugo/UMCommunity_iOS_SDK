@@ -96,26 +96,27 @@
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     BOOL isDelete = [self.user.has_followed boolValue];
+    __weak UMComUserRecommendCell *weakSelf = self;
     [UMComHttpManager userFollow:self.user.uid isDelete:isDelete response:^(id responseObject, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (!error) {
-            [self changeFocusButton:self.focusButton isFollow:!isDelete];
+            [weakSelf changeFocusButton:weakSelf.focusButton isFollow:!isDelete];
         }else{
-            if (self.userType == UMComTopicHotUser) {
+            if (weakSelf.userType == UMComTopicHotUser) {
                 if (isDelete == NO) {
                     if (error.code == 10007) {
-                        [self changeFocusButton:self.focusButton isFollow:YES];
+                        [weakSelf changeFocusButton:weakSelf.focusButton isFollow:YES];
                     }else{
-                        [self changeFocusButton:self.focusButton isFollow:NO];
+                        [weakSelf changeFocusButton:weakSelf.focusButton isFollow:NO];
                     }
                 }else{
                 }
             }else{
                 if (isDelete == NO) {
                     if (error.code == 10007) {
-                        [self changeFocusButton:self.focusButton isFollow:YES];
+                        [weakSelf changeFocusButton:weakSelf.focusButton isFollow:YES];
                     }else{
-                        [self changeFocusButton:self.focusButton isFollow:NO];
+                        [weakSelf changeFocusButton:weakSelf.focusButton isFollow:NO];
                     }
                 }else{
                 }

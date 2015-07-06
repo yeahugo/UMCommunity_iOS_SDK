@@ -54,7 +54,7 @@ typedef NS_OPTIONS(NSUInteger, UMComMutiTextRunTypeList)
 @property (nonatomic,assign) CGFloat               totalHeight;
 @property (nonatomic,assign) CGPoint               pointOffset;
 
-@property (nonatomic) CTFramesetterRef framesetterRef;
+@property (nonatomic) id framesetterRef;
 
 
 @property (nonatomic,strong) NSArray *runs;
@@ -65,8 +65,6 @@ typedef NS_OPTIONS(NSUInteger, UMComMutiTextRunTypeList)
 @property (nonatomic) NSInteger lineCount;
 @property (nonatomic) float lastLineWidth;
 @property (nonatomic) float lineHeight;
-
-@property (nonatomic, strong) CALayer *textLayer;
 
 - (void)setMutiStyleTextViewProperty:(UMComMutiStyleTextView *)styleTextView;
 

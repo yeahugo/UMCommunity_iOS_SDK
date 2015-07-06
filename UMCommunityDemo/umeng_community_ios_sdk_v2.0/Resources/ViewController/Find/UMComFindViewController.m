@@ -141,7 +141,6 @@
     UMComAllFeedViewController *friendViewController = [[UMComAllFeedViewController alloc]init];
     friendViewController.fetchFeedsController = [[UMComFriendFeedsRequest alloc]initWithCount:BatchSize];
     [self setBackButtonWithImage];
-//    [friendViewController setBackButtonWithTitle:UMComLocalizedString(@"Back",@"返回")];
     [friendViewController setTitleViewWithTitle:UMComLocalizedString(@"circle_friends", @"好友圈")];
     [self.navigationController pushViewController:friendViewController animated:YES];
 }
@@ -163,8 +162,6 @@
 {
     UMComUserCenterViewController *userCenterViewController = [[UMComUserCenterViewController alloc] initWithUser:[UMComSession sharedInstance].loginUser];
     [self.navigationController pushViewController:userCenterViewController animated:YES];
-//    [[UMComUserCenterAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
-//    }];
 
 }
 - (void)tranToSetting

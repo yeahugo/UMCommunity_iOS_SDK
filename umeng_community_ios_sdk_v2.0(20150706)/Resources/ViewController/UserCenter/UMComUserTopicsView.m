@@ -122,10 +122,10 @@
     for(int i=0;i<[data count];i++){
         UMComTopic *topic = data[i];
         UMComUserTopicLabel *label = [[UMComUserTopicLabel alloc] initWithText:topic maxWidth:self.bounds.size.width];
-
+        __weak typeof(self) weakSelf = self;
         [label setTopicTapHandle:^(UMComTopic *topic) {
-            if(self.tapHandle){
-                self.tapHandle(topic);
+            if(weakSelf.tapHandle){
+                weakSelf.tapHandle(topic);
             }
         }];
         CGRect frame = [self getFrameForSize:label.frame.size];

@@ -27,10 +27,9 @@
 
 -(void)didLoginBtn:(id)sender
 {
-    UMComUserAccount *account = [[UMComUserAccount alloc] init];
+    UMComUserAccount *account = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];
     account.usid = @"@";
     account.name = @"@";
-    account.snsPlatformName = @"sina0.";
     account.token = @"-";
     
     [UMComLoginManager finishLoginWithAccount:account completion:^(NSArray *data, NSError *error) {

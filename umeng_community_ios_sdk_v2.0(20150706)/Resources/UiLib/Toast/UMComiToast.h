@@ -36,7 +36,7 @@ typedef enum {
     UMSocialiToastPositionCenter                //提示位置在屏幕中间
 } UMSocialiToastPosition;
 
-enum iUMComDuration {
+typedef enum iUMComDuration {
 	UMComiToastDurationLong = 10000,
 	UMComiToastDurationShort = 1000,
 	UMComiToastDurationNormal = 3000

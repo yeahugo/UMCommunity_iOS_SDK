@@ -71,9 +71,10 @@
     UMComComment *comment = self.reloadComments[indexPath.row];
     UMComMutiStyleTextView *styleView = self.commentStyleViewArray[indexPath.row];
     [cell reloadWithComment:comment commentStyleView:styleView];
+    __weak typeof(self) weakSelf = self;
     cell.clickOnCommentContent = ^(UMComComment *comment){
-        self.selectedComment = comment;
-        self.replyUserId = comment.creator.uid;
+        weakSelf.selectedComment = comment;
+        weakSelf.replyUserId = comment.creator.uid;
     };
     cell.delegate = self.clickActionDelegate;
     return cell;

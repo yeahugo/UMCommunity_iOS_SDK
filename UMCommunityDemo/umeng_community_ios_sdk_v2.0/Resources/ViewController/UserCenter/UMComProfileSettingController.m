@@ -343,7 +343,7 @@
     UMComUserAccount *userAccount = [[UMComUserAccount alloc]init];
     userAccount.name = self.nameField.text;
     userAccount.gender = [NSNumber numberWithInteger:[self.genderPicker selectedRowInComponent:0]];
-    
+    __weak typeof(self) weakSelf = self;
     //如果从登录页面因为用户名错误，直接跳转到设置页面，先进行登录注册
     if (self.registerError) {
         UMComUserAccount *loginUserAccount = [UMComSession sharedInstance].currentUserAccount;
@@ -354,9 +354,9 @@
             if (error) {
                 [UMComShowToast loginFail:error];
             } else {
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if (self.completion) {
-                        self.completion(data,nil);
+                [weakSelf dismissViewControllerAnimated:YES completion:^{
+                    if (weakSelf.completion) {
+                        weakSelf.completion(data,nil);
                     }
                 }];
             }
@@ -364,17 +364,17 @@
     } else {
         [UMComHttpManager updateProfile:userAccount response:^(id responseObject, NSError *error) {
             if (!error) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:UpdateUserProfileSuccess object:self];
+                [[NSNotificationCenter defaultCenter] postNotificationName:UpdateUserProfileSuccess object:weakSelf];
                 
-                if (self.navigationController.viewControllers.count > 1) {
-                    if (self.completion) {
-                        self.completion(nil,nil);
+                if (weakSelf.navigationController.viewControllers.count > 1) {
+                    if (weakSelf.completion) {
+                        weakSelf.completion(nil,nil);
                     }
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
                 } else {
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        if (self.completion) {
-                            self.completion(nil,nil);
+                    [weakSelf dismissViewControllerAnimated:YES completion:^{
+                        if (weakSelf.completion) {
+                            weakSelf.completion(nil,nil);
                         }
                     }];
                 }

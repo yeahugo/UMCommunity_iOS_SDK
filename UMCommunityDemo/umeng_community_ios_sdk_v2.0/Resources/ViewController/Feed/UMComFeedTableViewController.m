@@ -81,6 +81,7 @@
 {
     [self.indicatorView startAnimating];
     self.indicatorView.hidden = NO;
+    __weak typeof(self) weakSelf = self;
     [self.fetchFeedsController fetchRequestFromCoreData:^(NSArray *coreData, NSError *error) {
         if (coreData.count > 0) {
             NSMutableArray *feedData = [NSMutableArray arrayWithCapacity:1];
@@ -89,24 +90,23 @@
                     [feedData addObject:feed];
                 }
             }
-//            self.feedsTableView.resultArray = [NSMutableArray arrayWithArray:[self.feedsTableView dealWithFeedData:feedData]];
-            [self.feedsTableView dealWithFetchResult:feedData error:error loadMore:NO haveNextPage:NO];
-            [self.indicatorView stopAnimating];
-//            [self.feedsTableView reloadData];
+            [weakSelf.feedsTableView dealWithFetchResult:feedData error:error loadMore:NO haveNextPage:NO];
+            [weakSelf.indicatorView stopAnimating];
         }
-        [self refreshDataFromServer];
+        [weakSelf refreshDataFromServer];
     }];
 }
 
 
 - (void)refreshDataFromServer
 {
+    __weak typeof(self) weakSelf = self;
     NSArray *tempArray = self.feedsTableView.resultArray;
     [self refreshData:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         [self.indicatorView stopAnimating];
         if (data.count > 0) {
-            [self showUnreadFeedWithCurrentFeedArray:tempArray compareArray:data];
-            [self.feedsTableView dealWithFetchResult:data error:error loadMore:NO haveNextPage:haveNextPage];
+            [weakSelf showUnreadFeedWithCurrentFeedArray:tempArray compareArray:data];
+            [weakSelf.feedsTableView dealWithFetchResult:data error:error loadMore:NO haveNextPage:haveNextPage];
         }
     }];
 }
@@ -136,9 +136,10 @@
         return;
     }
     NSArray *tempArray = self.feedsTableView.resultArray;
+    __weak typeof(self) weakSelf = self;
     [self.fetchFeedsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         if (!error && [data isKindOfClass:[NSArray class]] && data.count > 0) {
-            [self showUnreadFeedWithCurrentFeedArray:tempArray compareArray:data];
+            [weakSelf showUnreadFeedWithCurrentFeedArray:tempArray compareArray:data];
     
         }
         completion(data,haveNextPage,error);
@@ -195,6 +196,7 @@
 - (void)customObj:(id)obj clickOnLikeFeed:(UMComFeed *)feed
 {
     UMComFeedsTableViewCell *cell = (UMComFeedsTableViewCell *)obj;
+    __weak typeof(self) weakSelf = self;
     if ([feed.liked boolValue] == YES) {
         [[UMComDisLikeAction action] performActionAfterLogin:feed viewController:self.self completion:^(NSArray *data, NSError *error) {
             if (!error) {
@@ -206,7 +208,7 @@
                 }
                 [UMComShowToast deleteLikeFail:error];
             }
-            [self.feedsTableView reloadRowAtIndex:cell.indexPath];
+            [weakSelf.feedsTableView reloadRowAtIndex:cell.indexPath];
             
         }];
     }else{
@@ -220,7 +222,7 @@
                 }
                 [UMComShowToast createLikeFail:error];
             }
-            [self.feedsTableView reloadRowAtIndex:cell.indexPath];
+            [weakSelf.feedsTableView reloadRowAtIndex:cell.indexPath];
         }];
     }
 }
@@ -232,9 +234,10 @@
 
 - (void)customObj:(id)obj clickOnComment:(UMComComment *)comment feed:(UMComFeed *)feed
 {
+    __weak typeof(self) weakSelf = self;
     [[UMComCommentOperationAction action] performActionAfterLogin:nil viewController:self.myParentViewController completion:^(NSArray *data, NSError *error) {
         if (!error) {
-            [self transitionToFeedDetailViewControllerWithFeed:feed showType:UMComShowFromClickComment];
+            [weakSelf transitionToFeedDetailViewControllerWithFeed:feed showType:UMComShowFromClickComment];
         }
     }];
 }

@@ -334,28 +334,29 @@
 {
     self.focus.titleLabel.textAlignment = NSTextAlignmentCenter;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    __weak typeof(self) weakSelf = self;
     [(UMComUserCenterViewModel *)self.feedViewModel requestFollowUser:self.focus completion:^(NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (error) {
             [UMComShowToast focusUserFail:error];
         }else{
-            if (self.feedViewModel.isFocus) {
-                self.user.fans_count = [NSNumber numberWithInteger:([self.user.fans_count intValue] + 1)];
+            if (weakSelf.feedViewModel.isFocus) {
+                weakSelf.user.fans_count = [NSNumber numberWithInteger:([weakSelf.user.fans_count intValue] + 1)];
                 NSInteger followersCount = [[UMComSession sharedInstance].loginUser.following_count integerValue] +1;
                 [UMComSession sharedInstance].loginUser.following_count = [NSNumber numberWithInteger:followersCount];
             } else {
-                self.user.fans_count = [NSNumber numberWithInteger:([self.user.fans_count intValue] - 1)];
+                weakSelf.user.fans_count = [NSNumber numberWithInteger:([weakSelf.user.fans_count intValue] - 1)];
                 NSInteger followersCount = [[UMComSession sharedInstance].loginUser.following_count integerValue] -1;
                 [UMComSession sharedInstance].loginUser.following_count = [NSNumber numberWithInteger:followersCount];
             }
-            if (self.feedViewModel.isFocus) {
-                [self.user setHaveFollow];
+            if (weakSelf.feedViewModel.isFocus) {
+                [weakSelf.user setHaveFollow];
             } else {
-                [self.user setDisFollow];
+                [weakSelf.user setDisFollow];
             }
            
-            [self setFocus:self.focus];
-            [self.fanNumber setText:[self.user.fans_count description]];
+            [weakSelf setFocus:weakSelf.focus];
+            [weakSelf.fanNumber setText:[weakSelf.user.fans_count description]];
         }
         
     }];

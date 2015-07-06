@@ -89,9 +89,17 @@
             if (response.responseCode == UMSResponseCodeSuccess) {
                 [[UMSocialDataService defaultDataService] requestSnsInformation:snsPlatform.platformName completion:^(UMSocialResponseEntity *userInfoResponse) {
                     
-                    UMComUserAccount *account = [[UMComUserAccount alloc] init];
+                    
                     UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
-                    account.snsPlatformName = snsPlatform.platformName;
+                    UMComSnsType snsType = UMComSnsTypeOther;
+                    if ([snsPlatform.platformName isEqualToString:UMShareToSina]) {
+                        snsType = UMComSnsTypeSina;
+                    } else if ([snsPlatform.platformName isEqualToString:UMShareToWechatSession]){
+                        snsType = UMComSnsTypeWechat;
+                    } else if ([snsPlatform.platformName isEqualToString:UMShareToQQ]){
+                        snsType = UMComSnsTypeQQ;
+                    }
+                    UMComUserAccount *account = [[UMComUserAccount alloc] initWithSnsType:snsType];
                     account.usid = snsAccount.usid;
                     account.token = snsAccount.accessToken;
                     account.custom = @"这是一个自定义字段，可以改成自己需要的数据";

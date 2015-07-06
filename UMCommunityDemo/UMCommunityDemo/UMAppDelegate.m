@@ -33,10 +33,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-        
     [UMCommunity openLog:YES];
     //Message
-    [UMCommunity setWithAppKey:UMengCommunityAppkey];
+    [UMCommunity setWithAppKey:UMengCommunityAppkey];//54d19091fd98c55a19000406
     [UMComMessageManager startWithOptions:launchOptions];
     NSDictionary *notificationDict = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if ([notificationDict valueForKey:@"umwsq"]) {

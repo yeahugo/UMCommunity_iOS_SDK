@@ -176,8 +176,9 @@
     self.searchText = keyWord;
     self.titleLabel.hidden = YES;
     self.searchFeedRequest = [[UMComSearchFeedRequest alloc]initWithKeywords:keyWord count:BatchSize];
+    __weak UMComSearchViewController *weakSelf = self;
     [self refreshData:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-        [self.feedsTableView dealWithFetchResult:data error:error loadMore:NO haveNextPage:haveNextPage];
+        [weakSelf.feedsTableView dealWithFetchResult:data error:error loadMore:NO haveNextPage:haveNextPage];
 
     }];
 }
@@ -185,19 +186,20 @@
 - (void)refreshData:(LoadServerDataCompletion)completion
 {
     [self.feedsTableView.resultArray removeAllObjects];
+    __weak UMComSearchViewController *weakSelf = self;
     [self.searchFeedRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         completion(data,haveNextPage,error);
         if (error) {
-            self.titleLabel.hidden = YES;
+            weakSelf.titleLabel.hidden = YES;
             [UMComShowToast fetchFeedFail:error];
         }else{
             if (data.count == 0) {
-                self.titleLabel.hidden = YES;
+                weakSelf.titleLabel.hidden = YES;
             }else{
-                self.titleLabel.hidden = NO;
+                weakSelf.titleLabel.hidden = NO;
             }
         }
-        self.spaceLine.hidden = NO;
+        weakSelf.spaceLine.hidden = NO;
     }];
 }
 
@@ -257,8 +259,9 @@
 - (void)customObj:(id)obj clickOnLikeFeed:(UMComFeed *)feed
 {
     UMComFeedsTableViewCell *cell = (UMComFeedsTableViewCell *)obj;
+    __weak UMComSearchViewController *weakSelf = self;
     if ([feed.liked boolValue] == YES) {
-        [[UMComDisLikeAction action] performActionAfterLogin:feed viewController:self.self completion:^(NSArray *data, NSError *error) {
+        [[UMComDisLikeAction action] performActionAfterLogin:feed viewController:self completion:^(NSArray *data, NSError *error) {
             if (!error) {
                 feed.liked = @(0);
                 feed.likes_count = [NSNumber numberWithInteger:[feed.likes_count integerValue] -1];
@@ -268,7 +271,7 @@
                 }
                 [UMComShowToast deleteLikeFail:error];
             }
-            [self.feedsTableView reloadRowAtIndex:cell.indexPath];
+            [weakSelf.feedsTableView reloadRowAtIndex:cell.indexPath];
 
         }];
     }else{
@@ -282,7 +285,7 @@
                 }
                 [UMComShowToast createLikeFail:error];
             }
-            [self.feedsTableView reloadRowAtIndex:cell.indexPath];
+            [weakSelf.feedsTableView reloadRowAtIndex:cell.indexPath];
         }];
     }
 }
@@ -295,8 +298,9 @@
 
 - (void)customObj:(id)obj clickOnComment:(UMComComment *)comment feed:(UMComFeed *)feed
 {
+    __weak UMComSearchViewController *weakSelf = self;
     [[UMComCommentOperationAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
-        [self transitionToFeedDetailViewControllerWithFeed:feed showType:UMComShowFromClickComment];
+        [weakSelf transitionToFeedDetailViewControllerWithFeed:feed showType:UMComShowFromClickComment];
     }];
 }
 

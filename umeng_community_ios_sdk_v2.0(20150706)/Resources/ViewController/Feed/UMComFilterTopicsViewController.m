@@ -209,9 +209,10 @@
 {
     self.noTopicsTip.hidden = YES;
     [self.indicatorView startAnimating];
+    __weak UMComFilterTopicsViewController *weakSelf = self;
     [self.filterTopicsViewModel loadLocusTopics:^(NSArray *data, NSError *error) {
         if (!error) {
-            [self.indicatorView stopAnimating];
+            [weakSelf.indicatorView stopAnimating];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSMutableArray *dataArr = [NSMutableArray arrayWithCapacity:1];
                 for (UMComComment *comment in data) {
@@ -219,27 +220,27 @@
                         [dataArr addObject:data];
                     }
                 }
-                self.allTopicsArray = data;
+                weakSelf.allTopicsArray = data;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if ([[[UIDevice currentDevice] systemVersion]floatValue] < 8.0) {
-                        self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                        weakSelf.footView.backgroundColor = TableViewSeparatorRGBColor;
                     }
-                    [self.tableView reloadData];
+                    [weakSelf.tableView reloadData];
 
                 });
             });
 
         }
     } serverCompletion:^(NSArray *data, NSError *error) {
-        self.loadFinish = YES;
+        weakSelf.loadFinish = YES;
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [self.indicatorView stopAnimating];
+        [weakSelf.indicatorView stopAnimating];
         if (data.count > 0) {
-            self.allTopicsArray = data;
+            weakSelf.allTopicsArray = data;
         }
-        [self showNoTopicTipWithArr:self.allTopicsArray error:error notice:UMComLocalizedString(@"no related topics",@"暂无相关话题")];
+        [weakSelf showNoTopicTipWithArr:weakSelf.allTopicsArray error:error notice:UMComLocalizedString(@"no related topics",@"暂无相关话题")];
 
-        [self.tableView reloadData];
+        [weakSelf.tableView reloadData];
 
     }];
     
@@ -250,25 +251,27 @@
 {
     [self.indicatorView startAnimating];
     self.noTopicsTip.hidden = YES;
+    __weak UMComFilterTopicsViewController *weakSelf = self;
+
     [self.filterTopicsViewModel loadLocusRecommendTopics:^(NSArray *data, NSError *error) {
         if (data.count > 0) {
-            [self.indicatorView stopAnimating];
-            self.allTopicsArray = [NSMutableArray arrayWithArray:data];
+            [weakSelf.indicatorView stopAnimating];
+            weakSelf.allTopicsArray = [NSMutableArray arrayWithArray:data];
             if ([[[UIDevice currentDevice] systemVersion]floatValue] < 8.0) {
-                self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                weakSelf.footView.backgroundColor = TableViewSeparatorRGBColor;
             }
         }
         
-        [self.tableView reloadData];
+        [weakSelf.tableView reloadData];
     } serverCompletion:^(NSArray *data, NSError *error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        [self.indicatorView stopAnimating];
+        [weakSelf.indicatorView stopAnimating];
         if (data.count > 0) {
-            self.allTopicsArray = data;
+            weakSelf.allTopicsArray = data;
         }
-        [self showNoTopicTipWithArr:self.allTopicsArray error:error notice: UMComLocalizedString(@"There is no topic", @"暂时没有推荐话题咯")];
-        [self.tableView reloadData];
-        self.loadFinish = YES;
+        [weakSelf showNoTopicTipWithArr:weakSelf.allTopicsArray error:error notice: UMComLocalizedString(@"There is no topic", @"暂时没有推荐话题咯")];
+        [weakSelf.tableView reloadData];
+        weakSelf.loadFinish = YES;
     }];
 }
 
@@ -280,13 +283,14 @@
     [self.indicatorView startAnimating];
     if([keywords length]>0)
     {
+        __weak UMComFilterTopicsViewController *weakSelf = self;
         [self.filterTopicsViewModel searchTopicWithKeywords:keywords completion:^(NSArray *data,  NSError *error) {
-            [self.indicatorView stopAnimating];
+            [weakSelf.indicatorView stopAnimating];
             if (!error) {
-                self.filteredCacheTopicsArray = data;
+                weakSelf.filteredCacheTopicsArray = data;
             }
-            [self showNoTopicTipWithArr:data error:error notice:UMComLocalizedString(@"no related topics",@"暂无相关话题")];
-            [self.tableView reloadData];
+            [weakSelf showNoTopicTipWithArr:data error:error notice:UMComLocalizedString(@"no related topics",@"暂无相关话题")];
+            [weakSelf.tableView reloadData];
         }];
     }
 }
@@ -344,7 +348,7 @@
     __weak UMComFilterTopicsViewCell *wealCell = cell;
     [[UMComAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
         BOOL isFocus = [topic isFocus];
-        [cell.topic setFocused:!isFocus block:^(NSError * error) {
+        [wealCell.topic setFocused:!isFocus block:^(NSError * error) {
             if (!error) {
                 [wealCell setFocused:[topic isFocus]];
             } else {

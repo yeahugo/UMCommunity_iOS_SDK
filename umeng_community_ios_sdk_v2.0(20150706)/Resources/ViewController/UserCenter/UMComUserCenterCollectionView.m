@@ -103,13 +103,14 @@
         if (self.isHasNextPage == YES) {
             self.indicatorView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height+20);
             [self.indicatorView startAnimating];
+            __weak typeof(self) weakSelf = self;
             [self.fecthRequest fetchNextPageFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-                [self.indicatorView stopAnimating];
-                self.isHasNextPage = haveNextPage;
+                [weakSelf.indicatorView stopAnimating];
+                weakSelf.isHasNextPage = haveNextPage;
                 if (data.count > 0) {
-                    [self.userList addObjectsFromArray:data];
+                    [weakSelf.userList addObjectsFromArray:data];
                 }
-                [self reloadData];
+                [weakSelf reloadData];
             }];
         }
     }

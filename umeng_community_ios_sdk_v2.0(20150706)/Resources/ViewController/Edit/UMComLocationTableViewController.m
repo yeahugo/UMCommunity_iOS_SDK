@@ -52,8 +52,6 @@
                 [self.locationManager requestAlwaysAuthorization];
         }
     }
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//    self.tableView.separatorColor = TableViewSeparatorRGBColor;
     self.tableView.rowHeight = LocationCellHeight;
  
 }
@@ -115,15 +113,16 @@
      didUpdateLocations:(NSArray *)locations
 {
     self.editViewModel.location = manager.location;
+    __weak typeof(self) weakSelf = self;
     [UMComHttpManager locationNames:manager.location.coordinate response:^(id responseObject, NSError *error) {
         [self.indicatorView stopAnimating];
         if (!error) {
             if ([responseObject valueForKey:@"pois"] && [[responseObject valueForKey:@"pois"] count] > 0) {
                 if ([[[UIDevice currentDevice] systemVersion]floatValue] < 8.0) {
-                    self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                    weakSelf.footView.backgroundColor = TableViewSeparatorRGBColor;
                 }
-                self.locationDics = [responseObject valueForKey:@"pois"];
-                [self.tableView reloadData];
+                weakSelf.locationDics = [responseObject valueForKey:@"pois"];
+                [weakSelf.tableView reloadData];
             }else{
                 [UMComShowToast fetchLocationsFail:nil];
             }

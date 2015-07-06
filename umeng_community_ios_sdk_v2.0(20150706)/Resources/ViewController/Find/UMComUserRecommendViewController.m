@@ -160,33 +160,34 @@
 
 - (void)requestRecommendUsers
 {
+    __weak UMComUserRecommendViewController *weakSelf = self;
     [self.fetchRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-        [self.refreshIndicatorView stopAnimating];
-        [self.indicatorView stopAnimating];
+        [weakSelf.refreshIndicatorView stopAnimating];
+        [weakSelf.indicatorView stopAnimating];
         if (data.count > 0) {
             if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0) {
-                self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                weakSelf.footView.backgroundColor = TableViewSeparatorRGBColor;
             }
-            self.userList = data;
-            self.noRecommendTip.hidden = YES;
+            weakSelf.userList = data;
+            weakSelf.noRecommendTip.hidden = YES;
         }else{
             if (error) {
-                self.noRecommendTip.hidden = YES;
+                weakSelf.noRecommendTip.hidden = YES;
             }else{
-                if (self.noRecommendTip == nil) {
-                    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/2-80, self.view.frame.size.width, 40)];
+                if (weakSelf.noRecommendTip == nil) {
+                    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, weakSelf.view.frame.size.height/2-80, weakSelf.view.frame.size.width, 40)];
                     label.backgroundColor = [UIColor clearColor];
                     label.text = UMComLocalizedString(@"Tehre is no recommend user", @"暂时没有推荐用户咯");
                     label.textAlignment = NSTextAlignmentCenter;
-                    self.noRecommendTip = label;
-                    [self.tableView addSubview:label];
+                    weakSelf.noRecommendTip = label;
+                    [weakSelf.tableView addSubview:label];
                 } else {
-                    self.noRecommendTip.hidden = NO;
+                    weakSelf.noRecommendTip.hidden = NO;
                 }
             }
             [UMComShowToast fetchRecommendUserFail:error];
         }
-        [self.tableView reloadData];
+        [weakSelf.tableView reloadData];
     }];
 }
 

@@ -63,24 +63,25 @@
     }
     self.tableView.rowHeight = 45;
     
-    UMComAllTopicsRequest *allTopicsController = [[UMComAllTopicsRequest alloc] initWithCount:TotalTopicSize];
+     __block UMComAllTopicsRequest *allTopicsController = [[UMComAllTopicsRequest alloc] initWithCount:TotalTopicSize];
+    __weak UMComEditTopicsViewController *weakSelf = self;
     [UMComSession sharedInstance].isFocus = YES;
     [allTopicsController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
         
         if (!error && data.count > 0) {
             if ([[[UIDevice currentDevice] systemVersion]floatValue] < 8.0) {
-                self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                weakSelf.footView.backgroundColor = TableViewSeparatorRGBColor;
             }
-            self.topicsArray = [NSMutableArray arrayWithArray:data];
-            [self.tableView reloadData];
+            weakSelf.topicsArray = [NSMutableArray arrayWithArray:data];
+            [weakSelf.tableView reloadData];
         }
         [allTopicsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
             if (!error && data.count > 0) {
                 if ([[[UIDevice currentDevice] systemVersion]floatValue] < 8.0) {
-                    self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                    weakSelf.footView.backgroundColor = TableViewSeparatorRGBColor;
                 }
-                self.topicsArray = [NSMutableArray arrayWithArray:data];
-                [self.tableView reloadData];
+                weakSelf.topicsArray = [NSMutableArray arrayWithArray:data];
+                [weakSelf.tableView reloadData];
             }else {
                 [UMComShowToast fetchTopcsFail:error];
             }
@@ -143,16 +144,18 @@
     }
     else
     {
-        UMComAllTopicsRequest *allTopicsController = [[UMComAllTopicsRequest alloc] initWithCount:TotalTopicSize];
+        __block UMComAllTopicsRequest *allTopicsController = [[UMComAllTopicsRequest alloc] initWithCount:TotalTopicSize];
+        __weak UMComEditTopicsViewController *weakSelf = self;
+
         [allTopicsController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
             if (data) {
-                self.topicsArray = [NSMutableArray arrayWithArray:data];
-                [self.tableView reloadData];
+                weakSelf.topicsArray = [NSMutableArray arrayWithArray:data];
+                [weakSelf.tableView reloadData];
             } else {
 
                 [allTopicsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-                    self.topicsArray = [NSMutableArray arrayWithArray:data];
-                    [self.tableView reloadData];
+                    weakSelf.topicsArray = [NSMutableArray arrayWithArray:data];
+                    [weakSelf.tableView reloadData];
                 }];
             }
         }];

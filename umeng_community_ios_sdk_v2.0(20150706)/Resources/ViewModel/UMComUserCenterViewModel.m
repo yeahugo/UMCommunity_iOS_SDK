@@ -164,7 +164,7 @@
 - (void)loadDataWithType:(UMComUserCenterDataType)dataType completion:(LoadServerDataCompletion)completion
 {
     self.curDataType = dataType;
-    
+    __weak typeof(self) weakSelf = self;
     if(dataType==UMComUserCenterDataTopics)
     {
         UMComUserTopicsRequest *userTopicsRequest = [[UMComUserTopicsRequest alloc] initWithUid:self.uid count:BatchSize];
@@ -180,7 +180,7 @@
     {
         [self.fetchedFollowersController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
             if (error) {
-                completion(self.user.followers.array ,NO ,nil);
+                completion(weakSelf.user.followers.array ,NO ,nil);
             } else {
                 completion(data, haveNextPage, error);
             }
@@ -190,7 +190,7 @@
     {
         [self.fetchedFansController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
             if (error) {
-                completion(self.user.fans.array, NO, nil);
+                completion(weakSelf.user.fans.array, NO, nil);
             } else {
                 completion( data, haveNextPage, error);
             }

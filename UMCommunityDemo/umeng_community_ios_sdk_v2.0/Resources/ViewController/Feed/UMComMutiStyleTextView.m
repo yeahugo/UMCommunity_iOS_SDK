@@ -14,6 +14,11 @@
 #import "UMComLike.h"
 #import "UMComUser.h"
 
+@interface UMComMutiStyleTextView ()
+
+
+@end
+
 @implementation UMComMutiStyleTextView
 
 - (id)init
@@ -28,9 +33,12 @@
 - (void)dealloc
 {
     if (_framesetterRef) {
-        CFRelease(_framesetterRef);
+        CFRelease((__bridge_retained  CTFramesetterRef)(_framesetterRef));
+        _framesetterRef = NULL;
     }
 }
+
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -50,35 +58,33 @@
 }
 
 
+
 #pragma mark - CreateDefault
 
 - (void)createDefault
 {
-    self.textLayer = [CALayer layer];
-    UIImage *image = [UIImage imageNamed:@"origin_image_bg"];
-    self.textLayer.contents = (id) image.CGImage;
-//    [self.layer addSublayer:self.textLayer];
     //public
-    self.text        = nil;
-    self.font        = [UIFont systemFontOfSize:13.0f];
-    self.textColor   = [UIColor blackColor];
-    self.runType = UMComMutiTextRunNoneType;//UMComMutiTextRunURLType | UMComMutiTextRunEmojiType;
-    self.lineSpace   = 2.0f;
+    _text        = nil;
+    _font        = [UIFont systemFontOfSize:13.0f];
+    _textColor   = [UIColor blackColor];
+    _runType = UMComMutiTextRunNoneType;//UMComMutiTextRunURLType | UMComMutiTextRunEmojiType;
+    _lineSpace   = 2.0f;
 //    self.heightOffset = 0.0f;
-    self.attributedText = nil;
-    self.pointOffset = CGPointZero;
+    _attributedText = nil;
+    _pointOffset = CGPointZero;
     //private
-    self.runs        = [NSMutableArray array];
-    self.runRectDictionary = [NSMutableDictionary dictionary];
-    self.touchRun = nil;
-    self.clikTextDict = [NSMutableArray arrayWithCapacity:1];
-   
+    _runs        = [NSMutableArray array];
+    _runRectDictionary = [NSMutableDictionary dictionary];
+    _touchRun = nil;
+    _clikTextDict = [NSMutableArray arrayWithCapacity:1];
+    _framesetterRef = NULL;
     UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:self.frame];
-    self.backGroundImageView = bgImageView;
+    _backGroundImageView = bgImageView;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapInCerrentView:)];
     [self addGestureRecognizer:tap];
 }
+
 
 
 #pragma mark - Set
@@ -117,13 +123,15 @@
     CGMutablePathRef pathRef = CGPathCreateMutable();
     CGPathAddRect(pathRef, NULL, viewRect);
 
-    CTFrameRef frameRef = CTFramesetterCreateFrame(self.framesetterRef, CFRangeMake(0, 0), pathRef, nil);
+    CTFramesetterRef frameSetter = CFRetain((__bridge CTFramesetterRef)(self.framesetterRef));
+    CTFrameRef frameRef = CTFramesetterCreateFrame(frameSetter, CFRangeMake(0, 0), pathRef, nil);
     //通过context在frame中描画文字内容
     CTFrameDraw(frameRef, contextRef);
     [self.runRectDictionary removeAllObjects];
     [self setRunsKeysToRunRectWithFrameRef:frameRef];
     CGPathRelease(pathRef);
     CFRelease(frameRef);
+    CFRelease(frameSetter);
 }
 
 - (void)setRunsKeysToRunRectWithFrameRef:(CTFrameRef)frameRef
@@ -307,7 +315,7 @@
     self.runs = runs;
     
     CTFramesetterRef setterRef = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
-    self.framesetterRef = setterRef;
+    self.framesetterRef = (__bridge_transfer id)(CFRetain(setterRef));
     CTFrameRef frameRef = CTFramesetterCreateFrame(setterRef, CFRangeMake(0, 0), pathRef, nil);
     CFArrayRef lines = CTFrameGetLines(frameRef);
     
@@ -364,6 +372,7 @@
     self.lineCount = lineCount;
     self.attributedText = attString;
     CGPathRelease(pathRef);
+    CFRelease(setterRef);
     CFRelease(frameRef);
 }
 

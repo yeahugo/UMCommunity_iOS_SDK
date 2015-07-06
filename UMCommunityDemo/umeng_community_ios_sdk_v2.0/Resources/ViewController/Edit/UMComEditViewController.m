@@ -978,6 +978,7 @@
     }
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    __weak UMComEditViewController *weakSelf = self;
     if (self.fakeForwardTextView.hidden) {
         if (self.topic) {
             //若需要显示话题用户手动删除话题就不带话题id，如果不需要显示话题就自动加上话题id
@@ -996,13 +997,13 @@
         
         [self.editViewModel postEditContentWithImages:postImages response:^(id responseObject, NSError *error) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [self dealWhenPostFeedFinish:responseObject error:error];
+            [weakSelf dealWhenPostFeedFinish:responseObject error:error];
             
         }];
     } else {
         [self.editViewModel postForwardFeed:self.forwardFeed response:^(id responseObject, NSError *error) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [self dealWhenPostFeedFinish:responseObject error:error];
+            [weakSelf dealWhenPostFeedFinish:responseObject error:error];
         }];
     }
     [self dismissViewControllerAnimated:YES completion:^{

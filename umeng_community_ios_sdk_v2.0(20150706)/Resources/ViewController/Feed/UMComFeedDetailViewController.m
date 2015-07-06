@@ -137,18 +137,19 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     if (!self.fetchFeedsController) {
         [self getFetchedResultsController];
     }
+    __weak typeof(self) weakSelf = self;
     [self.fetchFeedsController fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
         if ([data isKindOfClass:[NSArray class]] && data.count > 0) {
-            self.feed = data[0];
-            [self reloadViewsWithFeed:self.feed];
+            weakSelf.feed = data[0];
+            [weakSelf reloadViewsWithFeed:weakSelf.feed];
         }
         [self.fetchFeedsController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
             if ([data isKindOfClass:[NSArray class]] && data.count > 0) {
-                self.feed = data[0];
-                [self reloadViewsWithFeed:self.feed];
+                weakSelf.feed = data[0];
+                [weakSelf reloadViewsWithFeed:weakSelf.feed];
             }
-            [self refreshFeedsLike:self.feed.feedID];
-            [self refreshFeedsComments:self.feed.feedID];
+            [weakSelf refreshFeedsLike:weakSelf.feed.feedID];
+            [weakSelf refreshFeedsComments:weakSelf.feed.feedID];
 
         }];
     }];
@@ -307,19 +308,20 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
          UMComFeedLikesRequest *feedLikesController = [[UMComFeedLikesRequest alloc] initWithFeedId:feedId count:TotalLikesSize];
         self.fetchLikeRequest = feedLikesController;
     }
+    __weak typeof(self) weakSelf = self;
 
     [self.fetchLikeRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         if (!error) {
-            if (!self.likeListView) {
-                self.likeListView = [[UMComLikeListView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kLikeViewHeight)];
-                self.likeListView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-                [self.feedDetaiView addSubview:self.likeListView];
-                self.likeListView.delegate = self;
+            if (!weakSelf.likeListView) {
+                weakSelf.likeListView = [[UMComLikeListView alloc]initWithFrame:CGRectMake(0, 0, weakSelf.view.frame.size.width, kLikeViewHeight)];
+                weakSelf.likeListView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+                [weakSelf.feedDetaiView addSubview:weakSelf.likeListView];
+                weakSelf.likeListView.delegate = weakSelf;
             }
-            [self.likeListView reloadViewsWithfeed:self.feed likeArray:data];
+            [weakSelf.likeListView reloadViewsWithfeed:weakSelf.feed likeArray:data];
         }
         isrefreshLikeFinish = YES;
-        [self reloadViewsWithFeed:self.feed];
+        [weakSelf reloadViewsWithFeed:weakSelf.feed];
 
     }];
 }
@@ -330,20 +332,21 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         self.fecthCommentRequest = [[UMComFeedCommentsRequest alloc] initWithFeedId:feedId order:commentorderByTimeAsc count:BatchSize];
         
     }
+    __weak typeof(self) weakSelf = self;
     [self.fecthCommentRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         isHaveNextPage = haveNextPage;
         isrefreshCommentFinish = YES;
         if (!error) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self.commentTableView reloadCommentTableViewArrWithComments:data];
+                [weakSelf.commentTableView reloadCommentTableViewArrWithComments:data];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    int commentCount = [self.feed.comments_count intValue];
+                    int commentCount = [weakSelf.feed.comments_count intValue];
                     if (commentCount < data.count) {
                         commentCount = (int)data.count;
                     }
-                    self.feed.comments_count = [NSNumber numberWithInt:commentCount];
-                    [self.commentTableView reloadData];
-                    [self reloadViewsWithFeed:self.feed];
+                    weakSelf.feed.comments_count = [NSNumber numberWithInt:commentCount];
+                    [weakSelf.commentTableView reloadData];
+                    [weakSelf reloadViewsWithFeed:weakSelf.feed];
                 });
             });
         }
@@ -362,9 +365,10 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
 - (IBAction)didClikeObComment:(UITapGestureRecognizer *)sender {
     [self dismissAllEditView];
+    __weak typeof(self) weakSelf = self;
     [[UMComCommentOperationAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
         if (!error) {
-            [self presentEditView];    
+            [weakSelf presentEditView];
         }
     }];
 }
@@ -395,22 +399,23 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 {
     CGFloat offset = scrollView.contentOffset.y;
     if (offset > 0 && scrollView.contentOffset.y > scrollView.contentSize.height - (scrollView.frame.size.height - 65)){
+        __weak typeof(self) weakSelf = self;
         [[UMComCommentOperationAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
             [self.fecthCommentRequest fetchNextPageFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
                 if (!error) {
                     isHaveNextPage = haveNextPage;
                     NSMutableArray *tempData = [NSMutableArray array];
-                    [tempData addObjectsFromArray:self.commentTableView.reloadComments];
+                    [tempData addObjectsFromArray:weakSelf.commentTableView.reloadComments];
                     [tempData addObjectsFromArray:data];
-                    [self.commentTableView reloadCommentTableViewArrWithComments:tempData];
-                    int commentCount = [self.feed.comments_count intValue];
+                    [weakSelf.commentTableView reloadCommentTableViewArrWithComments:tempData];
+                    int commentCount = [weakSelf.feed.comments_count intValue];
                     if (commentCount < tempData.count) {
                         commentCount = (int)tempData.count;
                     }
-                    self.showType = UMComShowFromClickDefault;
-                    self.feed.comments_count = [NSNumber numberWithInt:commentCount];
-                    [self.commentTableView reloadData];
-                    [self reloadViewsWithFeed:self.feed];
+                    weakSelf.showType = UMComShowFromClickDefault;
+                    weakSelf.feed.comments_count = [NSNumber numberWithInt:commentCount];
+                    [weakSelf.commentTableView reloadData];
+                    [weakSelf reloadViewsWithFeed:weakSelf.feed];
                 }
             }];
         }];
@@ -421,18 +426,18 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 - (void)onClickHandlButton:(UIButton *)sender
 {
     [self dismissAllEditView];
-    
+    __weak typeof(self) weakSelf = self;
     [[UMComFeedOperationAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
         NSString *title = @"";
         NSString *imageName = @"";
-        if ([self isPermission_delete_content]) {
+        if ([weakSelf isPermission_delete_content]) {
             title = UMComLocalizedString(@"delete", @"删除");
             imageName = @"um_delete";
         } else {
             title = UMComLocalizedString(@"spam", @"举报");
             imageName = @"um_spam";
         }
-        [self showActionTableViewWithImageNameList:[NSArray arrayWithObjects:imageName,@"um_copy", nil] titles:[NSArray arrayWithObjects:title,UMComLocalizedString(@"copy", @"复制"), nil] type:FeedType];
+        [weakSelf showActionTableViewWithImageNameList:[NSArray arrayWithObjects:imageName,@"um_copy", nil] titles:[NSArray arrayWithObjects:title,UMComLocalizedString(@"copy", @"复制"), nil] type:FeedType];
     }];
 }
 
@@ -661,14 +666,15 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
 - (void)customObj:(id)obj clickOnLikeFeed:(UMComFeed *)feed
 {
+    __weak typeof(self) weakSelf = self;
     if ([feed.liked boolValue] == YES) {
         [[UMComDisLikeAction action] performActionAfterLogin:feed viewController:self completion:^(NSArray *data, NSError *error) {
             if (!error) {
-                self.feed.liked = @(0);
-                self.feed.likes_count = [NSNumber numberWithInt:[self.feed.likes_count intValue]-1];
-                [self refreshFeedsLike:self.feed.feedID];
-                [self reloadLikeImageView:self.feed];
-                [[NSNotificationCenter defaultCenter] postNotificationName:LikeOperationFinish object:self.feed];
+                weakSelf.feed.liked = @(0);
+                weakSelf.feed.likes_count = [NSNumber numberWithInt:[weakSelf.feed.likes_count intValue]-1];
+                [weakSelf refreshFeedsLike:weakSelf.feed.feedID];
+                [weakSelf reloadLikeImageView:weakSelf.feed];
+                [[NSNotificationCenter defaultCenter] postNotificationName:LikeOperationFinish object:weakSelf.feed];
             } else {
                 [UMComShowToast deleteLikeFail:error];
             }
@@ -676,11 +682,11 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     }else{
         [[UMComLikeAction action] performActionAfterLogin:feed viewController:self completion:^(NSArray *data, NSError *error) {
             if (!error) {
-                self.feed.liked = @(1);
-                self.feed.likes_count = [NSNumber numberWithInt:[self.feed.likes_count intValue]+1];
-                [self refreshFeedsLike:self.feed.feedID];
-                [self reloadLikeImageView:self.feed];
-                [[NSNotificationCenter defaultCenter] postNotificationName:LikeOperationFinish object:self.feed];
+                weakSelf.feed.liked = @(1);
+                weakSelf.feed.likes_count = [NSNumber numberWithInt:[weakSelf.feed.likes_count intValue]+1];
+                [weakSelf refreshFeedsLike:weakSelf.feed.feedID];
+                [weakSelf reloadLikeImageView:weakSelf.feed];
+                [[NSNotificationCenter defaultCenter] postNotificationName:LikeOperationFinish object:weakSelf.feed];
             } else {
                 [UMComShowToast createLikeFail:error];
             }
@@ -702,6 +708,8 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
 - (void)customObj:(id)obj clickOnComment:(UMComComment *)comment feed:(UMComFeed *)feed
 {
+    __weak typeof(self) weakSelf = self;
+
     [[UMComCommentOperationAction action] performActionAfterLogin:nil viewController:self completion:^(NSArray *data, NSError *error) {
         if (self.commentTextField.hidden == NO) {
             [self dismissAllEditView];
@@ -709,14 +717,14 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         }
         NSString *title = @"";
         NSString *imageName = @"";
-        if ([self isPermission_delete_content] || [comment.creator.uid isEqualToString:[UMComSession sharedInstance].loginUser.uid]) {
+        if ([weakSelf isPermission_delete_content] || [comment.creator.uid isEqualToString:[UMComSession sharedInstance].loginUser.uid]) {
             title = UMComLocalizedString(@"delete", @"删除");
             imageName = @"um_delete";
         } else {
             title = UMComLocalizedString(@"spam", @"举报");
             imageName = @"um_spam";
         }
-        [self showActionTableViewWithImageNameList:[NSArray arrayWithObjects:imageName,@"um_reply", nil] titles:[NSArray arrayWithObjects:title,UMComLocalizedString(@"reply", @"回复"), nil] type:CommentType];
+        [weakSelf showActionTableViewWithImageNameList:[NSArray arrayWithObjects:imageName,@"um_reply", nil] titles:[NSArray arrayWithObjects:title,UMComLocalizedString(@"reply", @"回复"), nil] type:CommentType];
     }];
 
 }
@@ -859,13 +867,14 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 - (void)postComment:(NSString *)content
 {
     self.showType = UMComShowFromClickDefault;
+    __weak typeof(self) weakSelf = self;
     [UMComCommentFeedRequest postWithSourceFeedId:self.feed.feedID commentContent:content replyUserId:self.commentTableView.replyUserId completion:^(NSError *error) {
         if (error) {
             [UMComShowToast createCommentFail:error];
         }else{
-            self.feed.comments_count = [NSNumber numberWithInt:[self.feed.comments_count intValue]+1];
-            [self refreshFeedsComments:self.feed.feedID];
-            [[NSNotificationCenter defaultCenter] postNotificationName:CommentOperationFinish object:self.feed];
+            weakSelf.feed.comments_count = [NSNumber numberWithInt:[weakSelf.feed.comments_count intValue]+1];
+            [weakSelf refreshFeedsComments:weakSelf.feed.feedID];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CommentOperationFinish object:weakSelf.feed];
         }
     }];
 }

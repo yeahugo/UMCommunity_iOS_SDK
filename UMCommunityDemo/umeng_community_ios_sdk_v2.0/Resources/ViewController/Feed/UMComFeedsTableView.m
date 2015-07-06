@@ -190,8 +190,9 @@ static int HeaderOffSet = -90;//-120
     _loadingMore = YES;
     self.noFeedTip.hidden = YES;
     if (self.feedsTableViewDelegate && [self.feedsTableViewDelegate respondsToSelector:@selector(feedTableView:refreshData:)]) {
+        __weak UMComFeedsTableView * weakSelf = self;
         [self.feedsTableViewDelegate feedTableView:self refreshData:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-            [self dealWithFetchResult:data error:error loadMore:NO haveNextPage:haveNextPage];
+            [weakSelf dealWithFetchResult:data error:error loadMore:NO haveNextPage:haveNextPage];
         }];
     }
 }
@@ -210,12 +211,13 @@ static int HeaderOffSet = -90;//-120
     //上拉加载更多
     else if (_haveNextPage == YES && offset > 0 && scrollView.contentOffset.y > scrollView.contentSize.height - (scrollView.superview.frame.size.height - 65)) {
         if (self.feedsTableViewDelegate && [self.feedsTableViewDelegate respondsToSelector:@selector(feedTableView:loadMoreData:)]) {
+            __weak UMComFeedsTableView *feedsTableView = self;
             [self.feedsTableViewDelegate feedTableView:self loadMoreData:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-                self.noFeedTip.hidden = YES;
+                feedsTableView.noFeedTip.hidden = YES;
                 if (!haveNextPage) {
-                    [self.footerIndicatorView stopAnimating];
+                    [feedsTableView.footerIndicatorView stopAnimating];
                 }
-                [self dealWithFetchResult:data error:error loadMore:YES haveNextPage:haveNextPage];
+                [feedsTableView dealWithFetchResult:data error:error loadMore:YES haveNextPage:haveNextPage];
             }];
         }
     }
@@ -314,12 +316,13 @@ static int HeaderOffSet = -90;//-120
     if ([notification.object isKindOfClass:[UMComFeed class]]) {
         UMComFeed *feed = (UMComFeed *)notification.object;
         [self reloadOriginFeedAfterDeletedFeed:feed];
+        __weak typeof(self) weakSelf = self;
         [self.resultArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            UMComFeedStyle *feedStyle = self.resultArray[idx];
+            UMComFeedStyle *feedStyle = weakSelf.resultArray[idx];
             
             if ([feed.feedID isEqualToString:feedStyle.feed.feedID]) {
-                [self.resultArray removeObjectAtIndex:idx];
-                [self reloadData];
+                [weakSelf.resultArray removeObjectAtIndex:idx];
+                [weakSelf reloadData];
                 *stop = YES;
             }
         }];

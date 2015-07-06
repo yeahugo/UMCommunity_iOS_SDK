@@ -131,19 +131,21 @@
 - (void)searchUsersWithKeyWord:(NSString *)keyWord
 {
     self.userFetchRequest = [[UMComSearchUserRequest alloc]initWithKeywords:keyWord count:BatchSize];
+    __weak UMComHorizontalTableView *weakSelf = self;
+
     [self.userFetchRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
-        self.userList = data;
+        weakSelf.userList = data;
         if (error) {
-            self.nouserTip.hidden = YES;
+            weakSelf.nouserTip.hidden = YES;
             [UMComShowToast fetchUserFail:error];
         }else{
             if (data.count == 0) {
-                self.nouserTip.hidden = NO;
+                weakSelf.nouserTip.hidden = NO;
             }else{
-                self.nouserTip.hidden = YES;
+                weakSelf.nouserTip.hidden = YES;
             }
         }
-        [self reloadData];
+        [weakSelf reloadData];
     }];
 }
 

@@ -8,6 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    UMComSnsTypeSina,
+    UMComSnsTypeQQ,
+    UMComSnsTypeWechat,
+    UMComSnsTypeRenren,
+    UMComSnsTypeDouban,
+    UMComSnsTypeQzone,
+    UMComSnsTypeTencent,
+    UMComSnsTypeFacebook,
+    UMComSnsTypeTwitter,
+    UMComSnsTypeYixin,
+    UMComSnsTypeInstagram,
+    UMComSnsTypeTumblr,
+    UMComSnsTypeLine,
+    UMComSnsTypeKakaoTalk,
+    UMComSnsTypeFlickr,
+    UMComSnsTypeSelfAccount,
+    UMComSnsTypeOther
+}UMComSnsType;
+
 /**
  使用第三方登录方法后得到的登录数据构造此类
  
@@ -15,10 +35,10 @@
 @interface UMComUserAccount : NSObject
 
 /**
- required sns平台名，例如sina
+ required sns平台名，例如`UMComSnsTypeSina`
  
  */
-@property (nonatomic, copy) NSString * snsPlatformName;
+@property (nonatomic, assign) UMComSnsType snsType;
 
 /**
  required, sns平台的用户id
@@ -61,5 +81,15 @@
  
  */
 @property (nonatomic, copy) NSString * custom;
+
+
+/**
+ 初始化方法
+ 
+ @param snsType 平台类型
+ 
+ @returns 用户账号对象
+ */
+- (id)initWithSnsType:(UMComSnsType)snsType;
 
 @end

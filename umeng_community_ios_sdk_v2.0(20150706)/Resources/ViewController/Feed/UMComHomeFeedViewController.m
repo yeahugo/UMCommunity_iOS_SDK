@@ -293,38 +293,39 @@
 
 - (void)transitionToViewController:(UIViewController *)toViewController
 {
+    __weak typeof(self) weakSelf = self;
     [self transitionFromViewController:self.currentViewController toViewController:toViewController duration:0.25 options:UIViewAnimationOptionCurveEaseIn animations:^{
         isTransitionFinish = NO;
-        if (toViewController == self.currentViewController) {
+        if (toViewController == weakSelf.currentViewController) {
             return;
         }
         toViewController.view.frame = currentViewFrame;
-        NSInteger currentPage = self.titlePageControl.currentPage;
+        NSInteger currentPage = weakSelf.titlePageControl.currentPage;
         if (currentPage == 0) {
-            self.recommendViewController.view.frame = rightDisAppearFrame;
-            self.filterTopicsViewController.view.frame = rightDisAppearFrame;
+            weakSelf.recommendViewController.view.frame = rightDisAppearFrame;
+            weakSelf.filterTopicsViewController.view.frame = rightDisAppearFrame;
         }else if (currentPage == 1){
-            if (self.recommendViewController.fetchFeedsController == nil) {
-                self.recommendViewController.fetchFeedsController = [[UMComRecommendFeedsRequest alloc]initWithCount:BatchSize];
-                [self.recommendViewController refreshAllData];
+            if (weakSelf.recommendViewController.fetchFeedsController == nil) {
+                weakSelf.recommendViewController.fetchFeedsController = [[UMComRecommendFeedsRequest alloc]initWithCount:BatchSize];
+                [weakSelf.recommendViewController refreshAllData];
             }
-            self.allFeedViewController.view.frame = leftDisAppearFrame;
-            self.filterTopicsViewController.view.frame = rightDisAppearFrame;
+            weakSelf.allFeedViewController.view.frame = leftDisAppearFrame;
+            weakSelf.filterTopicsViewController.view.frame = rightDisAppearFrame;
         }else if (currentPage == 2){
-            if (self.filterTopicsViewController.allTopicsArray.count == 0) {
-                [self.filterTopicsViewController reloadTopicsDataWithSearchText:nil];
+            if (weakSelf.filterTopicsViewController.allTopicsArray.count == 0) {
+                [weakSelf.filterTopicsViewController reloadTopicsDataWithSearchText:nil];
             }
-            self.recommendViewController.view.frame = leftDisAppearFrame;
-            self.allFeedViewController.view.frame = leftDisAppearFrame;
+            weakSelf.recommendViewController.view.frame = leftDisAppearFrame;
+            weakSelf.allFeedViewController.view.frame = leftDisAppearFrame;
         }
-        [self setEditButtonAnimation];
+        [weakSelf setEditButtonAnimation];
     } completion:^(BOOL finished) {
         if (finished) {
             if ([toViewController isKindOfClass:[UMComAllFeedViewController class]]) {
-                [self setEditButtonAnimation];
+                [weakSelf setEditButtonAnimation];
             }
             
-            self.currentViewController = toViewController;
+            weakSelf.currentViewController = toViewController;
         }
         isTransitionFinish = YES;
     }];
@@ -400,19 +401,20 @@
     UIView *spaceView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     spaceView.backgroundColor = [UMComTools colorWithHexString:@"#f7f7f8"];
     [self.view addSubview:spaceView];
+    __weak typeof(self) weakSelf = self;
     searchViewController.dismissBlock = ^(){
         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-            navigationBar.frame = CGRectMake(originOffset.x, 20, self.view.frame.size.width, navigationBar.frame.size.height);
-            self.view.frame = _currentViewFrame;
+            navigationBar.frame = CGRectMake(originOffset.x, 20, weakSelf.view.frame.size.width, navigationBar.frame.size.height);
+            weakSelf.view.frame = _currentViewFrame;
             [navi.view removeFromSuperview];
             [spaceView removeFromSuperview];
         } completion:nil];
     };
     [self.view.window addSubview:navi.view];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        navigationBar.frame = CGRectMake(0, -44, self.view.frame.size.width, navigationBar.frame.size.height);
-        self.view.frame = CGRectMake(0,- navigationBar.frame.size.height-originOffset.y, self.view.frame.size.width, self.view.frame.size.height+navigationBar.frame.size.height+originOffset.y);
-        navi.view.frame = CGRectMake(0, 20,self.view.frame.size.width, self.view.frame.size.height+navigationBar.frame.size.height);
+        navigationBar.frame = CGRectMake(0, -44, weakSelf.view.frame.size.width, navigationBar.frame.size.height);
+        weakSelf.view.frame = CGRectMake(0,- navigationBar.frame.size.height-originOffset.y, weakSelf.view.frame.size.width, weakSelf.view.frame.size.height+navigationBar.frame.size.height+originOffset.y);
+        navi.view.frame = CGRectMake(0, 20,weakSelf.view.frame.size.width, weakSelf.view.frame.size.height+navigationBar.frame.size.height);
     } completion:nil];
 }
 

@@ -137,15 +137,6 @@
 
 -(IBAction)actionFocuse:(id)sender
 {
-//    __weak UMComFilterTopicsViewCell *weakSelf = self;
-//    BOOL isFocus = [self.topic isFocus];
-//    [self.topic setFocused:!isFocus block:^(NSError * error) {
-//        if (!error) {
-//            [weakSelf setFocused:[weakSelf.topic isFocus]];
-//        } else {
-//            [UMComShowToast focusTopicFail:error];
-//        }
-//    }];
     if (self.delegate && [self.delegate respondsToSelector:@selector(customObj:clickOnFollowTopic:)]) {
         [self.delegate customObj:self clickOnFollowTopic:self.topic];
     }

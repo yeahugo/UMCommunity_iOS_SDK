@@ -50,14 +50,15 @@
     self.indicatorView.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2,[UIScreen mainScreen].bounds.size.height/2);
     [self.indicatorView startAnimating];
     self.fetchedFollowersController = [[UMComFollowersRequest alloc] initWithUid:[UMComSession sharedInstance].uid count:TotalFriendSize];
+    __weak typeof(self) weakSelf = self;
     [self.fetchedFollowersController fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         if (!error) {
             if (data.count > 0) {
                 if ([[[UIDevice currentDevice] systemVersion]floatValue] < 8.0) {
-                    self.footView.backgroundColor = TableViewSeparatorRGBColor;
+                    weakSelf.footView.backgroundColor = TableViewSeparatorRGBColor;
                 }
-                self.followers = [NSArray arrayWithArray:data];
-                [self.tableView reloadData];
+                weakSelf.followers = [NSArray arrayWithArray:data];
+                [weakSelf.tableView reloadData];
             }else{
                 [UMComShowToast fetchFriendsFail:nil];
             }
@@ -65,7 +66,7 @@
         }else{
             [UMComShowToast fetchFriendsFail:error];
         }
-        [self.indicatorView stopAnimating];
+        [weakSelf.indicatorView stopAnimating];
     }];
     
     self.tableView.rowHeight = 50;
