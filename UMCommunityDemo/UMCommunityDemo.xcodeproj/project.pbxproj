@@ -1821,7 +1821,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1831,12 +1830,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMessage_Sdk_1.1.0",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Sina",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0/UMessage_Sdk_1.1.0",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",
@@ -1859,7 +1852,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1869,12 +1861,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMessage_Sdk_1.1.0",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Sina",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v1.2/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0/UMessage_Sdk_1.1.0",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.0/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",

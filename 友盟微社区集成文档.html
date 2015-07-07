@@ -5,15 +5,15 @@
 <p>解压文件后把文件夹UMCommunitySDK添加到Xcode工程中。</p>
 <h1>添加系统framework</h1>
 <p>请在你的xcode工程添加下面的系统framework</p>
-<p>Security.framework
-libiconv.dylib
-SystemConfiguration.framework
-CoreGraphics.Framework
-libsqlite3.dylib
-CoreTelephony.framework
-libstdc++.dylib
-libz.dylib
-CoreLocation.framework
+<p>Security.framework <br />
+libiconv.dylib <br />
+SystemConfiguration.framework <br />
+CoreGraphics.Framework <br />
+libsqlite3.dylib <br />
+CoreTelephony.framework <br />
+libstdc++.dylib <br />
+libz.dylib <br />
+CoreLocation.framework <br />
 AssertsLibrary.framework</p>
 <h1>修改xcode编译选项</h1>
 <ol>
@@ -89,9 +89,8 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 
   //登录完成之后上传开放平台uid
  {
-    UMComUserAccount *userAccount = [[UMComUserAccount alloc] init];
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSina];        //使用UMComSnsTypeSina等代表不同的社交平台
     userAccount.usid = @&quot;用户id&quot;;
-    userAccount.snsPlatformName = sns平台来源名; //例如sina，qq，wxsession
     userAccount.token = @&quot;登录token&quot;;
     userAccount.name = @&quot;昵称&quot;;
     [UMComLoginManager finishLoginWithAccount:account completion:^(NSArray *data, NSError *error) {
