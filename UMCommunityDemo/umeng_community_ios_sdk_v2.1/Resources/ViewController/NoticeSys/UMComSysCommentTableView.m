@@ -1,0 +1,466 @@
+//
+//  UMComSysCommentTableView.m
+//  UMCommunity
+//
+//  Created by umeng on 15/7/10.
+//  Copyright (c) 2015年 Umeng. All rights reserved.
+//
+
+#import "UMComSysCommentTableView.h"
+#import "UMComImageView.h"
+#import "UMComTools.h"
+#import "UMComMutiStyleTextView.h"
+#import "UMComComment.h"
+#import "UMComFeed.h"
+#import "UMComUser.h"
+#import "UMComPullRequest.h"
+#import "UMComFeed+UMComManagedObject.h"
+#import "UMComRefreshView.h"
+#import "UIView+UMComTipLabel.h"
+#import "UMComClickActionDelegate.h"
+
+
+@interface UMComSysCommentTableView ()<UITableViewDataSource, UITableViewDelegate, UMComRefreshViewDelegate>
+
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
+
+@property (nonatomic, assign) BOOL haveNextPage;
+
+@property (nonatomic, assign) BOOL isLoadFinish;
+
+@end
+
+@implementation UMComSysCommentTableView
+
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
+{
+    self = [super initWithFrame:frame style:style];
+    if (self) {
+        self.delegate = self;
+        self.dataSource = self;
+        self.rowHeight = 100;
+        self.isShowReplyButton = YES;
+        self.separatorColor = TableViewSeparatorRGBColor;
+        self.separatorStyle = UITableViewCellSeparatorStyleNone;
+        if ([self respondsToSelector:@selector(setSeparatorInset:)]) {
+            [self setSeparatorInset:UIEdgeInsetsZero];
+        }
+        if ([self respondsToSelector:@selector(setLayoutMargins:)])
+        {
+            [self setLayoutMargins:UIEdgeInsetsZero];
+        }
+        self.indicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        self.indicatorView.frame = CGRectMake(frame.size.width/2-25, frame.size.height/2-25, 50, 50);
+        [self addSubview:self.indicatorView];
+        self.isLoadFinish = YES;
+        self.haveNextPage = NO;
+    }
+    return self;
+}
+
+- (void)setDataFecthRequest:(UMComPullRequest *)dataFecthRequest
+{
+    _dataFecthRequest = dataFecthRequest;
+    [self fecthAllData];
+}
+
+- (void)setCellActionDelegate:(id<UMComClickActionDelegate>)cellActionDelegate
+{
+    _cellActionDelegate = cellActionDelegate;
+    [self reloadData];
+}
+
+- (void)setHeadView:(UMComRefreshView *)headView
+{
+    _headView = headView;
+    _headView.refreshDelegate = self;
+    headView.startLocation = self.frame.origin.y;
+    self.tableHeaderView = _headView;
+}
+
+- (void)setFootView:(UMComRefreshView *)footView
+{
+    _footView = footView;
+    _footView.refreshDelegate = self;
+    footView.startLocation = self.frame.origin.y;
+    self.tableFooterView = _footView;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.commentList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellId = @"cellId";
+    
+    UMComSysCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (!cell) {
+        cell = [[UMComSysCommentCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    cell.delegate = self.cellActionDelegate;
+    UMComCommentModle *commentModel = self.commentList[indexPath.row];
+    [cell reloadCellWithLikeModel:commentModel];
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UMComCommentModle *commentModel = self.commentList[indexPath.row];
+    return commentModel.totalHeight;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.isLoadFinish == YES) {
+        if (scrollView.contentOffset.y < 0) {
+            [self.headView refreshScrollViewDidScroll:scrollView];
+        }else if (_haveNextPage == YES){
+            [self.footView refreshScrollViewDidScroll:scrollView];
+        }
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    float offset = scrollView.contentOffset.y;
+    if (_isLoadFinish == YES) {
+        //下拉刷新
+        if (offset < 0) {
+            [self.headView refreshScrollViewDidEndDragging:scrollView];
+        }
+        //上拉加载更多
+        else if (_haveNextPage == YES && offset > 0) {
+            [self.footView refreshScrollViewDidEndDragging:scrollView];
+        }else{
+            [self.indicatorView stopAnimating];
+        }
+    }
+}
+
+#pragma mark - 
+- (void)refreshData:(UMComRefreshView *)refreshView loadingFinishHandler:(RefreshDataLoadFinishHandler)handler
+{
+    [self refreshData:^(NSArray *data, NSError *error) {
+        if (handler) {
+            handler(error);
+        }
+    }];
+}
+
+- (void)loadMoreData:(UMComRefreshView *)refreshView loadingFinishHandler:(RefreshDataLoadFinishHandler)handler
+{
+    [self fecthNextPageData:^(NSArray *data, NSError *error) {
+        if (handler) {
+            handler(error);
+        }
+    }];
+}
+
+- (void)fecthAllData
+{
+    [self.indicatorView startAnimating];
+    __weak typeof(self) weakSelf = self;
+    [self.dataFecthRequest fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
+        if (data.count > 0) {
+            weakSelf.commentList = [weakSelf commentModlesWithCommentData:data];
+            [weakSelf.indicatorView stopAnimating];
+        }
+        [weakSelf reloadData];
+        [weakSelf refreshData:nil];
+    }];
+}
+
+- (void)refreshData:(void (^)(NSArray *data, NSError *error))block
+{
+    if (self.dataFecthRequest == nil) {
+        [self.indicatorView stopAnimating];
+        return;
+    }
+    if (self.commentList.count > 0) {
+        [self.indicatorView stopAnimating];
+    }
+    __weak typeof(self) weakSelf = self;
+     self.isLoadFinish = NO;
+    [self.dataFecthRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        weakSelf.isLoadFinish = YES;
+        weakSelf.haveNextPage = haveNextPage;
+        if (block) {
+            block(data, error);
+        }
+        [weakSelf.indicatorView stopAnimating];
+        if (!error && [data isKindOfClass:[NSArray class]]) {
+            weakSelf.commentList = [weakSelf commentModlesWithCommentData:data];
+        }
+        [weakSelf showTipLableInViewCentreWithData:self.commentList error:error message:UMComLocalizedString(@"no_data", @"暂时没有数据咯")];
+        [weakSelf reloadData];
+    }];
+}
+
+
+- (void)fecthNextPageData:(void (^)(NSArray *data, NSError *error))block
+{
+    if (self.dataFecthRequest == nil) {
+        [self.indicatorView stopAnimating];
+        return;
+    }
+    self.isLoadFinish = NO;
+    __weak typeof(self) weakSelf = self;
+    [self.dataFecthRequest fetchNextPageFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        weakSelf.isLoadFinish = YES;
+        weakSelf.haveNextPage = YES;
+        if (block) {
+            block(data, error);
+        }
+        weakSelf.isLoadFinish = YES;
+        weakSelf.haveNextPage = haveNextPage;
+        [weakSelf.indicatorView stopAnimating];
+        if (!error && [data isKindOfClass:[NSArray class]]) {
+            weakSelf.commentList = [weakSelf.commentList arrayByAddingObjectsFromArray:[weakSelf commentModlesWithCommentData:data]];
+        }
+        [weakSelf reloadData];
+    }];
+}
+
+
+- (NSArray *)commentModlesWithCommentData:(NSArray *)dataArray
+{
+    self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    NSMutableArray *commentModels = [NSMutableArray arrayWithCapacity:dataArray.count];
+    CGFloat commentTextViewDelta = 0;
+    if (self.isShowReplyButton == YES) {
+        commentTextViewDelta = 20;
+    }
+    for (UMComComment *comment in dataArray) {
+        UMComCommentModle *commentModle = [UMComCommentModle commentModelWithComment:comment viewWidth:self.frame.size.width commentTextViewDelta:commentTextViewDelta];
+        [commentModels addObject:commentModle];
+    }
+    return commentModels;
+}
+
+@end
+
+
+
+const float CommentNameLabelHeight = 30;
+const float CommentContentOriginY = 10;
+
+
+@implementation UMComCommentModle
+{
+    float mainViewWidth;
+}
++ (UMComCommentModle *)commentModelWithComment:(UMComComment *)comment viewWidth:(float)viewWidth commentTextViewDelta:(CGFloat)commentTextViewDelta
+{
+    UMComCommentModle *commentModel = [[UMComCommentModle alloc]init];
+    commentModel.subViewsOriginX = 50;
+    commentModel.subViewWidth = viewWidth - commentModel.subViewsOriginX - 10;
+    commentModel.viewWidth = viewWidth;
+    [commentModel resetWithComment:comment];
+    commentModel.feedTextOrigin = CGPointMake(2, 10);
+    commentModel.commentTextViewDelta = commentTextViewDelta;
+    return commentModel;
+}
+
+- (void)resetWithComment:(UMComComment *)comment
+{
+    self.comment = comment;
+    UMComUser *user = comment.creator;
+    UMComFeed *feed = comment.feed;
+    self.portraitUrlString = [user.icon_url valueForKey:@"240"];
+    self.timeString = createTimeString(comment.create_time);
+    self.nameString = [NSString stringWithFormat:@"%@",user.name];
+    float totalHeight = CommentNameLabelHeight + CommentContentOriginY;
+    
+    if (comment.content) {
+        NSMutableString * replayStr = [NSMutableString stringWithString:@""];
+        NSMutableArray *clikDicts = [NSMutableArray arrayWithCapacity:1];
+        if (comment.reply_user) {
+            [replayStr appendString:@"回复"];
+            NSRange range = NSMakeRange(replayStr.length, comment.reply_user.name.length+1);
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:comment.reply_user forKey:NSStringFromRange(range)];
+            [clikDicts addObject:dict];
+            [replayStr appendFormat:@"@%@：",comment.reply_user.name];
+        }
+        if (comment.content) {
+            NSRange range = NSMakeRange(replayStr.length, comment.content.length);
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:comment forKey:NSStringFromRange(range)];
+            [clikDicts addObject:dict];
+            [replayStr appendFormat:@"%@",comment.content];
+        }
+        UMComMutiStyleTextView *commentStyleView = [UMComMutiStyleTextView rectDictionaryWithSize:CGSizeMake(self.subViewWidth-self.commentTextViewDelta, MAXFLOAT) font:UMComFontNotoSansLightWithSafeSize(14) attString:replayStr lineSpace:2 runType:UMComMutiTextRunCommentType clickArray:clikDicts];
+        totalHeight += commentStyleView.totalHeight;
+        self.commentTextView = commentStyleView;
+    }
+    
+    NSString * feedSting = @"";
+    NSMutableDictionary *feedClickTextDict = [NSMutableDictionary dictionaryWithCapacity:1];
+    if ([feed.status integerValue] < 2) {
+        feedSting = feed.text;
+        if (feed.topics.count > 0) {
+            [feedClickTextDict setObject:feed.topics.array forKey:@"topics"];
+        }
+        if (feed.related_user.count > 0) {
+            [feedClickTextDict setObject:feed.related_user.array forKey:@"related_user"];
+        }
+    }else{
+        feedSting = UMComLocalizedString(@"Delete Content", @"该内容已被删除");
+    }
+    UMComMutiStyleTextView *feedStyleView = [UMComMutiStyleTextView rectDictionaryWithSize:CGSizeMake(self.subViewWidth-self.feedTextOrigin.x*2, MAXFLOAT) font:UMComFontNotoSansLightWithSafeSize(14) attString:feedSting lineSpace:3 runType:UMComMutiTextRunFeedContentType clickArray:[NSMutableArray arrayWithObject:feedClickTextDict]];
+    self.feedStyleView = feedStyleView;
+    totalHeight += feedStyleView.totalHeight;
+    self.totalHeight = totalHeight+25;
+}
+
+
+@end
+
+@interface UMComSysCommentCell ()
+
+@property (nonatomic, strong) UIImageView *bgimageView;
+
+@property (nonatomic, strong) UMComComment *comment;
+
+@end
+
+@implementation UMComSysCommentCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        CGFloat textOriginX = 50;
+        CGFloat textOriginY = CommentContentOriginY;
+        self.portrait = [[[UMComImageView imageViewClassName] alloc]initWithFrame:CGRectMake(10, textOriginY, 30, 30)];
+        self.portrait.userInteractionEnabled = YES;
+        self.portrait.layer.cornerRadius = self.portrait.frame.size.width/2;
+        self.portrait.clipsToBounds = YES;
+        [self.contentView addSubview:self.portrait];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didSelectedUser)];
+        [self.portrait addGestureRecognizer:tap];
+        
+        self.userNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(textOriginX, textOriginY, self.frame.size.width-textOriginX-10-120, CommentNameLabelHeight)];
+        self.userNameLabel.font = UMComFontNotoSansLightWithSafeSize(15);
+        [self.contentView addSubview:self.userNameLabel];
+        
+        self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(textOriginX+self.userNameLabel.frame.size.width, textOriginY, 120, CommentNameLabelHeight)];
+        self.timeLabel.textColor = [UMComTools colorWithHexString:FontColorGray];
+        self.timeLabel.textAlignment = NSTextAlignmentRight;
+        self.timeLabel.font = UMComFontNotoSansLightWithSafeSize(14);
+        [self.contentView addSubview:self.timeLabel];
+        
+        self.commentTextView = [[UMComMutiStyleTextView alloc] initWithFrame:CGRectMake(textOriginX, textOriginY + self.userNameLabel.frame.size.height+10, self.frame.size.width-80, 50)];
+        self.commentTextView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:self.commentTextView];
+        
+        self.replyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.replyButton.frame = CGRectMake(self.commentTextView.frame.size.width+self.commentTextView.frame.origin.x+4, self.commentTextView.frame.origin.y, 16, 16);
+        [self.replyButton addTarget:self action:@selector(didClickOnReplyButton) forControlEvents:UIControlEventTouchUpInside];
+        [self.replyButton setBackgroundImage:[UIImage imageNamed:@"um_replyme"] forState:UIControlStateNormal];
+        [self.contentView addSubview:self.replyButton];
+        
+        self.bgimageView = [[UIImageView alloc]initWithFrame:CGRectMake(textOriginX, self.commentTextView.frame.origin.y+self.commentTextView.frame.size.height, self.frame.size.width-60, 100)];
+        UIImage *resizableImage = [[UIImage imageNamed:@"origin_image_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 50, 0, 0)];
+        self.bgimageView.image = resizableImage;
+        [self.contentView addSubview:self.bgimageView];
+        
+        self.feedTextView = [[UMComMutiStyleTextView alloc] initWithFrame:CGRectMake(textOriginX, self.bgimageView.frame.origin.y+10, self.frame.size.width-60, 80)];
+        self.feedTextView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:self.feedTextView];
+        self.contentView.backgroundColor = [UIColor whiteColor];
+    }
+    return self;
+}
+
+
+- (void)reloadCellWithLikeModel:(UMComCommentModle *)commentModel
+{
+    self.comment = commentModel.comment;
+    UMComUser *user = commentModel.comment.creator;
+    NSString *iconUrl = [user.icon_url valueForKey:@"240"];
+    [self.portrait setImageURL:iconUrl placeHolderImage:[UMComImageView placeHolderImageGender:user.gender.integerValue]];
+    
+    self.userNameLabel.text = commentModel.nameString;
+    self.timeLabel.text = commentModel.timeString;
+    self.userNameLabel.frame = CGRectMake(commentModel.subViewsOriginX, CommentContentOriginY, commentModel.subViewWidth-120, CommentNameLabelHeight);
+    self.timeLabel.frame = CGRectMake(commentModel.subViewsOriginX+self.userNameLabel.frame.size.width, CommentContentOriginY, 120, CommentNameLabelHeight);
+    self.commentTextView.frame = CGRectMake(commentModel.subViewsOriginX, CommentContentOriginY+CommentNameLabelHeight, commentModel.subViewWidth-commentModel.commentTextViewDelta, commentModel.commentTextView.totalHeight);
+    if (commentModel.commentTextViewDelta > 0) {
+       self.replyButton.frame = CGRectMake(self.commentTextView.frame.size.width+self.commentTextView.frame.origin.x+4, self.commentTextView.frame.origin.y, 16, 16);
+        self.replyButton.hidden = NO;
+    }else{
+        self.replyButton.hidden = YES;
+    }
+
+    [self.commentTextView setMutiStyleTextViewProperty:commentModel.commentTextView];
+    self.commentTextView.runType = UMComMutiTextRunCommentType;
+    
+    self.bgimageView.frame = CGRectMake(commentModel.subViewsOriginX, self.commentTextView.frame.origin.y+self.commentTextView.frame.size.height, commentModel.subViewWidth, commentModel.feedStyleView.totalHeight+commentModel.feedTextOrigin.y);
+    
+    self.feedTextView.frame = CGRectMake(commentModel.subViewsOriginX+commentModel.feedTextOrigin.x, self.bgimageView.frame.origin.y+commentModel.feedTextOrigin.y, commentModel.subViewWidth-commentModel.feedTextOrigin.x*2, commentModel.feedStyleView.totalHeight);
+    [self.feedTextView setMutiStyleTextViewProperty:commentModel.feedStyleView];
+    self.feedTextView.runType = UMComMutiTextRunFeedContentType;
+    __weak typeof(self) weakSelf = self;
+    self.feedTextView.clickOnlinkText = ^(UMComMutiStyleTextView *styleView,UMComMutiTextRun *run){
+        if ([run isKindOfClass:[UMComMutiTextRunClickUser class]]) {
+            UMComMutiTextRunClickUser *userRun = (UMComMutiTextRunClickUser *)run;
+            UMComUser *user = [weakSelf.comment.feed relatedUserWithUserName:userRun.text];
+            [weakSelf turnToUserCenterWithUser:user];
+        }else if ([run isKindOfClass:[UMComMutiTextRunTopic class]])
+        {
+            UMComMutiTextRunTopic *topicRun = (UMComMutiTextRunTopic *)run;
+            UMComTopic *topic = [weakSelf.comment.feed relatedTopicWithTopicName:topicRun.text];
+            [weakSelf turnToTopicViewWithTopic:topic];
+        }else{
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(customObj:clickOnFeedText:)]) {
+                __strong typeof(weakSelf)strongSelf = weakSelf;
+                [weakSelf.delegate customObj:strongSelf clickOnFeedText:weakSelf.comment.feed];
+            }
+        }
+    };
+}
+
+
+- (void)didClickOnReplyButton
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(customObj:clickOnComment:feed:)]) {
+        [self.delegate customObj:self clickOnComment:self.comment feed:self.comment.feed];
+    }
+}
+
+- (void)didSelectedUser
+{
+    [self turnToUserCenterWithUser:self.comment.creator];
+}
+
+- (void)turnToUserCenterWithUser:(UMComUser *)user
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(customObj:clickOnUser:)]) {
+        [self.delegate customObj:self clickOnUser:user];
+    }
+}
+
+- (void)turnToTopicViewWithTopic:(UMComTopic *)topic
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(customObj:clickOnTopic:)]) {
+        [self.delegate customObj:self clickOnTopic:topic];
+    }
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    UIColor *color = TableViewSeparatorRGBColor;
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextFillRect(context, rect);
+    
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
+    CGContextStrokeRect(context, CGRectMake(0, rect.size.height - TableViewCellSpace, rect.size.width, TableViewCellSpace));
+}
+
+@end

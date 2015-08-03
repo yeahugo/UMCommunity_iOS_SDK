@@ -30,7 +30,6 @@
     UMComUserAccount *account = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];
     account.usid = @"@";
     account.name = @"@";
-    account.token = @"-";
     
     [UMComLoginManager finishLoginWithAccount:account completion:^(NSArray *data, NSError *error) {
         [UMComLoginManager finishDismissViewController:self data:data error:error];

@@ -15,11 +15,13 @@
 #import "LoginViewController.h"
 #import "UMComNavigationController.h"
 #import <objc/runtime.h>
+#import <CoreText/CoreText.h>
 
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+//#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 //#define UMengCommunityAppkey @"557670c367e58eb5390038ed"
-//#define UMengCommunityAppkey @"4eaee02c527015373b000003"
+#define UMengCommunityAppkey @"4eaee02c527015373b000003"
 //#define UMengCommunityAppkey @"557664b467e58e8fa8002518"
+
 #define UMengLoginAppkey UMengCommunityAppkey
 
 @implementation UMAppDelegate
@@ -31,11 +33,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{    
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     [UMCommunity openLog:YES];
     //Message
     [UMCommunity setWithAppKey:UMengCommunityAppkey];//54d19091fd98c55a19000406
+    
     [UMComMessageManager startWithOptions:launchOptions];
     NSDictionary *notificationDict = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if ([notificationDict valueForKey:@"umwsq"]) {
@@ -50,7 +53,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     //下面实现自定义登录
 //    LoginViewController *loginViewControler =[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
 //    [UMComLoginManager setLoginHandler:loginViewControler];
-    //设置微信AppId、appSecret，分享url
+//    //设置微信AppId、appSecret，分享url
     [UMSocialWechatHandler setWXAppId:@"wx96110a1e3af63a39" appSecret:@"c60e3d3ff109a5d17013df272df99199" url:@"http://www.umeng.com/social"];
     //设置分享到QQ互联的appId和appKey
     [UMSocialQQHandler setQQWithAppId:@"1104606393" appKey:@"X4BAsJAVKtkDQ1zQ" url:@"http://www.umeng.com/social"];
@@ -80,6 +83,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 #pragma mark Message
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+    NSLog(@"----devicetoken------%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                  stringByReplacingOccurrencesOfString: @">" withString: @""]
+                 stringByReplacingOccurrencesOfString: @" " withString: @""]);
+    
     [UMComMessageManager registerDeviceToken:deviceToken];
 }
 
