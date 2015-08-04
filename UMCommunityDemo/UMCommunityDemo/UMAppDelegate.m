@@ -14,12 +14,10 @@
 #import "UMSocialWechatHandler.h"
 #import "LoginViewController.h"
 #import "UMComNavigationController.h"
-#import <objc/runtime.h>
-#import <CoreText/CoreText.h>
 
-//#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 //#define UMengCommunityAppkey @"557670c367e58eb5390038ed"
-#define UMengCommunityAppkey @"4eaee02c527015373b000003"
+//#define UMengCommunityAppkey @"4eaee02c527015373b000003"
 //#define UMengCommunityAppkey @"557664b467e58e8fa8002518"
 
 #define UMengLoginAppkey UMengCommunityAppkey
@@ -49,6 +47,16 @@ void uncaughtExceptionHandler(NSException *exception) {
     } else {
         //使用你的消息通知处理
     }
+    
+//    
+//    printAlbum();
+//    printComment();
+//    printFeed();
+//    printLike();
+//    printTopic();
+//    printUser();
+//    printNotification();
+    
 
     //下面实现自定义登录
 //    LoginViewController *loginViewControler =[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
