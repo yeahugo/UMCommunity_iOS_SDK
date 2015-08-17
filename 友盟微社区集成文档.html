@@ -14,11 +14,12 @@ CoreTelephony.framework <br />
 libstdc++.dylib <br />
 libz.dylib <br />
 CoreLocation.framework <br />
-AssertsLibrary.framework</p>
+AssertsLibrary.framework
+AVFoundation.framework</p>
 <h1>修改xcode编译选项</h1>
 <ol>
-<li>修改xcode编译选项在Other Linker Flags 增加-all_load选项</li>
-<li>在xcode的info.plist添加一项<code>NSLocationAlwaysUsageDescription</code> 为True</li>
+<li>在xcode的info.plist添加一项<code>NSLocationAlwaysUsageDescription</code> 为NSString:"1"</li>
+<li>在info.plist 增加一项 <code>View controller-based status bar appearance</code> 为True.</li>
 <li>若要qq登录的功能，需要添加xcode的一项url scheme：tencent+QQ 开放平台的应用appid，例如tencent100424468 。还有添加一下url scheme：“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FC5B14”。另外需要在你的工程的info.plist设置Bundle display name。</li>
 <li>若要微信登录的功能，需要添加一项xcode的url scheme为微信appid，例如wxd930ea5d5a258f4f</li>
 </ol>
@@ -47,7 +48,17 @@ AssertsLibrary.framework</p>
 {
     ……
     [UMComMessageManager setAppkey:UMengMessageAppkey];   //设置消息通知Appkey
-    [UMComMessageManager startWithOptions:launchOptions];
+    NSDictionary *notificationDict = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if ([notificationDict valueForKey:@&quot;umwsq&quot;]) {
+        [UMComMessageManager startWithOptions:launchOptions];
+        if ([notificationDict valueForKey:@&quot;aps&quot;]) // 点击推送进入
+        {
+            [UMComMessageManager didReceiveRemoteNotification:notificationDict];
+        }
+    } else {
+        [UMComMessageManager startWithOptions:nil];
+        //使用你的消息通知处理
+    }
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -57,8 +68,11 @@ AssertsLibrary.framework</p>
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [UMComMessageManager didReceiveRemoteNotification:userInfo];
-}
+    if ([userInfo valueForKey:@&quot;umwsq&quot;]) {
+        [UMComMessageManager didReceiveRemoteNotification:userInfo];
+    } else {
+        //使用你自己的消息推送处理
+    }}
 </code></pre>
 
 <h2>设置登录</h2>
@@ -73,41 +87,6 @@ AssertsLibrary.framework</p>
     [UMSocialQQHandler setQQWithAppId:@&quot;100424468&quot; appKey:@&quot;c7394704798a158208a74ab60104f0ba&quot; url:@&quot;http://www.umeng.com/social&quot;];
 //    [UMComLoginManager setAppKey:UMengLoginAppkey];   //设置友盟社会化组件的应用appkey，默认把友盟社区的appkey当成微社区的appkey
 }
-</code></pre>
-
-<h2>使用自定义登录</h2>
-<p>在你的登录页面设置代理对象，并处理弹出登录页面的方法：</p>
-<pre><code> //在你弹出友盟微社区的页面前，设置你的登录页面，例如
-LoginViewController *loginViewController = [[LoginViewController alloc] initWithNibName:@&quot;LoginViewController&quot; bundle:nil];
-[UMComLoginManager setLoginHandler:loginController];
-//在你的登陆页面loginViewController实现下面弹出登录页面的回调方法
- - (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(LoadDataCompletion)loginCompletion
- {
-    //弹出你的登录页面
-    [viewController presentViewController:self animated:YES completion:nil];
- }
-
-  //登录完成之后上传开放平台uid
- {
-    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];     //使用UMComSnsTypeSelfAccount代表自定义登录，该枚举类型必须和安卓SDK保持一致，否则会出现不能对应同一用户的问题
-    userAccount.usid = @&quot;用户id&quot;;
-    userAccount.name = @&quot;昵称&quot;;
-    userAccount.icon_url = @&quot;http://xxxx.jpg&quot;; //登录用户头像
-    [UMComLoginManager finishLoginWithAccount:account completion:^(NSArray *data, NSError *error) {
-        [UMComLoginManager finishDismissViewController:self data:data error:error];
-    }];
- }
-</code></pre>
-
-<h2>设置自定义消息字段</h2>
-<p>若应用消息流需要视频、音乐等其他字段类型，可以利用下面的方法，在用户点击发送feed的代码插入自定义的消息内容，然后修改消息流展示视图，将服务器返回的自定义消息内容显示出来：</p>
-<pre><code>#import &quot;UMComFeedEntity.h&quot;
-    [UMComFeedEntity setCustomFeedContent:@&quot;自定义字段内容&quot;];
-</code></pre>
-
-<p>同理，自定义评论字段如下：</p>
-<pre><code>#import &quot;UMComFeedEntity.h&quot;
-    [UMComFeedEntity setCustomCommentContent:@&quot;自定义评论字段内容&quot;];
 </code></pre>
 
 <h1>详细使用</h1>

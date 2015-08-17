@@ -28,8 +28,8 @@
 -(void)didLoginBtn:(id)sender
 {
     UMComUserAccount *account = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];
-    account.usid = @"@";
-    account.name = @"@";
+    account.usid = @"asdfasdfasdf";
+    account.name = @"你好";
     
     [UMComLoginManager finishLoginWithAccount:account completion:^(NSArray *data, NSError *error) {
         [UMComLoginManager finishDismissViewController:self data:data error:error];
