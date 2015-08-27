@@ -15,11 +15,12 @@
 #import "LoginViewController.h"
 #import "UMComNavigationController.h"
 
+#define UMengCommunityAppkey (@"53c6468356240b2b4d00f88d")  //密淘
 //#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 //#define UMengCommunityAppkey @"550bb547fd98c59931000be8"
 //#define UMengCommunityAppkey @"4eaee02c527015373b000003"
 //#define UMengCommunityAppkey @"54c871c1fd98c5b4a00003db"
-#define UMengCommunityAppkey @"55c44eb067e58e60a8002d22"
+//#define UMengCommunityAppkey @"550bb751fd98c5c6d100123c"
 
 #define UMengLoginAppkey UMengCommunityAppkey
 
