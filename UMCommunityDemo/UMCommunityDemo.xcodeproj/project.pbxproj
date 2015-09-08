@@ -211,7 +211,6 @@
 		D5749B981B85E020001E8917 /* UMComNearbyFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5749A5A1B85E020001E8917 /* UMComNearbyFeedViewController.m */; };
 		D5749B991B85E020001E8917 /* UMComTopicFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5749A5C1B85E020001E8917 /* UMComTopicFeedViewController.m */; };
 		D5749B9A1B85E020001E8917 /* UMComTopicFeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5749A5D1B85E020001E8917 /* UMComTopicFeedViewController.xib */; };
-		D5749B9B1B85E020001E8917 /* UMComCommentTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5749A601B85E020001E8917 /* UMComCommentTableView.m */; };
 		D5749B9C1B85E020001E8917 /* UMComCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5749A621B85E020001E8917 /* UMComCommentTableViewCell.m */; };
 		D5749B9D1B85E020001E8917 /* UMComCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5749A631B85E020001E8917 /* UMComCommentTableViewCell.xib */; };
 		D5749B9E1B85E020001E8917 /* UMComFeedContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5749A651B85E020001E8917 /* UMComFeedContentView.m */; };
@@ -614,8 +613,6 @@
 		D5749A5B1B85E020001E8917 /* UMComTopicFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComTopicFeedViewController.h; sourceTree = "<group>"; };
 		D5749A5C1B85E020001E8917 /* UMComTopicFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComTopicFeedViewController.m; sourceTree = "<group>"; };
 		D5749A5D1B85E020001E8917 /* UMComTopicFeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMComTopicFeedViewController.xib; sourceTree = "<group>"; };
-		D5749A5F1B85E020001E8917 /* UMComCommentTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComCommentTableView.h; sourceTree = "<group>"; };
-		D5749A601B85E020001E8917 /* UMComCommentTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComCommentTableView.m; sourceTree = "<group>"; };
 		D5749A611B85E020001E8917 /* UMComCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComCommentTableViewCell.h; sourceTree = "<group>"; };
 		D5749A621B85E020001E8917 /* UMComCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComCommentTableViewCell.m; sourceTree = "<group>"; };
 		D5749A631B85E020001E8917 /* UMComCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMComCommentTableViewCell.xib; sourceTree = "<group>"; };
@@ -1352,8 +1349,6 @@
 		D5749A5E1B85E020001E8917 /* FeedDetail */ = {
 			isa = PBXGroup;
 			children = (
-				D5749A5F1B85E020001E8917 /* UMComCommentTableView.h */,
-				D5749A601B85E020001E8917 /* UMComCommentTableView.m */,
 				D5749A611B85E020001E8917 /* UMComCommentTableViewCell.h */,
 				D5749A621B85E020001E8917 /* UMComCommentTableViewCell.m */,
 				D5749A631B85E020001E8917 /* UMComCommentTableViewCell.xib */,
@@ -1913,7 +1908,6 @@
 				D5749B981B85E020001E8917 /* UMComNearbyFeedViewController.m in Sources */,
 				D5749BB71B85E020001E8917 /* UMComMessageSettingViewController.m in Sources */,
 				D5749B811B85E020001E8917 /* UMComWebViewController.m in Sources */,
-				D5749B9B1B85E020001E8917 /* UMComCommentTableView.m in Sources */,
 				D5749B8F1B85E020001E8917 /* UMComLocationTableViewCell.m in Sources */,
 				D5749B6B1B85E020001E8917 /* UMComiToast.m in Sources */,
 				D540A2FA1AB9585F007063E6 /* UMAppDelegate.m in Sources */,
@@ -2079,7 +2073,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2089,12 +2082,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMessage_Sdk_1.1.0",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Sina",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1/UMessage_Sdk_1.1.0",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",
@@ -2117,7 +2104,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2127,12 +2113,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMessage_Sdk_1.1.0",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Sina",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1/UMSocial_Sdk_4.2/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1/UMessage_Sdk_1.1.0",
 					"$(PROJECT_DIR)/umeng_community_ios_sdk_v2.1.1/UMSocial_Sdk_4.2/UMSocial_Sdk_4.2",
