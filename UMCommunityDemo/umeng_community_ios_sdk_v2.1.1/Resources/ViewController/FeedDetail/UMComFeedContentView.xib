@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="UMComFeedContentView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="um_top.png" id="O4n-Na-WsP" userLabel="topImage">
+                    <rect key="frame" x="0.0" y="10" width="10" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="um_public.png" id="qNk-Nh-lPK" userLabel="publicImage">
+                    <rect key="frame" x="0.0" y="25" width="10" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K0T-Hv-NaP" userLabel="nameLabel">
+                    <rect key="frame" x="56" y="10" width="171" height="29"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="Yrj-6t-i4C" userLabel="feedView" customClass="UMComMutiStyleTextView">
+                    <rect key="frame" x="15" y="56" width="290" height="50"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="c2i-8c-rzf" userLabel="originBgView" customClass="UIImageView">
+                    <rect key="frame" x="15" y="110" width="290" height="145"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" id="c23-qe-KJG" customClass="UMComMutiStyleTextView">
+                            <rect key="frame" x="5" y="11" width="280" height="46"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="wqI-sx-Ptd">
+                            <rect key="frame" x="0.0" y="59" width="290" height="21"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin3x.png" id="Duz-be-9Rz">
+                                    <rect key="frame" x="0.0" y="4" width="10" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京市海淀区花园东路" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ey0-OU-6l6">
+                                    <rect key="frame" x="14" y="0.0" width="216" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.54117647059999996" green="0.53725490200000003" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0m" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cnK-2R-nSA">
+                                    <rect key="frame" x="248" y="0.0" width="42" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.54117647059999996" green="0.53725490200000003" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="HyZ-Cf-bIc" customClass="UMComGridView">
+                            <rect key="frame" x="0.0" y="83" width="290" height="64"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nF6-Kd-yFu" userLabel="timeLabel">
+                    <rect key="frame" x="15" y="263" width="290" height="21"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JF0-Ky-17h">
+                    <rect key="frame" x="278" y="0.0" width="40" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <inset key="contentEdgeInsets" minX="11" minY="13" maxX="11" maxY="13"/>
+                    <state key="normal" image="um_share.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onClickOnShareButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="W0j-xF-Feu"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bz7-9L-ek9">
+                    <rect key="frame" x="235" y="0.0" width="42" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <inset key="contentEdgeInsets" minX="12" minY="13" maxX="12" maxY="13"/>
+                    <state key="normal" image="um_collection.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onClickOnAddCollection:" destination="iN0-l3-epB" eventType="touchUpInside" id="O7B-2B-k0X"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionButton" destination="bz7-9L-ek9" id="RCu-lE-w64"/>
+                <outlet property="dateLabel" destination="nF6-Kd-yFu" id="GCj-a4-I5d"/>
+                <outlet property="feedStyleView" destination="Yrj-6t-i4C" id="oNi-h2-lfp"/>
+                <outlet property="imageGridView" destination="HyZ-Cf-bIc" id="CnR-RV-leX"/>
+                <outlet property="locationBgView" destination="wqI-sx-Ptd" id="EGA-cl-UkI"/>
+                <outlet property="locationDistance" destination="cnK-2R-nSA" id="hKy-9t-Zfh"/>
+                <outlet property="locationLabel" destination="ey0-OU-6l6" id="h9X-2D-liZ"/>
+                <outlet property="nameLabel" destination="K0T-Hv-NaP" id="PbG-xD-NMV"/>
+                <outlet property="originFeedBackgroundView" destination="c2i-8c-rzf" id="Izz-zF-cwh"/>
+                <outlet property="originFeedStyleView" destination="c23-qe-KJG" id="sGr-Fw-GIE"/>
+                <outlet property="publicImage" destination="qNk-Nh-lPK" id="XkK-86-HEP"/>
+                <outlet property="shareButton" destination="JF0-Ky-17h" id="1XI-fc-4Xk"/>
+                <outlet property="topImage" destination="O4n-Na-WsP" id="rWe-YK-0PJ"/>
+            </connections>
+            <point key="canvasLocation" x="3" y="-465"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pin3x.png" width="10" height="14"/>
+        <image name="um_collection.png" width="32" height="32"/>
+        <image name="um_public.png" width="20" height="35"/>
+        <image name="um_share.png" width="32" height="32"/>
+        <image name="um_top.png" width="20" height="35"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

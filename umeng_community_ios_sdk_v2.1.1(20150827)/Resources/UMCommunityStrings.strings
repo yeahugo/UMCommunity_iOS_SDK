@@ -1,0 +1,64 @@
+/* 
+  UMCommunityStrings.strings
+  UMCommunity
+
+  Created by luyiyuan on 14/10/9.
+  Copyright (c) 2014年 Umeng. All rights reserved.
+*/
+//全局
+Unknown_Error="该错误未知，请稍后重试";
+Server_Data_Error="Server 返回数据出错";
+
+//照片选择
+Warning="警告";
+
+OK="好的";
+
+Selected_Max_Pics="当前最多选择%d张图片";
+Selected_Min_Pics="当前至少选择%d张图片";
+
+//消息流
+Community="社区";
+ShowMoreComments="加载更多";
+
+//话题过滤
+Search="搜索";
+Search_Topic="查找话题...";
+Topic_No_Desc="该话题没有描述";
+Has_Focused="取消关注";
+No_Focused="关注";
+//Has_Focused="已关注";
+//No_Focused="未关注";
+
+
+//发送消息
+Sorry = "抱歉";
+Empty_Text = "消息不能为空";
+OK = "好";
+
+Create_Feed_Success = "消息发送成功";
+Create_Feed_Fail = "消息发送失败";
+
+//个人中心
+
+No_Name="用户名为空";
+No_Timeline="哇，这家伙居然什么都没说过！";
+No_FocusPeople="哇，这家伙居然谁都没关注！";
+No_Followers="哇，这家伙居然没有一个粉丝！";
+No_Subscribers="该用户还没有关注话题";
+
+
+//帐号设置
+user_setting="用户设置";
+message_setting="推送设置";
+message_switch_open="推送开关";
+message_status_close="已开启";
+message_status_close="已关闭";
+message_open_method="请在iPhone的“设置”-“通知”中进行修改";
+Setting="设置";
+ProfileSetting="帐号设置";
+NickName="昵称";
+Gender="性别";
+Male="男";
+Female="女";
+Save="保存";
