@@ -1,0 +1,526 @@
+//
+//  UMComShowToast.m
+//  UMCommunity
+//
+//  Created by Gavin Ye on 1/21/15.
+//  Copyright (c) 2015 Umeng. All rights reserved.
+//
+
+#import "UMComShowToast.h"
+#import "UMComiToast.h"
+#import "UMComLoginManager.h"
+#import "UMComSession.h"
+
+
+
+//===user===
+NSInteger  const  ERR_CODE_USER_NOT_EXIST = 10002;
+NSInteger  const  ERR_CODE_USER_NOT_LOGIN = 10003;
+NSInteger  const  ERR_CODE_USER_NO_PRIVILEGE = 10004;
+NSInteger  const  ERR_CODE_USER_IDENTITY_INVAILD = 10005;
+NSInteger  const  ERR_CODE_USER_HAS_CREATED = 10006;
+NSInteger  const  ERR_CODE_USER_HAVE_FOLLOWED = 10007;
+NSInteger  const  ERR_CODE_USER_LOGIN_INFO_NOT_COMPLETE = 10008;
+NSInteger  const  ERR_CODE_USER_CANNOT_FOLLOW_SELF = 10009;
+NSInteger  const  ERR_CODE_USER_NAME_LENGTH_ERROR = 10010;
+NSInteger  const  ERR_CODE_USER_IS_UNUSABLE = 10011;
+NSInteger  const  ERR_CODE_USER_NAME_SENSITIVE = 10012;
+NSInteger  const  ERR_CODE_USER_NAME_DUPLICATE = 10013;
+NSInteger  const  ERR_CODE_USER_CUSTOM_LENGTH_ERROR = 10014;
+NSInteger  const  ERR_CODE_ONE_TIME_ONE_USER = 10015;
+NSInteger  const  ERR_CODE_USER_NAME_CONTAINS_ILLEGAL_CHARS = 10016;
+NSInteger  const  ERR_CODE_DEVICE_IN_BLACKLIST = 10017;
+NSInteger  const  ERR_CODE_FAVOURITES_OVER_LIMIT = 10018;
+NSInteger  const  ERR_CODE_HAS_ALREADY_COLLECTED = 10019;
+NSInteger  const  ERR_CODE_HAS_NOT_COLLECTED = 10020;
+
+//
+NSString * const  ERR_MSG_USER_BASE_INFO_NOT_COMPLETE = @"user base info is not complete";
+NSString * const  ERR_MSG_USER_NOT_EXIST = @"user does not exist";
+NSString * const  ERR_MSG_USER_NOT_LOGIN = @"user did not log in";
+NSString * const  ERR_MSG_USER_NO_PRIVILEGE = @"user don\'t have privilege to do this.";
+NSString * const  ERR_MSG_USER_IDENTITY_INVAILD = @"user identity is invaild";
+NSString * const  ERR_MSG_USER_HAS_CREATED = @"user has been created";
+NSString * const  ERR_MSG_USER_HAVE_FOLLOWED = @"user has been followed";
+NSString * const  ERR_MSG_USER_LOGIN_INFO_NOT_COMPLETE = @"user login info not complete";
+NSString * const  ERR_MSG_USER_CANNOT_FOLLOW_SELF = @"user cannot follow self";
+NSString * const  ERR_MSG_USER_NAME_LENGTH_ERROR = @"user name length should be in range 2,20";
+NSString * const  ERR_MSG_USER_IS_UNUSABLE = @"user is unusable: deleted or forbidden";
+NSString * const  ERR_MSG_USER_NAME_SENSITIVE = @"user name contains sensitive words";
+NSString * const  ERR_MSG_USER_NAME_DUPLICATE = @"user name is duplicated";
+NSString * const  ERR_MSG_USER_CUSTOM_LENGTH_ERROR = @"user custom length should be in range 0, 50";
+NSString * const  ERR_CODE_ONE_TIME_ONE_USER_ERROR = @"this operation only allows one user per time";
+NSString * const  ERR_MSG_USER_NAME_CONTAINS_ILLEGAL_CHARS = @"user name contains illegal characters";
+NSString * const  ERR_MSG_DEVICE_IN_BLACKLIST = @"the device is in blacklist";
+NSString * const  ERR_MSG_FAVOURITES_OVER_LIMIT = @"collection has touch the limit: 50";
+NSString * const  ERR_MSG_HAS_ALREADY_COLLECTED = @"feed has already been collected";
+NSString * const  ERR_MSG_HAS_NOT_COLLECTED = @"feed has not been collected yet";
+//
+//
+//===Feed===
+NSInteger  const  ERR_CODE_FEED_UNAVAILABLE = 20001;
+NSInteger  const  ERR_CODE_FEED_NOT_EXSIT = 20002;
+NSInteger  const  ERR_CODE_FEED_HAS_BEEN_LIKED = 20003;
+NSInteger  const  ERR_CODE_FEED_RELATED_USER_ID_INVALID = 20004;
+NSInteger  const  ERR_CODE_FEED_CANNOT_FORWARD = 20005;
+NSInteger  const  ERR_CODE_FEED_RELATED_TOPIC_ID_INVALID = 20006;
+NSInteger  const  ERR_CODE_COMMENT_CONTENT_LENGTH_ERROR = 20007;
+NSInteger  const  ERR_CODE_FEED_CONTENT_LENGTH_ERROR = 20008;
+NSInteger  const  ERR_CODE_FEED_TYPE_INVALID = 20009;
+NSInteger  const  ERR_CODE_FEED_CUSTOM_LENGTH_ERROR = 20010;
+NSInteger  const  ERR_CODE_FEED_SHARE_CALLBACK_PLATFORM_ERROR = 20011;
+NSString * const  ERR_MSG_FEED_UNAVAILABLE = @"feed is unavailable";
+NSString * const  ERR_MSG_FEED_NOT_EXSIT = @"feed is not exsit";
+NSString * const  ERR_MSG_FEED_HAS_BEEN_LIKED = @"feed has been liked";
+NSString * const  ERR_MSG_FEED_RELATED_USER_ID_INVALID = @"feed related uid is invalid";
+NSString * const  ERR_MSG_FEED_CANNOT_FORWARD = @"feed can\'t be reposted";
+NSString * const  ERR_MSG_FEED_RELATED_TOPIC_ID_INVALID = @"feed related topic id is invalid";
+NSString * const  ERR_MSG_COMMENT_CONTENT_LENGTH_ERROR = @"a comment length should be in range 1, 140";
+NSString * const  ERR_MSG_FEED_CONTENT_LENGTH_ERROR = @"a feed length should be in range 1, 300";
+NSString * const  ERR_MSG_FEED_CUSTOM_LENGTH_ERROR = @"a custom string length should be in range 0, 50";
+NSString * const  ERR_MSG_FEED_TYPE_INVALID = @"invalid feed_type value";
+NSString * const  ERR_MSG_FEED_SHARE_CALLBACK_PLATFORM_ERROR = @"invalid share platform";
+//
+//===topic===
+NSInteger  const  ERR_CODE_HAVE_FOCUSED = 30001;
+NSInteger  const  ERR_CODE_NOT_EXIST = 30002;
+NSInteger  const  ERR_CODE_TOPIC_CANNOT_CREATE = 30003;
+NSInteger  const  ERR_CODE_TOPIC_RANK_ERROR = 30004;
+NSInteger  const  ERR_CODE_HAVE_NOT_FOCUSED = 30005;
+NSString * const  ERR_MSG_HAVE_FOCUSED = @"the topic has been focused";
+NSString * const  ERR_MSG_NOT_EXSIT = @"the topic is not exist";
+NSString * const  ERR_MSG_TOPIC_CANNOT_CREATE = @"the topic cannot be created";
+NSString * const  ERR_MSG_HAVE_NOT_FOCUSED = @"the topic has not been focused yet";
+NSString * const  ERR_MSG_TOPIC_RANK_ERROR = @"invalid topic new rank";
+//
+//===spammer===
+NSInteger  const  ERR_CODE_STATUS_INVILD = 40001;
+NSInteger  const  ERR_CODE_SPAMMER_HAS_CREATED = 40002;
+NSInteger  const  ERR_CODE_INVALID_TYPE = 40003;
+NSString * const  ERR_MSG_STATUS_INVILD = @"spammer action is invild";
+NSString * const  ERR_MSG_SPAMMER_HAS_CREATED = @"spammer has been created";
+NSString * const  ERR_MSG_INVALID_TYPE = @"invalid type to create spammer";
+//
+//===midgard_commen===
+NSInteger  const  ERR_CODE_REQUEST_PRARMS_ERROR = 50001;
+NSInteger  const  ERR_CODE_IMAGE_UPLOAD_FAILED = 50002;
+NSInteger  const  ERR_CODE_INVALID_AUTH_TOKEN = 50003;
+NSString * const  ERR_MSG_REQUEST_PRARMS_ERROR = @"request params contain erorr, please check to fix";
+NSString * const  ERR_MSG_IMAGE_UPLOAD_FAILED = @"images upload failed";
+NSString * const  ERR_MSG_INVALID_AUTH_TOKEN = @"auto token is invalid";
+
+
+@implementation UMComShowToast
+
++ (void)hanelerErrorWithError:(NSError *)error
+{
+    switch (error.code) {
+//====user====
+        case ERR_CODE_USER_NOT_EXIST:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_NOT_EXIST,@"用户不存在")];
+            break;
+        case ERR_CODE_USER_NOT_LOGIN:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_NOT_LOGIN,@"对不起，您还未登录")];
+            break;
+        case ERR_CODE_USER_NO_PRIVILEGE:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_NO_PRIVILEGE,@"对不起，你没有这个操作的权限")];
+            break;
+        case ERR_CODE_USER_IDENTITY_INVAILD:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_IDENTITY_INVAILD,@"当前用户无效")];
+            break;
+        case ERR_CODE_USER_HAS_CREATED:
+            NSLog(@"ERR_MSG_USER_HAS_CREATED：%@",ERR_MSG_USER_HAS_CREATED);
+            break;
+        case ERR_CODE_USER_HAVE_FOLLOWED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_HAVE_FOLLOWED,@"你已经关注过了")];
+            break;
+        case ERR_CODE_USER_LOGIN_INFO_NOT_COMPLETE:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_LOGIN_INFO_NOT_COMPLETE,@"用户登录信息不完善")];
+            break;
+        case ERR_CODE_USER_CANNOT_FOLLOW_SELF:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_CANNOT_FOLLOW_SELF,@"自己不能关注自己哦")];
+            break;
+        case ERR_CODE_USER_NAME_LENGTH_ERROR:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_NAME_LENGTH_ERROR,@"用户名长度不符合要求")];
+            break;
+        case ERR_CODE_USER_IS_UNUSABLE:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_IS_UNUSABLE,@"对不起，你已经被禁言")];
+            break;
+        case ERR_CODE_USER_NAME_SENSITIVE:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_NAME_SENSITIVE,@"用户名包含敏感词汇")];
+            break;
+        case ERR_CODE_USER_NAME_DUPLICATE:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_NAME_DUPLICATE,@"用户明已经存在，请换个靓号哦")];
+            break;
+            
+        case ERR_CODE_USER_CUSTOM_LENGTH_ERROR:
+            NSLog(@"ERR_MSG_USER_CUSTOM_LENGTH_ERROR:%@",ERR_MSG_USER_CUSTOM_LENGTH_ERROR);
+            break;
+        case ERR_CODE_ONE_TIME_ONE_USER:
+            NSLog(@"ERR_CODE_ONE_TIME_ONE_USER_ERROR:%@",ERR_CODE_ONE_TIME_ONE_USER_ERROR);
+            break;
+        case ERR_CODE_USER_NAME_CONTAINS_ILLEGAL_CHARS:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_USER_NAME_CONTAINS_ILLEGAL_CHARS,@"用户名包含非法字符")];
+            break;
+        case ERR_CODE_DEVICE_IN_BLACKLIST:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_DEVICE_IN_BLACKLIST,@"该设备已经被屏蔽，请联系社区管理员")];
+            break;
+        case ERR_CODE_FAVOURITES_OVER_LIMIT:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FAVOURITES_OVER_LIMIT,@"你的收藏列表已满，请先移除一些收藏项")];
+            break;
+        case ERR_CODE_HAS_ALREADY_COLLECTED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_HAS_ALREADY_COLLECTED,@"你已经收藏过啦")];
+            break;
+        case ERR_CODE_HAS_NOT_COLLECTED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_HAS_ALREADY_COLLECTED,@"你还没有收藏过啦")];
+            break;
+//====feed====
+        case ERR_CODE_FEED_UNAVAILABLE:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FEED_UNAVAILABLE,@"该内容已被删除")];
+            break;
+        case ERR_CODE_FEED_NOT_EXSIT:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FEED_NOT_EXSIT,@"该内容不存在")];
+            break;
+        case ERR_CODE_FEED_HAS_BEEN_LIKED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FEED_HAS_BEEN_LIKED,@"你已经赞过啦")];
+            break;
+        case ERR_CODE_FEED_RELATED_USER_ID_INVALID:
+            NSLog(@"ERR_MSG_FEED_RELATED_USER_ID_INVALID:%@",ERR_MSG_FEED_RELATED_USER_ID_INVALID);
+            break;
+        case ERR_CODE_FEED_CANNOT_FORWARD:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FEED_CANNOT_FORWARD,@"该内容不能被转发")];
+            break;
+        case ERR_CODE_FEED_RELATED_TOPIC_ID_INVALID:
+            NSLog(@"ERR_MSG_FEED_RELATED_TOPIC_ID_INVALID:%@",ERR_MSG_FEED_RELATED_TOPIC_ID_INVALID);
+            break;
+        case ERR_CODE_COMMENT_CONTENT_LENGTH_ERROR:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_COMMENT_CONTENT_LENGTH_ERROR,@"评论内容只能在1到140个字符之间")];
+            break;
+        case ERR_CODE_FEED_CONTENT_LENGTH_ERROR:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FEED_CONTENT_LENGTH_ERROR,@"内容长度不符合要求")];
+            break;
+        case ERR_CODE_FEED_TYPE_INVALID:
+            NSLog(@"ERR_MSG_FEED_TYPE_INVALID:%@",ERR_MSG_FEED_TYPE_INVALID);
+            break;
+        case ERR_CODE_FEED_CUSTOM_LENGTH_ERROR:
+            NSLog(@"ERR_MSG_FEED_CUSTOM_LENGTH_ERROR:%@",ERR_MSG_FEED_CUSTOM_LENGTH_ERROR);
+            break;
+        case ERR_CODE_FEED_SHARE_CALLBACK_PLATFORM_ERROR:
+            NSLog(@"ERR_MSG_FEED_SHARE_CALLBACK_PLATFORM_ERROR:%@",ERR_MSG_FEED_SHARE_CALLBACK_PLATFORM_ERROR);
+            break;
+//====topic====
+        case ERR_CODE_HAVE_FOCUSED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_HAVE_FOCUSED,@"该话题已经被关注啦")];
+            break;
+        case ERR_CODE_NOT_EXIST:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_NOT_EXSIT,@"该话题不存在啦")];
+            break;
+        case ERR_CODE_TOPIC_CANNOT_CREATE:
+            NSLog(@"ERR_MSG_TOPIC_CANNOT_CREATE:%@",ERR_MSG_TOPIC_CANNOT_CREATE);
+            break;
+        case ERR_CODE_TOPIC_RANK_ERROR:
+            NSLog(@"ERR_MSG_TOPIC_RANK_ERROR:%@",ERR_MSG_TOPIC_RANK_ERROR);
+            break;
+        case ERR_CODE_HAVE_NOT_FOCUSED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_HAVE_NOT_FOCUSED,@"你并未关注该话题哦")];
+            break;
+//===spammer===
+        case ERR_CODE_STATUS_INVILD:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_STATUS_INVILD,@"举报操作无效")];
+            break;
+        case ERR_CODE_SPAMMER_HAS_CREATED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_SPAMMER_HAS_CREATED,@"该内容已经被举报过了")];
+            break;
+        case ERR_CODE_INVALID_TYPE:
+            NSLog(@"ERR_MSG_INVALID_TYPE:%@",ERR_MSG_INVALID_TYPE);
+            break;
+//===midgard_commen===
+        case ERR_CODE_REQUEST_PRARMS_ERROR:
+            NSLog(@"ERR_MSG_REQUEST_PRARMS_ERROR:%@",ERR_MSG_REQUEST_PRARMS_ERROR);
+            break;
+        case ERR_CODE_IMAGE_UPLOAD_FAILED:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_IMAGE_UPLOAD_FAILED,@"图片上传失败")];
+            break;
+        case ERR_CODE_INVALID_AUTH_TOKEN:
+            NSLog(@"ERR_MSG_INVALID_AUTH_TOKEN:%@",ERR_MSG_INVALID_AUTH_TOKEN);
+            break;
+        default:
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Operation_fail",@"请求失败")];
+            break;
+    }
+}
+
+
++ (void)showFetchResultTipWithError:(NSError *)error
+{
+    if ([error.domain isEqualToString:NSURLErrorDomain]){
+        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Network request failed",@"网络请求失败")];
+    }else if(error){
+        [[self class] hanelerErrorWithError:error];
+    }else{
+    
+    }
+}
+
+
++ (void)createFeedSuccess
+{
+    [self fetchFailWithNoticeMessage:UMComLocalizedString(@"Create_Feed_Success",@"消息发送成功")];
+}
+
+
++ (void)notSupportPlatform
+{
+    [self fetchFailWithNoticeMessage:UMComLocalizedString(@"Not Support Platform", @"暂不支持该平台登录")];
+}
+
+//+ (void)createFeedFail:(NSError *)error
+//{
+//    if (![self handleError:error]){
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Create_Feed_Fail",@"消息发送失败")];
+//    }
+//}
+
++ (void)showNotInstall
+{
+    [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Not_Install",@"抱歉，您没有安装微信客户端")];
+}
+
++ (void)showNoMore{
+    [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Not_Install",@"已加载全部数据")];
+}
+
+//+ (void)loginFail:(NSError *)error
+//{
+//    if (error.code == kUserDelete){
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"User_Delete_Fail",@"该用户已经被删除，请联系管理员")];
+//    } else if (![self handleError:error] && error){
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Login_Fail",@"登录失败")];
+//    }
+//}
+
+//+ (void)createCommentFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error){
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Create_Comment_Fail",@"发送评论失败")];
+//    }
+//}
+
++ (void)spamSuccess:(NSError *)error
+{
+    if (error) {
+        [self showFetchResultTipWithError:error];
+    }else{
+        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Success",@"举报消息成功")];
+    }
+}
+
+
++ (void)spamComment:(NSError *)error
+{
+    if (error) {
+        [self showFetchResultTipWithError:error];
+    }else{
+        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Comment_Success",@"举报评论成功")];
+    }
+}
+
++ (void)spamUser:(NSError *)error
+{
+    if (error) {
+        [self showFetchResultTipWithError:error];
+    }else{
+        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Spam_Comment_Success",@"举报用户成功")];
+    }
+}
+
+//+ (BOOL)handleError:(NSError *)error
+//{
+//    BOOL handleResult = NO;
+//    if (error.code == 10011) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"User unusable",@"对不起，你已经被禁言")];
+//        handleResult = YES;
+//    } else if ([error.domain isEqualToString:NSURLErrorDomain]){
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Network request failed",@"网络请求失败")];
+//        handleResult = YES;
+//    }
+//    return handleResult;
+//}
+
+//+ (void)fetchFeedFail:(NSError *)error
+//{
+//    if (error) {
+//        [self showFetchResultTipWithError:error];
+//    }else{
+//    
+//    }
+//    if (![self handleError:error] && error) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Fetch_Feeds_Fail",@"获取消息失败")];
+//    }
+//}
+
+//+ (void)createLikeFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        if (error.code == 20003) {
+//            [self dealWithFeedFailWithErrorCode:20003];
+//        }else{
+//            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Add_Like_Fail",@"点赞失败")];
+//        }
+//    }
+//}
+
+//+ (void)deleteLikeFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Delete_Like_Fail",@"取消点赞失败")];
+//    }
+//}
+
+//+ (void)fetchMoreFeedFail:(NSError *)error
+//{
+//    [self showFetchResultTipWithError:error];
+//}
+
++ (void)commentMoreWord
+{
+    [[UMComiToast makeText:UMComLocalizedString(@"Comment More word",@"评论内容不能超过140个字")] show];
+}
+
++ (void)fetchFailWithNoticeMessage:(NSString *)message
+{
+    [[UMComiToastSettings getSharedSettings] setGravity:UMSocialiToastPositionBottom];
+    [[UMComiToast makeText:message] show];
+}
+
+
+//+ (void)fetchTopcsFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Topics search fail",@"请求话题失败")];
+//    }
+//}
+
+
+//+ (void)fetchLocationsFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Locations search fail",@"获取地址失败")];
+//    }
+//}
+
+//+ (void)fetchFriendsFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Locations search fail",@"获取好友列表失败")];
+//    }
+//}
+
+
++ (void)saveIamgeResultNotice:(NSError *)error
+{
+    NSString *msg = nil ;
+    if(error != NULL){
+        msg = UMComLocalizedString(@"Image save fail!",@"保存图片失败");
+    }else{
+        msg = UMComLocalizedString(@"Image save succeed!",@"保存图片成功");;
+    }
+    [[self class] fetchFailWithNoticeMessage:msg];
+}
+
+//+ (void)focusTopicFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        if (error.code == 30001) {
+//            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Topic has been followed",@"该话题已被关注")];
+//        }else{
+//            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Operation fail",@"操作失败")];
+//        }
+//    }
+//}
+
+//+ (void)focusUserFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        if (error.code == 10007) {
+//            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"User has been followed",@"该用户已被关注")];
+//        }else if (error.code == 10009){
+//            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"User cannot follow self",@"自己不能关注自己")];
+//        }else{
+//            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Operation fail",@"操作失败")];
+//        }
+//    }
+//}
+
+//+ (void)fetchRecommendUserFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Recommend user search fail",@"请求推荐用户失败")];
+//    }
+//}
+
+//+ (void)fetchUserFail:(NSError *)error
+//{
+//    if (![self handleError:error] && error) {
+//        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"user search fail",@"请求用户失败")];
+//    }
+//}
+
+//
+//
+//+ (void)deletedFail:(NSError *)error
+//{
+//    if (![self handleError:error]){
+//        if (error) {
+//            if (error.code == 10004) {
+//                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"no privilege",@"您没有此删除操作的权限")];
+//            }else{
+//                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Delete_Fail",@"删除消息失败")];
+//            }
+//        } else{
+//            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Delete_Success",@"删除成功")];
+//        }
+//    }
+//}
+
++ (void)favouriteFeedFail:(NSError *)error isFavourite:(BOOL)isFavourite
+{
+    if (error) {
+        [self showFetchResultTipWithError:error];
+    }else{
+        if (isFavourite) {
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Favourite_Success",@"收藏成功")];
+        }else{
+            [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"DisFavourite_Success",@"取消收藏成功")];
+        }
+    }
+//    if (![self handleError:error]) {
+//        if (error) {
+//            if (error.code == 10004) {
+//                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"no privilege",@"您没有此删除操作的权限")];
+//            }else{
+//                if (isFavourite) {
+//                    if (error.code == 10018) {
+//                        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Collection_has_touch_the_limit",@"你的收藏列表已满，请先移除一些收藏项")];
+//                    }else{
+//                        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Favourite_Fail",@"收藏消息失败")];
+//                    }
+//
+//                }else{
+//                    [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"DisFavourite_Fail",@"取消收藏消息失败")];
+//                }
+//
+//            }
+//        } else{
+//            if (isFavourite) {
+//                [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"Favourite_Success",@"收藏成功")];
+//            }else{
+//                     [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(@"DisFavourite_Success",@"取消收藏成功")];
+//            }
+//        }
+//    }
+}
+
+
+
+@end
