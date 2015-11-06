@@ -1,0 +1,104 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><link rel="stylesheet" type="text/css" href="markdown.css"></link></head><body>
+</body></html><h1>使用自定义登录</h1>
+<p>下面是修改在微社区的页面内弹出自定义的登录页面方法：</p>
+<pre><code> //在你弹出友盟微社区的页面前，设置你的登录页面，例如
+LoginViewController *loginViewController = [[LoginViewController alloc] initWithNibName:@&quot;LoginViewController&quot; bundle:nil];
+[UMComLoginManager setLoginHandler:loginController];
+</code></pre>
+
+<p>LoginViewController实现了<code>UMComLoginDelegate</code>协议，定义如下: </p>
+<pre><code>@interface LoginViewController : UIViewController &lt;UMComLoginDelegate&gt;
+// 代码省略
+@end
+</code></pre>
+
+<p>LoginViewController的核心代码为: </p>
+<pre><code>@implementation LoginViewController
+// 代码省略
+ - (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(LoadDataCompletion)loginCompletion
+ {
+    //弹出你的登录页面
+    [viewController presentViewController:self animated:YES completion:nil];
+ }
+
+// 点击登录按钮时触发的登录事件
+- (IBAction)doLogin:(id)sender {
+    NSLog(@&quot;登录操作&quot;) ;
+
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];     //使用UMComSnsTypeSelfAccount代表自定义登录，该枚举类型必须和安卓SDK保持一致，否则会出现不能对应同一用户的问题
+    userAccount.usid = @&quot;用户id&quot;;
+    userAccount.name = @&quot;昵称&quot;;
+    userAccount.icon_url = @&quot;http://xxxx.jpg&quot;; //登录用户头像
+    // 将数据传递给友盟微社区SDK
+    [UMComLoginManager finishLoginWithAccount:userAccount completion:^(NSArray *data, NSError *error) {
+        [UMComLoginManager finishDismissViewController:self data:data error:error];
+    }];
+}
+@end
+</code></pre>
+
+<p>若在你们自己的APP内，调用微社区的登录，可以实现下面的方法：</p>
+<pre><code>//登录之前先设置登录前的viewController
+    [UMComSession sharedInstance].beforeLoginViewController = self;
+//把用户资料上传到友盟
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];     //使用UMComSnsTypeSelfAccount代表自定义登录，该枚举类型必须和安卓SDK保持一致，否则会出现不能对应同一用户的问题
+    userAccount.usid = @&quot;用户id&quot;;
+    userAccount.name = @&quot;昵称&quot;;
+    userAccount.icon_url = @&quot;http://xxxx.jpg&quot;; //登录用户头像
+    [UMComLoginManager finishLoginWithAccount:userAccount completion:^(NSArray *data, NSError *error) {
+    }];
+</code></pre>
+
+<h1>消息通知跳转到自定义页面</h1>
+<p>若在微社区的portal后台修改接收到消息通知跳转到的ViewController，需要修改 <code>UMComMessageManager.m</code>文件的<code>+ (void)handleUserInfo:(NSDictionary *)userInfo</code>方法，参照SDK原有的逻辑，根据传入的viewController名，跳转到各自的页面。例如下面是SDK已经实现的跳转到管理员通知页面的实例：</p>
+<pre><code>……
+else if ([controllerName isEqualToString:@&quot;UMComRemoteNoticeViewController&quot;]){
+    [[UMComAction action] performActionAfterLogin:nil viewController:presentedViewController completion:^(NSArray *data, NSError *error) {
+    if (!error) {
+        UMComRemoteNoticeViewController *remoteNoticeViewController = [[UMComRemoteNoticeViewController alloc] init];
+        UMComNavigationController *feedDetailNav = [[UMComNavigationController alloc] initWithRootViewController:remoteNoticeViewController];
+        [presentedViewController presentViewController:feedDetailNav animated:YES completion:nil];
+    }}];
+}
+</code></pre>
+
+<h1>设置Feed自定义字段</h1>
+<p>若应用消息流需要视频、音乐等其他字段类型，可以利用下面的方法，在用户点击发送feed的代码插入自定义的消息内容，然后修改消息流展示视图，将服务器返回的自定义消息内容显示出来：</p>
+<pre><code>#import &quot;UMComFeedEntity.h&quot;
+例如： UMComFeedEntity *feedEntity = [[UMComFeedEntity alloc] init]; 
+    //feed内容
+   feedEntity.text = @&quot;创建一条新的Feed&quot;;
+   //位置描述
+   feedEntity.locationDescription = @&quot;北京市海淀区花园东路11号&quot;;
+   //位置CLLocation
+   feedEntity.location = location;
+   //关联话题NSArray
+   feedEntity.topics = topics;
+   //@用户NSArray
+   feedEntity.atUsers = atUsers；
+   //图片NSArray （可以使图片(UIImage)， 也可以是图片地址（NSString））
+   feedEntity.images = images；
+   /****************自定义字段************************/
+    feedEntity.customContent = @&quot;http://v.youku.com/v_show/id_XNjQ1NjczNzEy.html?f=21207816&amp;ev=2&quot;;//可以设置任意字符串，例如设置视频url 
+    //发送创建Feed的请求
+    [UMComPushRequest postWithFeed:weakSelf.feedEntity completion:^(id responseObject, NSError *error) {
+    //responseObject 是UMComFeed对象
+     }];    
+</code></pre>
+
+<p>同理，自定义评论字段如下：</p>
+<pre><code>    [UMComPushRequest postWithSourceFeed:feed(被评论的Feed) commentContent:@&quot;评论内容&quot; replyUser:replyUser（回复某人的评论） commentCustomContent:@&quot;自定义评论字段内容，可以根据自己需要设置&quot; completion:^(NSError *error) {
+    }];
+</code></pre>
+
+<p>feed的自定义字段也可以在portal端修改。
+<img alt="feed自定义字段" src="http://dev.umeng.com/system/images/W1siZiIsIjIwMTUvMTAvMTAvMTJfNDlfMTZfODQwX1NjcmVlbl9TaG90XzIwMTVfMTBfMTBfYXRfMTAuMjkuNTFfQU0ucG5nIl1d/Screen%20Shot%202015-10-10%20at%2010.29.51%20AM.png" title="" /></p>
+<p>App的feed流页面可以使用<code>fetchRequestFromServer</code>等方法获取到得UMComFeed数据，得到对应的<code>custom</code>字段数据。例如：</p>
+<pre><code>#import &quot;UMCommunity.h&quot;
+    UMComAllFeedsRequest *allFeedRequest = [[UMComAllFeedsRequest alloc] initWithCount:20];
+    [allFeedRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        for (UMComFeed *feed in data) {
+            NSLog(@&quot;自定义字段是 ： %@&quot;,feed.custom);
+        }
+    }];
+</code></pre>

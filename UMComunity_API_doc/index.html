@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>UMCommunity Reference</title>
+
+	<link rel="stylesheet" href="css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="index.html">UMCommunity </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="index.html">umeng</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="hierarchy.html">Hierarchy</a></li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview-contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">UMCommunity Reference</h1>
+
+					
+					<div class="section section-overview index-overview">
+						
+						
+						<h1>数据API使用</h1>
+
+<h2>请求对象初始化</h2>
+
+<p>获取社区的数据API全部集成自<a href="Classes/UMComPullRequest.html"><code>UMComPullRequest</code></a>，获取不同的数据对应自己的初始化方法，例如<a href="Classes/UMComAllFeedsRequest.html"><code>UMComAllFeedsRequest</code></a>的初始化方法为：</p>
+
+<p><code>UMComAllFeedsRequest *allFeedRequest = [[UMComAllFeedsRequest alloc] initWithCount:20];</code></p>
+
+<h2>获取数据</h2>
+
+<p>从服务器获取第一页的Feed，返回的数据为<code>UMComFeed</code>对象组成的NSArray，若请求的是话题、用户则分别是<code>UMComTopic</code>和<code>UMComUser</code>对象组成的NSArray，例如</p>
+
+<pre><code>[allFeedRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+//第一页的数据是
+    NSLog(@"feeds is %@",data);
+    UMComFeed * theFirstFeed = [data firstObject];   //数据里面每个元素是UMComFeed对象
+//根据第一页请求返回的结果去获取下一页数据
+    if (haveNextPage == YES){
+    [allFeedRequest fetchNextPageFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        NSLog(@"feeds is %@",data);
+    }];
+    }
+    }];
+</code></pre>
+
+<p>也可以在获取网络数据之前先获取本地coredata缓存的数据，coredata数据只有第一页的内容</p>
+
+<pre><code>[allFeedRequest fetchRequestFromCoreData:^(NSArray *data, NSError *error) {
+//返回消息、结果
+        NSLog(@"feeds is %@",data);
+    }];
+</code></pre>
+
+<h1>Feed接口</h1>
+
+<h2>获取关注的Feed列表 <a href="Classes/UMComAllFeedsRequest.html"><code>UMComAllFeedsRequest</code></a></h2>
+
+<h2>获取Topic对应的Feed列表 <a href="Classes/UMComTopicFeedsRequest.html"><code>UMComTopicFeedsRequest</code></a></h2>
+
+<h2>获取某个用户发布的Feed列表 <a href="Classes/UMComUserFeedsRequest.html"><code>UMComUserFeedsRequest</code></a></h2>
+
+<h2>获取推荐的Feed列表 <a href="Classes/UMComRecommendFeedsRequest.html"><code>UMComRecommendFeedsRequest</code></a></h2>
+
+<h2>获取好友圈的Feed列表 <a href="Classes/UMComFriendFeedsRequest.html"><code>UMComFriendFeedsRequest</code></a></h2>
+
+<h2>获取最新的Feed列表 <a href="Classes/UMComAllNewFeedsRequest.html"><code>UMComAllNewFeedsRequest</code></a></h2>
+
+<h2>获取某个地理位置附近的Feed列表 <a href="Classes/UMComNearbyFeedsRequest.html"><code>UMComNearbyFeedsRequest</code></a></h2>
+
+<h2>获取收藏的Feed列表 <a href="Classes/UMComUserFavouritesRequest.html"><code>UMComUserFavouritesRequest</code></a></h2>
+
+<h2>搜索Feed <a href="Classes/UMComSearchFeedRequest.html"><code>UMComSearchFeedRequest</code></a></h2>
+
+<h2>获取被人@的Feed <a href="Classes/UMComUserFeedBeAtRequest.html"><code>UMComUserFeedBeAtRequest</code></a></h2>
+
+<h2>获取一条Feed的详情 <a href="Classes/UMComOneFeedRequest.html"><code>UMComOneFeedRequest</code></a></h2>
+
+<h2>获取一条Feed的所有评论 <a href="Classes/UMComFeedCommentsRequest.html"><code>UMComFeedCommentsRequest</code></a></h2>
+
+<h2>获取一条Feed所有点赞 <a href="Classes/UMComFeedLikesRequest.html"><code>UMComFeedLikesRequest</code></a></h2>
+
+<h2>添加评论 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)postWithSourceFeed:(UMComFeed *)feed
+            commentContent:(NSString *)commentContent
+                 replyUser:(UMComUser *)replyUser
+                completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>添加收藏或者取消收藏 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)favouriteFeedWithFeed:(UMComFeed *)feed isFavourite:(BOOL)isFavourite completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>点赞或取消点赞 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)likeWithFeed:(UMComFeed *)feed isLike:(BOOL)isLike completion:(PostResponseResultResponse)result;
+</code></pre>
+
+<h2>创建新Feed <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)postWithFeed:(UMComFeedEntity *)newFeed completion:(PostResponseResultResponse)result;  
+</code></pre>
+
+<h2>转发 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)forwardWithFeed:(UMComFeed *)feed
+                newFeed:(UMComFeedEntity *)newFeed
+            completion:(PostResponseResultResponse)result;     
+</code></pre>
+
+<h2>删除Feed <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)deleteWithFeed:(UMComFeed *)feed 
+            completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>举报Feed <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)spamWithFeed:(UMComFeed *)feed
+          completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>获取未读Feed数量 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)fetchUnreadFeedCountWithSeq:(NSNumber *)seq result:(PostResponseResultResponse)result;
+</code></pre>
+
+<h1>用户接口</h1>
+
+<h2>获取用户详情 <a href="Classes/UMComUserProfileRequest.html"><code>UMComUserProfileRequest</code></a></h2>
+
+<h2>获取用户关注的人 <a href="Classes/UMComFollowersRequest.html"><code>UMComFollowersRequest</code></a></h2>
+
+<h2>获取用户粉丝 <a href="Classes/UMComFansRequest.html"><code>UMComFansRequest</code></a></h2>
+
+<h2>获取推荐用户 <a href="Classes/UMComRecommendUsersRequest.html"><code>UMComRecommendUsersRequest</code></a></h2>
+
+<h2>获取某话题下的活跃用户 <a href="Classes/UMComRecommendTopicUsersRequest.html"><code>UMComRecommendTopicUsersRequest</code></a></h2>
+
+<h2>搜索用户 <a href="Classes/UMComSearchUserRequest.html"><code>UMComSearchUserRequest</code></a></h2>
+
+<h2>上传用户资料，实现登录 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)loginWithUser:(UMComUserAccount *)userAccount completion:(PostResponseResultResponse)result;
+</code></pre>
+
+<h2>更新用户资料 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)updateWithUser:(UMComUserAccount *)userAccount completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>更新用户头像 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)updateWithProfileImage:(UIImage *)image completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>关注或者取消关注某用户 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)followerWithUser:(UMComUser *)user
+                isFollow:(BOOL)isFollow
+              completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>获取未读Feed数量 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)fetchUnreadFeedCountWithSeq:(NSNumber *)seq result:(PostResponseResultResponse)result;
+</code></pre>
+
+<h2>检查用户名是否合法 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)checkUserName:(NSString *)name
+         userNameType:(UMComUserNameType)userNameType
+       userNameLength:(UMComUserNameLength)userNameLength
+           completion:(PostResultResponse)completion;
+</code></pre>
+
+<h1>话题接口</h1>
+
+<h2>获取所有话题 <a href="Classes/UMComAllTopicsRequest.html"><code>UMComAllTopicsRequest</code></a></h2>
+
+<h2>获取某用户关注的话题 <a href="Classes/UMComUserTopicsRequest.html"><code>UMComUserTopicsRequest</code></a></h2>
+
+<h2>获取推荐话题 <a href="Classes/UMComRecommendTopicsRequest.html"><code>UMComRecommendTopicsRequest</code></a></h2>
+
+<h2>搜索话题 <a href="Classes/UMComSearchTopicRequest.html"><code>UMComSearchTopicRequest</code></a></h2>
+
+<h2>关注或者取消关注某话题 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)followerWithTopic:(UMComTopic *)topic
+               isFollower:(BOOL)isFollower
+               completion:(PostResultResponse)result;
+</code></pre>
+
+<h1>消息通知</h1>
+
+<h2>获取管理员通知 <a href="Classes/UMComUserNotificationRequest.html"><code>UMComUserNotificationRequest</code></a></h2>
+
+<h2>获取接收到的评论 <a href="Classes/UMComUserCommentsReceivedRequest.html"><code>UMComUserCommentsReceivedRequest</code></a></h2>
+
+<h2>获取用户发出的评论 <a href="Classes/UMComUserCommentsSentRequest.html"><code>UMComUserCommentsSentRequest</code></a></h2>
+
+<h2>获取收到的点赞 <a href="Classes/UMComUserLikesReceivedRequest.html"><code>UMComUserLikesReceivedRequest</code></a></h2>
+
+<h2>获取未读消息个数 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)requestUnreadMessageCountWithResult:(PostResponseResultResponse)result;
+</code></pre>
+
+<h1>相册</h1>
+
+<h2>获取某用户相册 <a href="Classes/UMComUserAlbumRequest.html"><code>UMComUserAlbumRequest</code></a></h2>
+
+<h1>SDK其他接口</h1>
+
+<h2>设置友盟Appkey</h2>
+
+<pre><code>[UMCommunity setWithAppKey:UMengCommunityAppkey];
+</code></pre>
+
+<h2>展示微社区的主页面</h2>
+
+<p>在你要显示社区的页面，使用下面的代码来弹出整个社区页面：</p>
+
+<pre><code>    UINavigationController *communityViewController = [UMCommunity getFeedsModalViewController];
+    [self presentModalViewController:communityViewController animated:YES];
+</code></pre>
+
+<p>或者把社区页面push到UINavigation</p>
+
+<pre><code>    UIViewController *communityViewController = [UMCommunity getFeedsViewController];
+    [self.navigationController pushViewController:communityViewController animated:YES];
+</code></pre>
+
+<h2>使用消息推送</h2>
+
+<pre><code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    ……
+    [UMComMessageManager setAppkey:UMengMessageAppkey];   //设置消息通知Appkey
+    NSDictionary *notificationDict = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if ([notificationDict valueForKey:@"umwsq"]) {
+        [UMComMessageManager startWithOptions:launchOptions];
+        if ([notificationDict valueForKey:@"aps"]) // 点击推送进入
+        {
+            [UMComMessageManager didReceiveRemoteNotification:notificationDict];
+        }
+    } else {
+        [UMComMessageManager startWithOptions:nil];
+        //使用你的消息通知处理
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [UMComMessageManager registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if ([userInfo valueForKey:@"umwsq"]) {
+        [UMComMessageManager didReceiveRemoteNotification:userInfo];
+    } else {
+        //使用你自己的消息推送处理
+    }}
+</code></pre>
+
+<h2>设置各个开放平台登录appkey</h2>
+
+<p>在appdelegate下面的方法设置各个社交平台的appid，例如：</p>
+
+<pre><code> #import "UMSocialQQHandler.h"
+ #import "UMSocialWechatHandler.h"
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+    //设置分享到QQ互联的appId和appKey
+    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+//    [UMComLoginManager setAppKey:UMengLoginAppkey];   //设置友盟社会化组件的应用appkey，默认把友盟社区的appkey当成微社区的appkey
+}
+</code></pre>
+
+<h2>使用自定义登录</h2>
+
+<p>在你的登录页面设置代理对象，并处理弹出登录页面的方法：</p>
+
+<pre><code> //在你弹出友盟微社区的页面前，设置你的登录页面，例如
+LoginViewController *loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+[UMComLoginManager setLoginHandler:loginController];
+//在你的登陆页面loginViewController实现下面弹出登录页面的回调方法
+ - (void)presentLoginViewController:(UIViewController *)viewController finishResponse:(LoadDataCompletion)loginCompletion
+ {
+    //弹出你的登录页面
+    [viewController presentViewController:self animated:YES completion:nil];
+ }
+
+  //登录完成之后上传开放平台uid
+ {
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];     //使用UMComSnsTypeSelfAccount代表自定义登录，该枚举类型必须和安卓SDK保持一致，否则会出现不能对应同一用户的问题
+    userAccount.usid = @"用户id";
+    userAccount.name = @"昵称";
+    userAccount.icon_url = @"http://xxxx.jpg"; //登录用户头像
+    [UMComLoginManager finishLoginWithAccount:userAccount completion:^(NSArray *data, NSError *error) {
+        [UMComLoginManager finishDismissViewController:self data:data error:error];
+    }];
+ }
+</code></pre>
+						
+						
+					</div>
+					
+
+					<div class="index-container">
+						
+
+						
+						<div class="index-column">
+							<h2 class="index-title">Class References</h2>
+							<ul>
+								
+								<li><a href="Classes/UMComAllFeedsRequest.html">UMComAllFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComAllNewFeedsRequest.html">UMComAllNewFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComAllTopicsRequest.html">UMComAllTopicsRequest</a></li>
+								
+								<li><a href="Classes/UMComFansRequest.html">UMComFansRequest</a></li>
+								
+								<li><a href="Classes/UMComFeedCommentsRequest.html">UMComFeedCommentsRequest</a></li>
+								
+								<li><a href="Classes/UMComFeedEntity.html">UMComFeedEntity</a></li>
+								
+								<li><a href="Classes/UMComFeedLikesRequest.html">UMComFeedLikesRequest</a></li>
+								
+								<li><a href="Classes/UMComFeedsByFeedIdsRequest.html">UMComFeedsByFeedIdsRequest</a></li>
+								
+								<li><a href="Classes/UMComFollowersRequest.html">UMComFollowersRequest</a></li>
+								
+								<li><a href="Classes/UMComFriendFeedsRequest.html">UMComFriendFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComLocationRequest.html">UMComLocationRequest</a></li>
+								
+								<li><a href="Classes/UMComLoginManager.html">UMComLoginManager</a></li>
+								
+								<li><a href="Classes/UMComMessageManager.html">UMComMessageManager</a></li>
+								
+								<li><a href="Classes/UMComNearbyFeedsRequest.html">UMComNearbyFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComOneFeedRequest.html">UMComOneFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComPullRequest.html">UMComPullRequest</a></li>
+								
+								<li><a href="Classes/UMComPushRequest.html">UMComPushRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendFeedsRequest.html">UMComRecommendFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendTopicUsersRequest.html">UMComRecommendTopicUsersRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendTopicsRequest.html">UMComRecommendTopicsRequest</a></li>
+								
+								<li><a href="Classes/UMComRecommendUsersRequest.html">UMComRecommendUsersRequest</a></li>
+								
+								<li><a href="Classes/UMComSearchFeedRequest.html">UMComSearchFeedRequest</a></li>
+								
+								<li><a href="Classes/UMComSearchTopicRequest.html">UMComSearchTopicRequest</a></li>
+								
+								<li><a href="Classes/UMComSearchUserRequest.html">UMComSearchUserRequest</a></li>
+								
+								<li><a href="Classes/UMComTopicFeedsRequest.html">UMComTopicFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComTopicRecommendFeeds.html">UMComTopicRecommendFeeds</a></li>
+								
+								<li><a href="Classes/UMComUMengLoginHandler.html">UMComUMengLoginHandler</a></li>
+								
+								<li><a href="Classes/UMComUserAccount.html">UMComUserAccount</a></li>
+								
+								<li><a href="Classes/UMComUserAlbumRequest.html">UMComUserAlbumRequest</a></li>
+								
+								<li><a href="Classes/UMComUserCommentsReceivedRequest.html">UMComUserCommentsReceivedRequest</a></li>
+								
+								<li><a href="Classes/UMComUserCommentsSentRequest.html">UMComUserCommentsSentRequest</a></li>
+								
+								<li><a href="Classes/UMComUserFavouritesRequest.html">UMComUserFavouritesRequest</a></li>
+								
+								<li><a href="Classes/UMComUserFeedBeAtRequest.html">UMComUserFeedBeAtRequest</a></li>
+								
+								<li><a href="Classes/UMComUserFeedsRequest.html">UMComUserFeedsRequest</a></li>
+								
+								<li><a href="Classes/UMComUserLikesReceivedRequest.html">UMComUserLikesReceivedRequest</a></li>
+								
+								<li><a href="Classes/UMComUserNotificationRequest.html">UMComUserNotificationRequest</a></li>
+								
+								<li><a href="Classes/UMComUserProfileRequest.html">UMComUserProfileRequest</a></li>
+								
+								<li><a href="Classes/UMComUserTopicsRequest.html">UMComUserTopicsRequest</a></li>
+								
+								<li><a href="Classes/UMCommunity.html">UMCommunity</a></li>
+								
+							</ul>
+						</div>
+						
+
+						
+						<div class="index-column">
+							
+							<h2 class="index-title">Protocol References</h2>
+							<ul>
+								
+								<li><a href="Protocols/UMComLoginDelegate.html">UMComLoginDelegate</a></li>
+								
+								<li><a href="Protocols/UMComPullResultDelegate.html">UMComPullResultDelegate</a></li>
+								
+							</ul>
+							
+
+							
+							<h2 class="index-title">Constant References</h2>
+							<ul>
+								
+									<li><a href="Constants/UMComFetchSourceType.html">UMComFetchSourceType</a></li>
+								
+							</ul>
+							
+
+							
+						</div>
+						
+					</div>
+
+					<footer>
+						<div class="footer-copyright">
+							
+							<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-11-06</p>
+							
+							
+							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+							
+						</div>
+					</footer>
+				</main>
+			</div>
+		</div>
+	</article>
+
+	<script src="js/script.js"></script>
+</body>
+</html>

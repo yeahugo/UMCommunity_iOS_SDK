@@ -1,0 +1,181 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><link rel="stylesheet" type="text/css" href="markdown.css"></link></head><body>
+</body></html><h1>产品概述</h1>
+<p>友盟微社区，旨在帮助开发者在 APP 内快速建立一个专属的社区，让用户与用户、用户与开发者之间可以双向沟通，同时借助话题和关系链，用户可自行创造、传播高价值内容，提高 APP 粘性。</p>
+<h1>创建微社区</h1>
+<p>在友盟微社区后台创建APP，并得到Appkey。</p>
+<h1>下载并安装</h1>
+<p>解压文件后把文件夹umeng_community_ios_sdk_xxx添加到Xcode工程中。</p>
+<p><img alt="安装SDK" src="http://dev.umeng.com/system/resources/W1siZiIsIjIwMTUvMDgvMTgvMTZfMTRfMDlfMTMwX3VtY29tbXVuaXR5X2lPUy5wbmciXV0/umcommunity_iOS.png" title="下载并安装" /></p>
+<h1>添加系统framework</h1>
+<p>请在你的xcode工程添加下面的系统framework</p>
+<p>Security.framework <br />
+libiconv.dylib <br />
+SystemConfiguration.framework <br />
+CoreGraphics.framework <br />
+libsqlite3.dylib <br />
+CoreTelephony.framework <br />
+libstdc++.dylib <br />
+libz.dylib <br />
+CoreLocation.framework <br />
+AssetsLibrary.framework <br />
+AVFoundation.framework</p>
+<h1>修改xcode编译选项</h1>
+<ol>
+<li>在xcode的info.plist添加一项<code>NSLocationAlwaysUsageDescription</code> 为NSString:""</li>
+<li>在info.plist 增加一项 <code>View controller-based status bar appearance</code> 为YES.</li>
+<li>本SDK需要使用JSONKit来实现数据解析，若目标工程使用ARC，需要在Build Phases-&gt;Compile Sources的JSONKit.m文件添加Compiler Flags：<code>-fno-objc-arc</code>。</li>
+<li>若要qq登录的功能，需要添加xcode的一项url scheme：tencent+QQ 开放平台的应用appid，例如tencent100424468 。还有添加一下url scheme：“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FC5B14”。另外需要在你的工程的info.plist设置Bundle display name。</li>
+<li>若要微信登录的功能，需要添加一项xcode的url scheme为微信appid，例如wxd930ea5d5a258f4f。</li>
+<li>为了兼容iOS9，需要在Xcode7里工程设置的Build Settings-&gt;Enable Bitcode设置成NO,（没有用Xcode7 可以忽略）。</li>
+<li>为了兼容iOS9，需要用如下方式允许用HTTP进行网络连接，（没有用Xcode7可以忽略）：</li>
+</ol>
+<pre><code>    在info.plist的NSAppTransportSecurity下新增NSAllowsArbitraryLoads并设置为YES，指定所有HTTP连接都可正常请求
+    &lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
+        &lt;/true&gt;
+    &lt;/dict&gt;
+</code></pre>
+
+<ol>
+<li>
+<p>如果使用友盟第三方登录或者分享功能，在iOS9下就需要增加一个可跳转的白名单，指定对应跳转App的URL Scheme，否则将在第三方平台判断是否跳转时用到的canOpenURL时返回NO，进而只进行webview授权或授权/分享失败，（没有用Xcode7 可以忽略）。</p>
+<p>在info.plist增加：LSApplicationQueriesSchemes 的key,value为array类型，然后再array中根据需要添加如下内容：</p>
+</li>
+</ol>
+<pre><code>&lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;
+&lt;array&gt;
+    &lt;!-- 微信 URL Scheme 白名单--&gt;
+    &lt;string&gt;wechat&lt;/string&gt;
+    &lt;string&gt;weixin&lt;/string&gt;
+
+    &lt;!-- 新浪微博 URL Scheme 白名单--&gt;
+    &lt;string&gt;sinaweibohd&lt;/string&gt;
+    &lt;string&gt;sinaweibo&lt;/string&gt;
+    &lt;string&gt;sinaweibosso&lt;/string&gt;
+    &lt;string&gt;weibosdk&lt;/string&gt;
+    &lt;string&gt;weibosdk2.5&lt;/string&gt;
+
+    &lt;!-- QQ和Qzone URL Scheme 白名单--&gt;
+    &lt;string&gt;mqqapi&lt;/string&gt;
+    &lt;string&gt;mqq&lt;/string&gt;
+    &lt;string&gt;mqqOpensdkSSoLogin&lt;/string&gt;
+    &lt;string&gt;mqqconnect&lt;/string&gt;
+    &lt;string&gt;mqqopensdkdataline&lt;/string&gt;
+    &lt;string&gt;mqqopensdkgrouptribeshare&lt;/string&gt;
+    &lt;string&gt;mqqopensdkfriend&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapi&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV2&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdk&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;
+    &lt;string&gt;wtloginmqq&lt;/string&gt;
+    &lt;string&gt;wtloginmqq2&lt;/string&gt;
+    &lt;string&gt;mqzone&lt;/string&gt;
+    &lt;string&gt;mqzonev2&lt;/string&gt;
+    &lt;string&gt;mqzoneshare&lt;/string&gt;
+    &lt;string&gt;wtloginqzone&lt;/string&gt;
+    &lt;string&gt;mqzonewx&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdkapiV2&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdkapi19&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdkapi&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdk&lt;/string&gt;
+&lt;/array&gt;
+</code></pre>
+
+<h1>添加集成代码</h1>
+<h2>设置appkey</h2>
+<p>在appdelegate下面的方法内设置appkey，例如：</p>
+<pre><code>#import &quot;UMCommunity.h&quot;
+……
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    [UMCommunity setWithAppKey:@&quot;54d19091fd98c55a19000406&quot;];  //需要修改微社区的Appkey
+}
+</code></pre>
+
+<h2>展示消息流页面</h2>
+<p>在你要显示社区的页面，使用下面的代码来弹出整个社区页面：</p>
+<pre><code>#import &quot;UMCommunity.h&quot;
+……
+    UINavigationController *communityViewController = [UMCommunity getFeedsModalViewController];
+    [self presentModalViewController:communityViewController animated:YES];
+</code></pre>
+
+<p>或者把社区页面push到UINavigation</p>
+<pre><code>#import &quot;UMCommunity.h&quot;
+……
+    UIViewController *communityViewController = [UMCommunity getFeedsViewController];
+    [self.navigationController pushViewController:communityViewController animated:YES];
+</code></pre>
+
+<h2>设置消息通知</h2>
+<ol>
+<li>
+<p>在<a href="http://wsq.umeng.com/" title="微社区">微社区管理后台</a>-&gt;社区管理-&gt;应用-&gt;友盟推送-&gt;应用信息，上传开发证书和生产证书</p>
+</li>
+<li>
+<p>在下面的代码内获取设备device token,然后把该字符串上传到<a href="http://wsq.umeng.com/" title="微社区">微社区管理后台</a>-&gt;社区管理-&gt;应用-&gt;友盟推送-&gt;开发环境-&gt;添加测试设备，</p>
+</li>
+</ol>
+<pre><code> - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@&quot;----devicetoken------%@&quot;,[[[[deviceToken description] stringByReplacingOccurrencesOfString: @&quot;&lt;&quot; withString: @&quot;&quot;]
+                  stringByReplacingOccurrencesOfString: @&quot;&gt;&quot; withString: @&quot;&quot;]
+                 stringByReplacingOccurrencesOfString: @&quot; &quot; withString: @&quot;&quot;]);
+}
+</code></pre>
+
+<ol>
+<li>实现消息通知的功能，在appdelegate下面的方法设置appkey，例如：</li>
+</ol>
+<pre><code> #import &quot;UMCommunity.h&quot;
+……
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    ……
+    NSDictionary *notificationDict = [launchOptions valueForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if ([notificationDict valueForKey:@&quot;umwsq&quot;]) {
+        [UMComMessageManager startWithOptions:launchOptions];
+        if ([notificationDict valueForKey:@&quot;aps&quot;]) // 点击推送进入
+        {
+            [UMComMessageManager didReceiveRemoteNotification:notificationDict];
+        }
+    } else {
+        [UMComMessageManager startWithOptions:nil];
+        //使用你的消息通知处理
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [UMComMessageManager registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if ([userInfo valueForKey:@&quot;umwsq&quot;]) {
+        [UMComMessageManager didReceiveRemoteNotification:userInfo];
+    } else {
+        //使用你自己的消息推送处理
+    }
+}
+</code></pre>
+
+<h2>设置登录</h2>
+<p>在appdelegate下面的方法设置各个社交平台的appid，例如：</p>
+<pre><code> #import &quot;UMSocialQQHandler.h&quot;
+ #import &quot;UMSocialWechatHandler.h&quot;
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@&quot;wxd930ea5d5a258f4f&quot; appSecret:@&quot;db426a9829e4b49a0dcac7b4162da6b6&quot; url:@&quot;http://www.umeng.com/social&quot;];
+    //设置分享到QQ互联的appId和appKey
+    [UMSocialQQHandler setQQWithAppId:@&quot;100424468&quot; appKey:@&quot;c7394704798a158208a74ab60104f0ba&quot; url:@&quot;http://www.umeng.com/social&quot;];
+//  [UMComLoginManager setAppKey:@&quot;54d19091fd98c55a19000406&quot;];   //设置友盟社会化组件的应用appkey，默认把友盟社区的appkey当成微社区的appkey
+}
+</code></pre>
+
+<h2>详细使用</h2>
+<p>自定义登录和消息通知的集成方法请参考详细集成文档。</p>
+<p>直接获取数据的方法请参考API 文档。</p>
