@@ -46,7 +46,7 @@
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comment" inverseName="feed" inverseEntity="Comment" syncable="YES"/>
         <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="feeds" inverseEntity="User" syncable="YES"/>
-        <relationship name="forward_feeds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Feed" inverseName="origin_feed" inverseEntity="Feed" syncable="YES"/>
+        <relationship name="forward_feeds" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Feed" inverseName="origin_feed" inverseEntity="Feed" syncable="YES"/>
         <relationship name="likes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Like" inverseName="feed" inverseEntity="Like" syncable="YES"/>
         <relationship name="origin_feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Feed" inverseName="forward_feeds" inverseEntity="Feed" syncable="YES"/>
         <relationship name="related_user" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="related_feeds" inverseEntity="User" syncable="YES"/>
@@ -78,8 +78,8 @@
         <attribute name="seq" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="seq_recommend" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="topicID" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="creator" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="topics" inverseEntity="User" syncable="YES"/>
         <relationship name="feeds" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Feed" inverseName="topics" inverseEntity="Feed" syncable="YES"/>
+        <relationship name="follow_users" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="topics" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="UMComUser" syncable="YES">
         <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -87,16 +87,16 @@
         <attribute name="be_at_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="comment_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="custom" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fans_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="feed_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="following_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="fans_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="feed_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="following_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="has_followed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="icon_url" optional="YES" attributeType="Transformable" valueTransformerName="ImageDictionary" syncable="YES"/>
         <attribute name="is_recommended" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="level_title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="like_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="like_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="liked_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="permissions" optional="YES" attributeType="Transformable" valueTransformerName="Permissions" syncable="YES"/>
@@ -106,14 +106,14 @@
         <attribute name="sum" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="user" inverseEntity="Album" syncable="YES"/>
-        <relationship name="comment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="creator" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="comment" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comment" inverseName="creator" inverseEntity="Comment" syncable="YES"/>
         <relationship name="fans" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="followers" inverseEntity="User" syncable="YES"/>
         <relationship name="feeds" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Feed" inverseName="creator" inverseEntity="Feed" syncable="YES"/>
         <relationship name="followers" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="fans" inverseEntity="User" syncable="YES"/>
-        <relationship name="likes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Like" inverseName="creator" inverseEntity="Like" syncable="YES"/>
+        <relationship name="likes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Like" inverseName="creator" inverseEntity="Like" syncable="YES"/>
         <relationship name="related_feeds" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Feed" inverseName="related_user" inverseEntity="Feed" syncable="YES"/>
-        <relationship name="reply_comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="reply_user" inverseEntity="Comment" syncable="YES"/>
-        <relationship name="topics" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Topic" inverseName="creator" inverseEntity="Topic" syncable="YES"/>
+        <relationship name="reply_comments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comment" inverseName="reply_user" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="topics" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Topic" inverseName="follow_users" inverseEntity="Topic" syncable="YES"/>
     </entity>
     <elements>
         <element name="Album" positionX="-81" positionY="-18" width="128" height="135"/>

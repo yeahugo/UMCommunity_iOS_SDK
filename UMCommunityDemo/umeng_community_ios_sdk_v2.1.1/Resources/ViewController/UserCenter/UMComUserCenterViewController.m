@@ -150,7 +150,9 @@ typedef enum {
     self.genderView = genderView;
     
     [self setTitleViewWithTitle:self.user.name];
+    
     [self resetBaseInfoViews];
+    
     //当用户注销时直接跳回主页面
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popOutWhenUserlogout) name:UserLogoutSucceed object:nil];
     
@@ -296,9 +298,13 @@ typedef enum {
             }else{
                 [UMComShowToast fetchFailWithNoticeMessage:  UMComLocalizedString(@"user info load fail",@"个人信息加载失败")];
             }
-            [weakSelf.feedsTableView loadAllData:nil fromServer:nil];
         }];
     }];
+    if (self.user.feeds.count > 0) {
+        [self.feedsTableView.dataArray addObjectsFromArray:[self.feedsTableView transFormToFeedStylesWithFeedDatas:self.user.feeds.array]];
+        [self.feedsTableView reloadData];
+    }
+    [self.feedsTableView loadAllData:nil fromServer:nil];
 }
 
 - (void)refreshBaseInformationWithUserProfile:(UMComUser *)user

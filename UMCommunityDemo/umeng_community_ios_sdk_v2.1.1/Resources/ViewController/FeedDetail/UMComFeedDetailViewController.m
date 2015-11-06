@@ -77,6 +77,8 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 
 @property (nonatomic, strong) UMComCommentEditView *commentEditView;
 
+@property (nonatomic, strong) UIView *spaceHiddenView;
+
 @property (nonatomic, strong) NSDictionary * viewExtra;
 
 @property (nonatomic, strong) NSArray *reloadComments;
@@ -170,6 +172,7 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
     self.feedsTableView.tableHeaderView = nil;
     UMComRefreshView * refreshView = [[UMComRefreshView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kUMComRefreshOffsetHeight) ScrollView:self.feedsTableView];
     self.feedsTableView.backgroundColor = [UIColor clearColor];
@@ -196,6 +199,10 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     self.menuView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view bringSubviewToFront:self.menuView];
     
+    self.likeListView = [[UMComLikeListView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kLikeViewHeight)];
+    self.likeListView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.likeListView.delegate = self;
+    
     UMComOneFeedRequest *oneFeedController = [[UMComOneFeedRequest alloc] initWithFeedId:self.feedId viewExtra:self.viewExtra];
     self.fetchFeedsController = oneFeedController;
     
@@ -205,6 +212,12 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         [self reloadViewsWithFeed];
     }
     [self refreshNewData:nil];
+    
+    self.spaceHiddenView = [[UIView alloc]initWithFrame:CGRectMake(0, self.feedStyle.totalHeight+self.likeListView.frame.size.height, self.feedsTableView.frame.size.width, 6)];
+    self.spaceHiddenView.backgroundColor = [UIColor whiteColor];
+    [self.feedsTableView addSubview:self.spaceHiddenView];
+    
+    
 }
 
 #pragma mark - UITableViewDelegate And UITableViewDataSource
@@ -236,6 +249,7 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
             [cell.contentView addSubview:self.likeListView];
         }
         cell.bottomMenuBgView.hidden = YES;
+        self.spaceHiddenView.frame = CGRectMake(0, cell.frame.size.height - 5, self.feedsTableView.frame.size.width, 6);
         return cell;
     }else{
         static NSString *cellID = @"CommentTableViewCell";
@@ -273,7 +287,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     }
 }
 
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
@@ -283,7 +296,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     }
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
@@ -292,6 +304,8 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
         return 40;
     }
 }
+
+
 
 - (UIView *)getTableControlView
 {
@@ -311,7 +325,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     forwardLabel.textAlignment = NSTextAlignmentRight;
     forwardLabel.text = [NSString stringWithFormat:@"转发(%@)",self.feed.forward_count];
     [view addSubview:forwardLabel];
-    
     UIView *bottomLine = [self creatLineInView:view];
     bottomLine.frame = CGRectMake(0, view.frame.size.height-0.3, view.frame.size.width, 0.3);
     return view;
@@ -377,32 +390,31 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
 }
 
 
-#pragma mark - CommentList
-- (void)reloadCommentTableViewArrWithComments:(NSArray *)reloadComments
-{
-    NSMutableArray *mutiStyleViewArr = [NSMutableArray array];
-    int index = 0;
-    for (UMComComment *comment in reloadComments) {
-        NSMutableString * replayStr = [NSMutableString stringWithString:@""];
-        NSMutableArray *checkWords = nil; //[NSMutableArray arrayWithCapacity:1];
-        if (comment.reply_user) {
-            [replayStr appendString:@"回复"];
-            checkWords = [NSMutableArray arrayWithObject:[NSString stringWithFormat:@"@%@",comment.creator.name]];
-            [replayStr appendFormat:@"@%@：",comment.reply_user.name];
-        }
-        if (comment.content) {
-            [replayStr appendFormat:@"%@",comment.content];
-        }
-        UMComMutiStyleTextView *commentStyleView = [UMComMutiStyleTextView rectDictionaryWithSize:CGSizeMake(self.view.frame.size.width-UMComCommentDeltalWidth, MAXFLOAT) font:UMComCommentTextFont attString:replayStr lineSpace:2 runType:UMComMutiTextRunCommentType checkWords:checkWords];
-        float height = commentStyleView.totalHeight + 5/2 + UMComCommentNamelabelHeght;
-        commentStyleView.totalHeight  = height;
-        [mutiStyleViewArr addObject:commentStyleView];
-        index++;
-    }
-    self.commentStyleViewArray = mutiStyleViewArr;
-    self.reloadComments = reloadComments;
-}
 
+#pragma mark - private Method
+- (void)reloadViewsWithFeed
+{
+    self.feedStyle = [UMComFeedStyle feedStyleWithFeed:self.feed viewWidth:self.view.frame.size.width feedType:feedDetailType];
+    if (self.likeListView.likeList.count > 0) {
+        self.likeListView.frame = CGRectMake(0, self.feedStyle.totalHeight+DeltaHeight, self.view.frame.size.width, kLikeViewHeight);
+        self.likeListView.hidden = NO;
+    }else{
+        self.likeListView.frame = CGRectMake(0, self.feedStyle.totalHeight, self.view.frame.size.width, 0);
+        self.likeListView.hidden = YES;
+    }
+    
+    [self.feedsTableView reloadData];
+    
+    CGFloat comtentSizeHeight = self.feedStyle.totalHeight + self.likeListView.frame.size.height + DeltaHeight + self.feedsTableView.frame.size.height;
+    if (self.feedsTableView.contentSize.height < comtentSizeHeight && self.reloadComments.count > 0) {
+        self.feedsTableView.contentSize = CGSizeMake(self.feedsTableView.contentSize.width, comtentSizeHeight);
+        self.feedsTableView.refreshController.footView.hidden = YES;
+    }else if (self.reloadComments.count == 0){
+        self.feedsTableView.refreshController.footView.hidden = YES;
+    }else{
+        self.feedsTableView.refreshController.footView.hidden = NO;
+    }
+}
 
 - (void)refreshNewData:(LoadFinishBlock)block
 {
@@ -418,30 +430,6 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
             }];
         }];
     }];
-}
-
-
-#pragma mark - private Method
-- (void)reloadViewsWithFeed
-{
-    self.feedStyle = [UMComFeedStyle feedStyleWithFeed:self.feed viewWidth:self.view.frame.size.width feedType:feedDetailType];
-    if (self.likeListView.likeList.count > 0) {
-        self.likeListView.frame = CGRectMake(0, self.feedStyle.totalHeight+DeltaHeight, self.view.frame.size.width, kLikeViewHeight);
-        self.likeListView.hidden = NO;
-    }else{
-        self.likeListView.frame = CGRectMake(0, self.feedStyle.totalHeight, self.view.frame.size.width, 0);
-        self.likeListView.hidden = YES;
-    }
-    [self.feedsTableView reloadData];
-    CGFloat comtentSizeHeight = self.feedStyle.totalHeight + self.likeListView.frame.size.height + DeltaHeight + self.feedsTableView.frame.size.height;
-    if (self.feedsTableView.contentSize.height < comtentSizeHeight && self.reloadComments.count > 0) {
-        self.feedsTableView.contentSize = CGSizeMake(self.feedsTableView.contentSize.width, comtentSizeHeight);
-        self.feedsTableView.refreshController.footView.hidden = YES;
-    }else if (self.reloadComments.count == 0){
-        self.feedsTableView.refreshController.footView.hidden = YES;
-    }else{
-        self.feedsTableView.refreshController.footView.hidden = NO;
-    }
 }
 
 
@@ -481,16 +469,12 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     
     if (self.feed.likes.count > 0) {
         [self.likeListView reloadViewsWithfeed:self.feed likeArray:self.feed.likes.array];
-        [self.feedsTableView reloadData];
+        [weakSelf reloadViewsWithFeed];
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self.fetchLikeRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        if (!self.likeListView) {
-            self.likeListView = [[UMComLikeListView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kLikeViewHeight)];
-            self.likeListView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            self.likeListView.delegate = self;
-        }
+        
         if (!error) {
             [weakSelf.likeListView reloadViewsWithfeed:weakSelf.feed likeArray:data];
         }
@@ -535,6 +519,32 @@ static const NSString * Permission_delete_content = @"permission_delete_content"
     }];
 }
 
+- (void)reloadCommentTableViewArrWithComments:(NSArray *)reloadComments
+{
+    NSMutableArray *mutiStyleViewArr = [NSMutableArray array];
+    int index = 0;
+    for (UMComComment *comment in reloadComments) {
+        NSMutableString * replayStr = [NSMutableString stringWithString:@""];
+        NSMutableArray *checkWords = nil; //[NSMutableArray arrayWithCapacity:1];
+        if (comment.reply_user) {
+            [replayStr appendString:@"回复"];
+            checkWords = [NSMutableArray arrayWithObject:[NSString stringWithFormat:@"@%@",comment.reply_user.name]];
+            [replayStr appendFormat:@"@%@：",comment.reply_user.name];
+        }
+        if (comment.content) {
+            [replayStr appendFormat:@"%@",comment.content];
+        }
+        UMComMutiStyleTextView *commentStyleView = [UMComMutiStyleTextView rectDictionaryWithSize:CGSizeMake(self.view.frame.size.width-UMComCommentDeltalWidth, MAXFLOAT) font:UMComCommentTextFont attString:replayStr lineSpace:2 runType:UMComMutiTextRunCommentType checkWords:checkWords];
+        float height = commentStyleView.totalHeight + 5/2 + UMComCommentNamelabelHeght;
+        commentStyleView.totalHeight  = height;
+        [mutiStyleViewArr addObject:commentStyleView];
+        index++;
+    }
+    self.commentStyleViewArray = mutiStyleViewArr;
+    self.reloadComments = reloadComments;
+}
+
+#pragma mark - button action
 
 - (IBAction)didClickOnLike:(UITapGestureRecognizer *)sender {
     [self.commentEditView dismissAllEditView];

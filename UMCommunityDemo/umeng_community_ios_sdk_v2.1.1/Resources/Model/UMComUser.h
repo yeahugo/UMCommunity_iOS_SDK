@@ -2,7 +2,7 @@
 //  UMComUser.h
 //  UMCommunity
 //
-//  Created by Gavin Ye on 9/8/15.
+//  Created by Gavin Ye on 9/15/15.
 //  Copyright (c) 2015 Umeng. All rights reserved.
 //
 
@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSNumber * is_recommended;
 @property (nonatomic, retain) NSNumber * level;
 @property (nonatomic, retain) NSString * level_title;
+@property (nonatomic, retain) NSNumber * like_count;
 @property (nonatomic, retain) NSNumber * liked_count;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) id permissions;
@@ -36,25 +37,29 @@
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * uid;
-@property (nonatomic, retain) NSNumber * like_count;
 @property (nonatomic, retain) UMComAlbum *album;
-@property (nonatomic, retain) NSSet *comment;
+@property (nonatomic, retain) NSOrderedSet *comment;
 @property (nonatomic, retain) NSOrderedSet *fans;
 @property (nonatomic, retain) NSOrderedSet *feeds;
 @property (nonatomic, retain) NSOrderedSet *followers;
-@property (nonatomic, retain) NSSet *likes;
+@property (nonatomic, retain) NSOrderedSet *likes;
 @property (nonatomic, retain) NSOrderedSet *related_feeds;
-@property (nonatomic, retain) NSSet *reply_comments;
+@property (nonatomic, retain) NSOrderedSet *reply_comments;
 @property (nonatomic, retain) NSOrderedSet *topics;
 @end
 
 @interface UMComUser (CoreDataGeneratedAccessors)
 
+- (void)insertObject:(UMComComment *)value inCommentAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromCommentAtIndex:(NSUInteger)idx;
+- (void)insertComment:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeCommentAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInCommentAtIndex:(NSUInteger)idx withObject:(UMComComment *)value;
+- (void)replaceCommentAtIndexes:(NSIndexSet *)indexes withComment:(NSArray *)values;
 - (void)addCommentObject:(UMComComment *)value;
 - (void)removeCommentObject:(UMComComment *)value;
-- (void)addComment:(NSSet *)values;
-- (void)removeComment:(NSSet *)values;
-
+- (void)addComment:(NSOrderedSet *)values;
+- (void)removeComment:(NSOrderedSet *)values;
 - (void)insertObject:(UMComUser *)value inFansAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromFansAtIndex:(NSUInteger)idx;
 - (void)insertFans:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
@@ -85,11 +90,16 @@
 - (void)removeFollowersObject:(UMComUser *)value;
 - (void)addFollowers:(NSOrderedSet *)values;
 - (void)removeFollowers:(NSOrderedSet *)values;
+- (void)insertObject:(UMComLike *)value inLikesAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromLikesAtIndex:(NSUInteger)idx;
+- (void)insertLikes:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeLikesAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInLikesAtIndex:(NSUInteger)idx withObject:(UMComLike *)value;
+- (void)replaceLikesAtIndexes:(NSIndexSet *)indexes withLikes:(NSArray *)values;
 - (void)addLikesObject:(UMComLike *)value;
 - (void)removeLikesObject:(UMComLike *)value;
-- (void)addLikes:(NSSet *)values;
-- (void)removeLikes:(NSSet *)values;
-
+- (void)addLikes:(NSOrderedSet *)values;
+- (void)removeLikes:(NSOrderedSet *)values;
 - (void)insertObject:(UMComFeed *)value inRelated_feedsAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromRelated_feedsAtIndex:(NSUInteger)idx;
 - (void)insertRelated_feeds:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
@@ -100,11 +110,16 @@
 - (void)removeRelated_feedsObject:(UMComFeed *)value;
 - (void)addRelated_feeds:(NSOrderedSet *)values;
 - (void)removeRelated_feeds:(NSOrderedSet *)values;
+- (void)insertObject:(UMComComment *)value inReply_commentsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromReply_commentsAtIndex:(NSUInteger)idx;
+- (void)insertReply_comments:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeReply_commentsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInReply_commentsAtIndex:(NSUInteger)idx withObject:(UMComComment *)value;
+- (void)replaceReply_commentsAtIndexes:(NSIndexSet *)indexes withReply_comments:(NSArray *)values;
 - (void)addReply_commentsObject:(UMComComment *)value;
 - (void)removeReply_commentsObject:(UMComComment *)value;
-- (void)addReply_comments:(NSSet *)values;
-- (void)removeReply_comments:(NSSet *)values;
-
+- (void)addReply_comments:(NSOrderedSet *)values;
+- (void)removeReply_comments:(NSOrderedSet *)values;
 - (void)insertObject:(UMComTopic *)value inTopicsAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromTopicsAtIndex:(NSUInteger)idx;
 - (void)insertTopics:(NSArray *)value atIndexes:(NSIndexSet *)indexes;

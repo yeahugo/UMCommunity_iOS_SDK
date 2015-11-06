@@ -185,6 +185,19 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark -
+- (void)refreshAllData
+{
+    if (self.topic.feeds.count > 0) {
+        [self.feedsTableView.dataArray addObjectsFromArray:[self.feedsTableView transFormToFeedStylesWithFeedDatas:self.topic.feeds.array]];
+        [self.feedsTableView reloadData];
+    }
+    if (self.fetchFeedsController) {
+        self.feedsTableView.fetchRequest = self.fetchFeedsController;
+        [self.feedsTableView loadAllData:nil fromServer:nil];
+    }
+}
+
 - (void)addNewFeedDataWhenFeedCreatSucceed:(NSNotification *)notification
 {
     UMComFeed *newFeed = (UMComFeed *)notification.object;
@@ -262,6 +275,10 @@
     self.feedsTableView.scrollViewDelegate = nil;
     self.hotUsersTableView.scrollViewDelegate = self;
     if (self.hotUsersTableView.dataArray.count == 0) {
+        if (self.topic.follow_users.count > 0) {
+            [self.hotUsersTableView.dataArray addObjectsFromArray:self.topic.follow_users.array];
+            [self.hotUsersTableView reloadData];
+        }
         [self.hotUsersTableView loadAllData:nil fromServer:nil];
     }
     [self resetContentOffsetOfScrollView:self.hotUsersTableView];

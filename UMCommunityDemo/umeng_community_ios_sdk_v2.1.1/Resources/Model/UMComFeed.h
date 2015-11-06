@@ -2,22 +2,20 @@
 //  UMComFeed.h
 //  UMCommunity
 //
-//  Created by umeng on 15/8/11.
+//  Created by umeng on 15/9/8.
 //  Copyright (c) 2015年 Umeng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "UMComManagedObject.h"
+
 #define FeedStatusDeleted (2)
-
-
-@class UMComComment, UMComFeed, UMComLike, UMComTopic, UMComUser;
-
 #define FeedStatusSpam 2
 #define FeedStatusDeleteByUser 3
 #define FeedStatusSnow 4
 #define FeedStatusShielding 5
+@class UMComComment, UMComFeed, UMComLike, UMComTopic, UMComUser;
 
 @interface UMComFeed : UMComManagedObject
 
@@ -30,8 +28,8 @@
 @property (nonatomic, retain) NSNumber * has_collected;
 @property (nonatomic, retain) id images;
 @property (nonatomic, retain) NSString * is_follow;
-@property (nonatomic, retain) NSNumber * is_recommend;
 @property (nonatomic, retain) NSNumber * is_lististop;
+@property (nonatomic, retain) NSNumber * is_recommend;
 @property (nonatomic, retain) NSNumber * liked;
 @property (nonatomic, retain) NSNumber * likes_count;
 @property (nonatomic, retain) id location;
@@ -47,7 +45,7 @@
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSOrderedSet *comments;
 @property (nonatomic, retain) UMComUser *creator;
-@property (nonatomic, retain) NSSet *forward_feeds;
+@property (nonatomic, retain) NSOrderedSet *forward_feeds;
 @property (nonatomic, retain) NSOrderedSet *likes;
 @property (nonatomic, retain) UMComFeed *origin_feed;
 @property (nonatomic, retain) NSOrderedSet *related_user;
@@ -66,11 +64,16 @@
 - (void)removeCommentsObject:(UMComComment *)value;
 - (void)addComments:(NSOrderedSet *)values;
 - (void)removeComments:(NSOrderedSet *)values;
+- (void)insertObject:(UMComFeed *)value inForward_feedsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromForward_feedsAtIndex:(NSUInteger)idx;
+- (void)insertForward_feeds:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeForward_feedsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInForward_feedsAtIndex:(NSUInteger)idx withObject:(UMComFeed *)value;
+- (void)replaceForward_feedsAtIndexes:(NSIndexSet *)indexes withForward_feeds:(NSArray *)values;
 - (void)addForward_feedsObject:(UMComFeed *)value;
 - (void)removeForward_feedsObject:(UMComFeed *)value;
-- (void)addForward_feeds:(NSSet *)values;
-- (void)removeForward_feeds:(NSSet *)values;
-
+- (void)addForward_feeds:(NSOrderedSet *)values;
+- (void)removeForward_feeds:(NSOrderedSet *)values;
 - (void)insertObject:(UMComLike *)value inLikesAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromLikesAtIndex:(NSUInteger)idx;
 - (void)insertLikes:(NSArray *)value atIndexes:(NSIndexSet *)indexes;

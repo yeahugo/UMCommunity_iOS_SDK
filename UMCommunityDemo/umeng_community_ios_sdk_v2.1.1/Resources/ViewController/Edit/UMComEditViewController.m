@@ -42,6 +42,8 @@
 
 @property (nonatomic, strong) UMComFeed *originFeed;        //转发的原始feed
 
+@property (nonatomic, strong) NSMutableArray *forwardCheckWords;  //转发时用于校验高亮字体
+
 @property (nonatomic, strong) UMComTopic *topic;
 
 @property (nonatomic, strong) NSString *feedCreatedUsers;
@@ -102,12 +104,35 @@
     self.originFeed = forwardFeed;
     self.forwardFeed = forwardFeed;
     self.feedCreatedUsers = @" ";
+    self.forwardCheckWords = [NSMutableArray array];
+    NSArray *tempArray = [self getFeedCheckWordsFromFeed:forwardFeed];
+    if (tempArray.count > 0) {
+        [self.forwardCheckWords addObjectsFromArray:tempArray];
+    }
     while (self.originFeed.origin_feed) {
         self.feedCreatedUsers = [self.feedCreatedUsers stringByAppendingFormat:@"//@%@：%@ ",self.originFeed.creator.name,self.originFeed.text];
+        NSArray *tempArray2 = [self getFeedCheckWordsFromFeed:self.originFeed.origin_feed];
+        if (tempArray2.count > 0) {
+            [self.forwardCheckWords addObjectsFromArray:tempArray2];
+        }
         [self.editViewModel.followers addObject:self.originFeed.creator];
         self.originFeed = self.originFeed.origin_feed;
     }
     return self;
+}
+
+- (NSArray *)getFeedCheckWordsFromFeed:(UMComFeed *)feed
+{
+    NSMutableArray *checkWords = [NSMutableArray array];
+    NSString *word = [NSString stringWithFormat:@"@%@",feed.creator.name];
+    [checkWords addObject:word];
+    for (NSString *userName in [feed.related_user.array valueForKeyPath:@"name"]) {
+        [checkWords addObject:[NSString stringWithFormat:@"@%@",userName]];
+    }
+    for (NSString *topicName in [feed.topics.array valueForKeyPath:@"name"]) {
+        [checkWords addObject:[NSString stringWithFormat:@"#%@#",topicName]];
+    }
+    return checkWords;
 }
 
 - (id)initWithTopic:(UMComTopic *)topic
@@ -132,8 +157,7 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-  
-    self.editBgView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+
     [self.locationLabel setText:self.editViewModel.locationDescription];
     [self.realTextView becomeFirstResponder];
     self.realTextView.selectedRange = self.editViewModel.seletedRange;
@@ -253,7 +277,7 @@
     //加入话题列表
     self.topicsViewController = [[UMComEditTopicsViewController alloc] initWithEditViewModel:self.editViewModel];
     [self.topicsViewController.view setFrame:CGRectMake(0, self.editToolView.frame.origin.y+self.editToolView.bounds.size.height,self.view.bounds.size.width, self.view.bounds.size.height - self.editToolView.frame.origin.y-self.editToolView.bounds.size.height-self.locationBackgroundView.frame.size.height)];
-    [self.editBgView addSubview:self.topicsViewController.view];
+    [self.view addSubview:self.topicsViewController.view];
 }
 
 - (void)showWhenForwordOldFeed
@@ -300,7 +324,7 @@
     {
         [self.realTextView setText:self.editViewModel.editContent];
         NSMutableAttributedString *attributString = [[NSMutableAttributedString alloc]initWithString:self.editViewModel.editContent];
-        [self creatHighLightForAttributedString:attributString font:textFont];
+        [self creatHighLightForAttributedString:attributString font:textFont checkWords:[self getCheckWords]];
         self.realTextView.attributedText = attributString;
         isShowTopicNoticeBgView = NO;
         self.realTextView.font = textFont;
@@ -337,7 +361,7 @@
     [textStorage appendAttributedString:attrString];
     [textStorage endEditing];
     
-    self.realTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.editBgView.frame.size.width, 120) textContainer:container];
+    self.realTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 120) textContainer:container];
     [self.realTextView setFont:textFont];
     [self.view addSubview:self.realTextView];
     self.realTextView.delegate = self;
@@ -367,6 +391,9 @@
 - (NSArray *)getCheckWords
 {
     NSMutableArray *checkWodrs = [NSMutableArray array];
+    if (self.forwardCheckWords.count > 0) {
+        [checkWodrs addObjectsFromArray:self.forwardCheckWords];
+    }
     for (UMComTopic *topic in self.editViewModel.topics) {
         NSString *topicName = [NSString stringWithFormat:@"#%@#",topic.name];
         [checkWodrs addObject:topicName];
@@ -406,9 +433,9 @@
     NSMutableAttributedString* attrString = [[NSMutableAttributedString alloc]
                                       initWithString:forwardString
                                       attributes:attrs];
-    self.fakeForwardTextView.textAlignment = NSTextAlignmentCenter;
+//    self.fakeForwardTextView.textAlignment = NSTextAlignmentCenter;
     self.fakeForwardTextView.font = textFont;
-    [self creatHighLightForAttributedString:attrString font:textFont];
+    [self creatHighLightForAttributedString:attrString font:textFont checkWords:self.forwardCheckWords];
     [self.fakeForwardTextView setAttributedText:attrString];
     self.fakeForwardTextView.editable = NO;
 }
@@ -433,11 +460,11 @@
     NSMutableAttributedString* attrString = [[NSMutableAttributedString alloc]
                                              initWithString:text
                                              attributes:attrs];
-    [self creatHighLightForAttributedString:attrString font:textFont];
+    [self creatHighLightForAttributedString:attrString font:textFont checkWords:[self getCheckWords]];
     self.realTextView.attributedText = attrString;
     [self.realTextView setFont:textFont];
     self.realTextView.delegate = self;
-    self.realTextView.frame = CGRectMake(0, 0, self.editBgView.frame.size.width, 80);
+    self.realTextView.frame = CGRectMake(0, 0, self.view.frame.size.width, 80);
 }
 
 
@@ -494,7 +521,7 @@
 {
     CGFloat visibleHeight = self.visibleViewHeight;
     if (visibleHeight == 0) {
-        visibleHeight  = self.editBgView.frame.size.height*4/9;
+        visibleHeight  = self.view.frame.size.height*4/9;
     }
     CGFloat forwordViewHeight = 5;
     CGFloat deltaHeight = 30;
@@ -503,7 +530,7 @@
         if (!self.originFeed.images || [self.originFeed.images count] == 0) {
             self.fakeForwardTextView.frame = CGRectMake(0, 0, self.forwardFeedBackground.frame.size.width, self.fakeForwardTextView.frame.size.height);
         }
-        self.atFriendButton.center = CGPointMake(self.editBgView.frame.size.width/2, self.editToolView.frame.size.height/2);
+        self.atFriendButton.center = CGPointMake(self.view.frame.size.width/2, self.editToolView.frame.size.height/2);
 
     }else{
         if (self.addedImageView.arrayImages.count == 0 || !self.addedImageView) {
@@ -540,7 +567,7 @@
         self.locationButton.center = CGPointMake(self.imagesButton.center.x+48+viewSpace, self.editToolView.frame.size.height/2);
         self.atFriendButton.center = CGPointMake(self.locationButton.center.x+48+viewSpace, self.editToolView.frame.size.height/2);
         self.topicNoticeBgView.frame = CGRectMake(self.topicButton.center.x, self.editToolView.frame.origin.y-30, self.topicNoticeBgView.frame.size.width, 30);
-        [self.editBgView bringSubviewToFront:self.topicNoticeBgView];
+        [self.view bringSubviewToFront:self.topicNoticeBgView];
         if (isShowTopicNoticeBgView == YES && self.topic == nil) {
 //            if (self.addedImageView.arrayImages.count == 0) {
                 deltaHeight = 30;
@@ -550,12 +577,12 @@
             self.topicNoticeBgView.hidden = YES;
         }
     }
-    self.realTextView.frame = CGRectMake(0, 0, self.editBgView.frame.size.width,visibleHeight-forwordViewHeight-5-deltaHeight);
+    self.realTextView.frame = CGRectMake(0, 0, self.view.frame.size.width,visibleHeight-forwordViewHeight-5-deltaHeight);
     self.forwardFeedBackground.frame = CGRectMake(self.forwardFeedBackground.frame.origin.x, self.realTextView.frame.size.height+2+deltaHeight, self.forwardFeedBackground.frame.size.width,forwordViewHeight);
     if (self.locationLabel.text.length > 0 && [self.addedImageView.arrayImages count] > 0) {
         self.locationBackgroundView.frame = CGRectMake(self.addedImageView.frame.origin.x+self.addedImageView.imageSpace-8, self.locationBackgroundView.frame.origin.y, self.locationBackgroundView.frame.size.width, self.locationBackgroundView.frame.size.height);
     }
-    [self.editBgView insertSubview:self.topicsViewController.view belowSubview:self.editToolView];
+    [self.view insertSubview:self.topicsViewController.view belowSubview:self.editToolView];
 }
 
 -(void)keyboardWillShow:(NSNotification*)notification
@@ -563,7 +590,7 @@
    CGRect keybordFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     float endheight = keybordFrame.size.height;
     self.editToolView.hidden = NO;
-    self.visibleViewHeight = self.editBgView.frame.size.height - endheight - self.editToolView.frame.size.height;
+    self.visibleViewHeight = self.view.frame.size.height - endheight - self.editToolView.frame.size.height;
     self.editToolView.frame = CGRectMake(self.editToolView.frame.origin.x,self.visibleViewHeight, keybordFrame.size.width, self.editToolView.frame.size.height);
     [self viewsFrameChange];
 }
@@ -572,12 +599,12 @@
 {
     CGRect keybordFrame = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     float endheight = keybordFrame.size.height;
-    self.visibleViewHeight = self.editBgView.frame.size.height - endheight - self.editToolView.frame.size.height;
+    self.visibleViewHeight = self.view.frame.size.height - endheight - self.editToolView.frame.size.height;
     self.editToolView.frame = CGRectMake(self.editToolView.frame.origin.x,self.visibleViewHeight, keybordFrame.size.width, self.editToolView.frame.size.height);
     self.editToolView.hidden = NO;
     [self viewsFrameChange];
     self.forwardFeedBackground.hidden = NO;
-    self.topicsViewController.view.frame = CGRectMake(0,self.editToolView.frame.size.height+self.editToolView.frame.origin.y, self.editBgView.frame.size.width, self.editBgView.frame.size.height-self.editToolView.frame.size.height-self.editToolView.frame.origin.y);
+    self.topicsViewController.view.frame = CGRectMake(0,self.editToolView.frame.size.height+self.editToolView.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height-self.editToolView.frame.size.height-self.editToolView.frame.origin.y);
     UITableView *tableView = (UITableView *)self.topicsViewController.tableView;
     tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.topicsViewController.view.frame.size.height);
 }
@@ -806,7 +833,7 @@
         if (textView == self.realTextView) {
             [self.editViewModel.editContent setString:textView.text];
             NSMutableAttributedString *mutiAttributString = [[NSMutableAttributedString alloc]initWithString:textView.text];
-            [self creatHighLightForAttributedString:mutiAttributString font:textFont];
+            [self creatHighLightForAttributedString:mutiAttributString font:textFont checkWords:[self getCheckWords]];
             self.realTextView.attributedText = mutiAttributString;
         }
     }
@@ -847,7 +874,7 @@
 
 
 //产生高亮字体
-- (void)creatHighLightForAttributedString:(NSMutableAttributedString *)attributedString font:(UIFont *)font
+- (void)creatHighLightForAttributedString:(NSMutableAttributedString *)attributedString font:(UIFont *)font checkWords:(NSArray *)checkWords
 {
     if (attributedString.length == 0) {
         return;
@@ -869,7 +896,7 @@
         
         for (NSTextCheckingResult *match in arrayOfAllMatches)
         {
-            for (NSString *item in [self getCheckWords]) {
+            for (NSString *item in checkWords) {
                 NSRange matchRange = NSMakeRange(match.range.location, match.range.length);
                 NSString *matchText = [string substringWithRange:matchRange];
                 if ([item isEqualToString:matchText]) {
@@ -891,7 +918,7 @@
                                                               range:NSMakeRange(0, [string length])];
         for (NSTextCheckingResult *match in arrayOfAllMatches)
         {
-            for (NSString *item in [self getCheckWords]) {
+            for (NSString *item in checkWords) {
                 NSRange matchRange = NSMakeRange(match.range.location, match.range.length);
                 NSString *matchText = [string substringWithRange:matchRange];
                 if ([item isEqualToString:matchText]) {
@@ -1019,7 +1046,7 @@
         topicAndUserLength += topic.name.length + 2;
     }
     for (UMComUser *user in self.editViewModel.followers) {
-        topicAndUserLength += user.name.length +2;
+        topicAndUserLength += user.name.length +1;
     }
     
     NSString *realTextString = [self.realTextView.text stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];

@@ -44,8 +44,6 @@
 
 @property (strong, nonatomic) UMComAddedImageView *addedImageView;
 
-@property (weak, nonatomic) IBOutlet UIView *editBgView;
-
 @property (weak, nonatomic) IBOutlet UIImageView *topicNoticeBgView;
 
 - (id)initWithDraftFeed:(UMComFeedEntity *)draftFeed;

@@ -20,6 +20,8 @@
 @property (nonatomic, assign) UMComFeedType feedType;
 
 @property (nonatomic, copy) void (^scrollViewDidScroll)(UIScrollView *scrollView, CGPoint lastPosition);
+
+- (NSArray *)transFormToFeedStylesWithFeedDatas:(NSArray *)feedList;
 //
 - (void)reloadRowAtIndex:(NSIndexPath *)indexPath;
 
