@@ -15,11 +15,15 @@
 #import "LoginViewController.h"
 #import "UMComNavigationController.h"
 
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+//#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
 //#define UMengCommunityAppkey @"550bb547fd98c59931000be8"
-//#define UMengCommunityAppkey @"4eaee02c527015373b000003"
-//#define UMengCommunityAppkey @"55dbdbc9e0f55a571d002a2c"
+#define UMengCommunityAppkey @"4eaee02c527015373b000003"
+//#define UMengCommunityAppkey @"557a945e67e58e1cf10011ee"
 //#define UMengCommunityAppkey @"53c6468356240b2b4d00f88d"
+//#define UMengCommunityAppkey @"54daf6b0fd98c52a04000a15"
+//#define UMengCommunityAppkey @"561e2e35e0f55aa743000adc"
+
+
 
 #define UMengLoginAppkey UMengCommunityAppkey
 

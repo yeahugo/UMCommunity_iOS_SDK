@@ -11,13 +11,13 @@
 <p>Security.framework <br />
 libiconv.dylib <br />
 SystemConfiguration.framework <br />
-CoreGraphics.Framework <br />
+CoreGraphics.framework <br />
 libsqlite3.dylib <br />
 CoreTelephony.framework <br />
 libstdc++.dylib <br />
 libz.dylib <br />
 CoreLocation.framework <br />
-AssertsLibrary.framework <br />
+AssetsLibrary.framework <br />
 AVFoundation.framework</p>
 <h1>修改xcode编译选项</h1>
 <ol>
@@ -25,8 +25,65 @@ AVFoundation.framework</p>
 <li>在info.plist 增加一项 <code>View controller-based status bar appearance</code> 为YES.</li>
 <li>本SDK需要使用JSONKit来实现数据解析，若目标工程使用ARC，需要在Build Phases-&gt;Compile Sources的JSONKit.m文件添加Compiler Flags：<code>-fno-objc-arc</code>。</li>
 <li>若要qq登录的功能，需要添加xcode的一项url scheme：tencent+QQ 开放平台的应用appid，例如tencent100424468 。还有添加一下url scheme：“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FC5B14”。另外需要在你的工程的info.plist设置Bundle display name。</li>
-<li>若要微信登录的功能，需要添加一项xcode的url scheme为微信appid，例如wxd930ea5d5a258f4f</li>
+<li>若要微信登录的功能，需要添加一项xcode的url scheme为微信appid，例如wxd930ea5d5a258f4f。</li>
+<li>为了兼容iOS9，需要在Xcode7里工程设置的Build Settings-&gt;Enable Bitcode设置成NO,（没有用Xcode7 可以忽略）。</li>
+<li>为了兼容iOS9，需要用如下方式允许用HTTP进行网络连接，（没有用Xcode7可以忽略）：</li>
 </ol>
+<pre><code>    在info.plist的NSAppTransportSecurity下新增NSAllowsArbitraryLoads并设置为YES，指定所有HTTP连接都可正常请求
+    &lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
+        &lt;/true&gt;
+    &lt;/dict&gt;
+</code></pre>
+
+<ol>
+<li>
+<p>如果使用友盟第三方登录或者分享功能，在iOS9下就需要增加一个可跳转的白名单，指定对应跳转App的URL Scheme，否则将在第三方平台判断是否跳转时用到的canOpenURL时返回NO，进而只进行webview授权或授权/分享失败，（没有用Xcode7 可以忽略）。</p>
+<p>在info.plist增加：LSApplicationQueriesSchemes 的key,value为array类型，然后再array中根据需要添加如下内容：</p>
+</li>
+</ol>
+<pre><code>&lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;
+&lt;array&gt;
+    &lt;!-- 微信 URL Scheme 白名单--&gt;
+    &lt;string&gt;wechat&lt;/string&gt;
+    &lt;string&gt;weixin&lt;/string&gt;
+
+    &lt;!-- 新浪微博 URL Scheme 白名单--&gt;
+    &lt;string&gt;sinaweibohd&lt;/string&gt;
+    &lt;string&gt;sinaweibo&lt;/string&gt;
+    &lt;string&gt;sinaweibosso&lt;/string&gt;
+    &lt;string&gt;weibosdk&lt;/string&gt;
+    &lt;string&gt;weibosdk2.5&lt;/string&gt;
+
+    &lt;!-- QQ和Qzone URL Scheme 白名单--&gt;
+    &lt;string&gt;mqqapi&lt;/string&gt;
+    &lt;string&gt;mqq&lt;/string&gt;
+    &lt;string&gt;mqqOpensdkSSoLogin&lt;/string&gt;
+    &lt;string&gt;mqqconnect&lt;/string&gt;
+    &lt;string&gt;mqqopensdkdataline&lt;/string&gt;
+    &lt;string&gt;mqqopensdkgrouptribeshare&lt;/string&gt;
+    &lt;string&gt;mqqopensdkfriend&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapi&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV2&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdk&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;
+    &lt;string&gt;mqqopensdkapiV3&lt;/string&gt;
+    &lt;string&gt;wtloginmqq&lt;/string&gt;
+    &lt;string&gt;wtloginmqq2&lt;/string&gt;
+    &lt;string&gt;mqzone&lt;/string&gt;
+    &lt;string&gt;mqzonev2&lt;/string&gt;
+    &lt;string&gt;mqzoneshare&lt;/string&gt;
+    &lt;string&gt;wtloginqzone&lt;/string&gt;
+    &lt;string&gt;mqzonewx&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdkapiV2&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdkapi19&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdkapi&lt;/string&gt;
+    &lt;string&gt;mqzoneopensdk&lt;/string&gt;
+&lt;/array&gt;
+</code></pre>
+
 <h1>添加集成代码</h1>
 <h2>设置appkey</h2>
 <p>在appdelegate下面的方法内设置appkey，例如：</p>

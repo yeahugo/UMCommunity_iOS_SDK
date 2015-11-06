@@ -65,10 +65,40 @@ else if ([controllerName isEqualToString:@&quot;UMComRemoteNoticeViewController&
 <h1>设置Feed自定义字段</h1>
 <p>若应用消息流需要视频、音乐等其他字段类型，可以利用下面的方法，在用户点击发送feed的代码插入自定义的消息内容，然后修改消息流展示视图，将服务器返回的自定义消息内容显示出来：</p>
 <pre><code>#import &quot;UMComFeedEntity.h&quot;
-    [UMComFeedEntity setCustomFeedContent:@&quot;自定义字段内容&quot;];
+例如： UMComFeedEntity *feedEntity = [[UMComFeedEntity alloc] init]; 
+    //feed内容
+   feedEntity.text = @&quot;创建一条新的Feed&quot;;
+   //位置描述
+   feedEntity.locationDescription = @&quot;北京市海淀区花园东路11号&quot;;
+   //位置CLLocation
+   feedEntity.location = location;
+   //关联话题NSArray
+   feedEntity.topics = topics;
+   //@用户NSArray
+   feedEntity.atUsers = atUsers；
+   //图片NSArray （可以使图片(UIImage)， 也可以是图片地址（NSString））
+   feedEntity.images = images；
+   /****************自定义字段************************/
+    feedEntity.customContent = @&quot;http://v.youku.com/v_show/id_XNjQ1NjczNzEy.html?f=21207816&amp;ev=2&quot;;//可以设置任意字符串，例如设置视频url 
+    //发送创建Feed的请求
+    [UMComPushRequest postWithFeed:weakSelf.feedEntity completion:^(id responseObject, NSError *error) {
+    //responseObject 是UMComFeed对象
+     }];    
 </code></pre>
 
 <p>同理，自定义评论字段如下：</p>
-<pre><code>#import &quot;UMComFeedEntity.h&quot;
-    [UMComFeedEntity setCustomCommentContent:@&quot;自定义评论字段内容&quot;];
+<pre><code>    [UMComPushRequest postWithSourceFeed:feed(被评论的Feed) commentContent:@&quot;评论内容&quot; replyUser:replyUser（回复某人的评论） commentCustomContent:@&quot;自定义评论字段内容，可以根据自己需要设置&quot; completion:^(NSError *error) {
+    }];
+</code></pre>
+
+<p>feed的自定义字段也可以在portal端修改。
+<img alt="feed自定义字段" src="http://dev.umeng.com/system/images/W1siZiIsIjIwMTUvMTAvMTAvMTJfNDlfMTZfODQwX1NjcmVlbl9TaG90XzIwMTVfMTBfMTBfYXRfMTAuMjkuNTFfQU0ucG5nIl1d/Screen%20Shot%202015-10-10%20at%2010.29.51%20AM.png" title="" /></p>
+<p>App的feed流页面可以使用<code>fetchRequestFromServer</code>等方法获取到得UMComFeed数据，得到对应的<code>custom</code>字段数据。例如：</p>
+<pre><code>#import &quot;UMCommunity.h&quot;
+    UMComAllFeedsRequest *allFeedRequest = [[UMComAllFeedsRequest alloc] initWithCount:20];
+    [allFeedRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+        for (UMComFeed *feed in data) {
+            NSLog(@&quot;自定义字段是 ： %@&quot;,feed.custom);
+        }
+    }];
 </code></pre>

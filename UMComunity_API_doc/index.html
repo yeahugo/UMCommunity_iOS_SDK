@@ -7,7 +7,7 @@
 
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
-	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
 </head>
 <body class="appledoc">
 	<header>
@@ -95,31 +95,62 @@
 
 <h2>获取收藏的Feed列表 <a href="Classes/UMComUserFavouritesRequest.html"><code>UMComUserFavouritesRequest</code></a></h2>
 
-<h2>获取话题推荐Feed <a href="Classes/UMComTopicRecommendFeeds.html"><code>UMComTopicRecommendFeeds</code></a></h2>
-
 <h2>搜索Feed <a href="Classes/UMComSearchFeedRequest.html"><code>UMComSearchFeedRequest</code></a></h2>
 
 <h2>获取被人@的Feed <a href="Classes/UMComUserFeedBeAtRequest.html"><code>UMComUserFeedBeAtRequest</code></a></h2>
+
+<h2>获取一条Feed的详情 <a href="Classes/UMComOneFeedRequest.html"><code>UMComOneFeedRequest</code></a></h2>
 
 <h2>获取一条Feed的所有评论 <a href="Classes/UMComFeedCommentsRequest.html"><code>UMComFeedCommentsRequest</code></a></h2>
 
 <h2>获取一条Feed所有点赞 <a href="Classes/UMComFeedLikesRequest.html"><code>UMComFeedLikesRequest</code></a></h2>
 
-<h2>发布新Feed <a href="Classes/UMComCreateFeedRequest.html"><code>UMComCreateFeedRequest</code></a></h2>
+<h2>添加评论 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
 
-<h2>添加评论 <a href="Classes/UMComCommentFeedRequest.html"><code>UMComCommentFeedRequest</code></a></h2>
+<pre><code>+ (void)postWithSourceFeed:(UMComFeed *)feed
+            commentContent:(NSString *)commentContent
+                 replyUser:(UMComUser *)replyUser
+                completion:(PostResultResponse)result;
+</code></pre>
 
-<h2>点赞或取消点赞 <a href="Classes/UMComLikeFeedRequest.html"><code>UMComLikeFeedRequest</code></a></h2>
+<h2>添加收藏或者取消收藏 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
 
-<h2>添加收藏或者取消收藏 <a href="Classes/UMComFavouriteFeedRequest.html"><code>UMComFavouriteFeedRequest</code></a></h2>
+<pre><code>+ (void)favouriteFeedWithFeed:(UMComFeed *)feed isFavourite:(BOOL)isFavourite completion:(PostResultResponse)result;
+</code></pre>
 
-<h2>转发 <a href="Classes/UMComForwardFeedReqeust.html"><code>UMComForwardFeedReqeust</code></a></h2>
+<h2>点赞或取消点赞 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
 
-<h2>删除Feed <a href="Classes/UMComDeleteFeedRequest.html"><code>UMComDeleteFeedRequest</code></a></h2>
+<pre><code>+ (void)likeWithFeed:(UMComFeed *)feed isLike:(BOOL)isLike completion:(PostResponseResultResponse)result;
+</code></pre>
 
-<h2>举报Feed <a href="Classes/UMComSpamFeedRequest.html"><code>UMComSpamFeedRequest</code></a></h2>
+<h2>创建新Feed <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
 
-<h2>获取未读Feed数量 <a href="Classes/UMComUserUnreadMeassageRequest.html"><code>UMComUserUnreadMeassageRequest</code></a></h2>
+<pre><code>+ (void)postWithFeed:(UMComFeedEntity *)newFeed completion:(PostResponseResultResponse)result;  
+</code></pre>
+
+<h2>转发 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)forwardWithFeed:(UMComFeed *)feed
+                newFeed:(UMComFeedEntity *)newFeed
+            completion:(PostResponseResultResponse)result;     
+</code></pre>
+
+<h2>删除Feed <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)deleteWithFeed:(UMComFeed *)feed 
+            completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>举报Feed <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)spamWithFeed:(UMComFeed *)feed
+          completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>获取未读Feed数量 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)fetchUnreadFeedCountWithSeq:(NSNumber *)seq result:(PostResponseResultResponse)result;
+</code></pre>
 
 <h1>用户接口</h1>
 
@@ -135,15 +166,40 @@
 
 <h2>搜索用户 <a href="Classes/UMComSearchUserRequest.html"><code>UMComSearchUserRequest</code></a></h2>
 
-<h2>上传用户资料，实现登录 <a href="Classes/UMComLoginManager.html"><code>UMComLoginManager</code></a></h2>
+<h2>上传用户资料，实现登录 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
 
-<h2>更新用户资料 <a href="Classes/UMComUpdateProfileRequest.html"><code>UMComUpdateProfileRequest</code></a></h2>
+<pre><code>+ (void)loginWithUser:(UMComUserAccount *)userAccount completion:(PostResponseResultResponse)result;
+</code></pre>
 
-<h2>更新用户头像 <a href="Classes/UMComUpdateProfileImageRequest.html"><code>UMComUpdateProfileImageRequest</code></a></h2>
+<h2>更新用户资料 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
 
-<h2>关注或者取消关注某用户 <a href="Classes/UMComFollowUserRequest.html"><code>UMComFollowUserRequest</code></a></h2>
+<pre><code>+ (void)updateWithUser:(UMComUserAccount *)userAccount completion:(PostResultResponse)result;
+</code></pre>
 
-<h2>获取未读Feed数量 <a href="Classes/UMComUnreadFeedCountRequest.html"><code>UMComUnreadFeedCountRequest</code></a></h2>
+<h2>更新用户头像 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)updateWithProfileImage:(UIImage *)image completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>关注或者取消关注某用户 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)followerWithUser:(UMComUser *)user
+                isFollow:(BOOL)isFollow
+              completion:(PostResultResponse)result;
+</code></pre>
+
+<h2>获取未读Feed数量 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)fetchUnreadFeedCountWithSeq:(NSNumber *)seq result:(PostResponseResultResponse)result;
+</code></pre>
+
+<h2>检查用户名是否合法 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)checkUserName:(NSString *)name
+         userNameType:(UMComUserNameType)userNameType
+       userNameLength:(UMComUserNameLength)userNameLength
+           completion:(PostResultResponse)completion;
+</code></pre>
 
 <h1>话题接口</h1>
 
@@ -155,7 +211,12 @@
 
 <h2>搜索话题 <a href="Classes/UMComSearchTopicRequest.html"><code>UMComSearchTopicRequest</code></a></h2>
 
-<h2>关注或者取消关注某话题 <a href="Classes/UMComFollowTopicRequest.html"><code>UMComFollowTopicRequest</code></a></h2>
+<h2>关注或者取消关注某话题 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
+
+<pre><code>+ (void)followerWithTopic:(UMComTopic *)topic
+               isFollower:(BOOL)isFollower
+               completion:(PostResultResponse)result;
+</code></pre>
 
 <h1>消息通知</h1>
 
@@ -167,9 +228,10 @@
 
 <h2>获取收到的点赞 <a href="Classes/UMComUserLikesReceivedRequest.html"><code>UMComUserLikesReceivedRequest</code></a></h2>
 
-<h2>获取未读消息个数 <a href="Classes/UMComUserUnreadMeassageRequest.html"><code>UMComUserUnreadMeassageRequest</code></a></h2>
+<h2>获取未读消息个数 <a href="Classes/UMComPushRequest.html"><code>UMComPushRequest</code></a></h2>
 
-<h2>检查用户名是否合法 <a href="Classes/UMComCheckUserNameRequest.html"><code>UMComCheckUserNameRequest</code></a></h2>
+<pre><code>+ (void)requestUnreadMessageCountWithResult:(PostResponseResultResponse)result;
+</code></pre>
 
 <h1>相册</h1>
 
@@ -261,7 +323,7 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 
   //登录完成之后上传开放平台uid
  {
-    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];      //使用UMComSnsTypeSelfAccount代表自定义登录，该枚举类型必须和安卓SDK保持一致，否则会出现不能对应同一用户的问题
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];     //使用UMComSnsTypeSelfAccount代表自定义登录，该枚举类型必须和安卓SDK保持一致，否则会出现不能对应同一用户的问题
     userAccount.usid = @"用户id";
     userAccount.name = @"昵称";
     userAccount.icon_url = @"http://xxxx.jpg"; //登录用户头像
@@ -289,17 +351,7 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 								
 								<li><a href="Classes/UMComAllTopicsRequest.html">UMComAllTopicsRequest</a></li>
 								
-								<li><a href="Classes/UMComCheckUserNameRequest.html">UMComCheckUserNameRequest</a></li>
-								
-								<li><a href="Classes/UMComCommentFeedRequest.html">UMComCommentFeedRequest</a></li>
-								
-								<li><a href="Classes/UMComCreateFeedRequest.html">UMComCreateFeedRequest</a></li>
-								
-								<li><a href="Classes/UMComDeleteFeedRequest.html">UMComDeleteFeedRequest</a></li>
-								
 								<li><a href="Classes/UMComFansRequest.html">UMComFansRequest</a></li>
-								
-								<li><a href="Classes/UMComFavouriteFeedRequest.html">UMComFavouriteFeedRequest</a></li>
 								
 								<li><a href="Classes/UMComFeedCommentsRequest.html">UMComFeedCommentsRequest</a></li>
 								
@@ -309,21 +361,13 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 								
 								<li><a href="Classes/UMComFeedsByFeedIdsRequest.html">UMComFeedsByFeedIdsRequest</a></li>
 								
-								<li><a href="Classes/UMComFollowTopicRequest.html">UMComFollowTopicRequest</a></li>
-								
-								<li><a href="Classes/UMComFollowUserRequest.html">UMComFollowUserRequest</a></li>
-								
 								<li><a href="Classes/UMComFollowersRequest.html">UMComFollowersRequest</a></li>
-								
-								<li><a href="Classes/UMComForwardFeedReqeust.html">UMComForwardFeedReqeust</a></li>
 								
 								<li><a href="Classes/UMComFriendFeedsRequest.html">UMComFriendFeedsRequest</a></li>
 								
-								<li><a href="Classes/UMComLikeFeedRequest.html">UMComLikeFeedRequest</a></li>
+								<li><a href="Classes/UMComLocationRequest.html">UMComLocationRequest</a></li>
 								
 								<li><a href="Classes/UMComLoginManager.html">UMComLoginManager</a></li>
-								
-								<li><a href="Classes/UMComLoginRequest.html">UMComLoginRequest</a></li>
 								
 								<li><a href="Classes/UMComMessageManager.html">UMComMessageManager</a></li>
 								
@@ -332,6 +376,8 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 								<li><a href="Classes/UMComOneFeedRequest.html">UMComOneFeedRequest</a></li>
 								
 								<li><a href="Classes/UMComPullRequest.html">UMComPullRequest</a></li>
+								
+								<li><a href="Classes/UMComPushRequest.html">UMComPushRequest</a></li>
 								
 								<li><a href="Classes/UMComRecommendFeedsRequest.html">UMComRecommendFeedsRequest</a></li>
 								
@@ -347,23 +393,11 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 								
 								<li><a href="Classes/UMComSearchUserRequest.html">UMComSearchUserRequest</a></li>
 								
-								<li><a href="Classes/UMComShareStaticsRequest.html">UMComShareStaticsRequest</a></li>
-								
-								<li><a href="Classes/UMComSpamFeedRequest.html">UMComSpamFeedRequest</a></li>
-								
-								<li><a href="Classes/UMComSpamUserRequest.html">UMComSpamUserRequest</a></li>
-								
 								<li><a href="Classes/UMComTopicFeedsRequest.html">UMComTopicFeedsRequest</a></li>
 								
 								<li><a href="Classes/UMComTopicRecommendFeeds.html">UMComTopicRecommendFeeds</a></li>
 								
 								<li><a href="Classes/UMComUMengLoginHandler.html">UMComUMengLoginHandler</a></li>
-								
-								<li><a href="Classes/UMComUnreadFeedCountRequest.html">UMComUnreadFeedCountRequest</a></li>
-								
-								<li><a href="Classes/UMComUpdateProfileImageRequest.html">UMComUpdateProfileImageRequest</a></li>
-								
-								<li><a href="Classes/UMComUpdateProfileRequest.html">UMComUpdateProfileRequest</a></li>
 								
 								<li><a href="Classes/UMComUserAccount.html">UMComUserAccount</a></li>
 								
@@ -387,8 +421,6 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 								
 								<li><a href="Classes/UMComUserTopicsRequest.html">UMComUserTopicsRequest</a></li>
 								
-								<li><a href="Classes/UMComUserUnreadMeassageRequest.html">UMComUserUnreadMeassageRequest</a></li>
-								
 								<li><a href="Classes/UMCommunity.html">UMCommunity</a></li>
 								
 							</ul>
@@ -409,6 +441,13 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 							
 
 							
+							<h2 class="index-title">Constant References</h2>
+							<ul>
+								
+									<li><a href="Constants/UMComFetchSourceType.html">UMComFetchSourceType</a></li>
+								
+							</ul>
+							
 
 							
 						</div>
@@ -418,10 +457,10 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-09-23</p>
+							<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-11-06</p>
 							
 							
-							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
 							
 						</div>
 					</footer>

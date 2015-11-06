@@ -7,7 +7,7 @@
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
-	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
 </head>
 <body class="appledoc">
 	<header>
@@ -58,6 +58,8 @@
 		
 		<option value="//api/name/atUsers">atUsers</option>
 		
+		<option value="//api/name/customContent">customContent</option>
+		
 		<option value="//api/name/images">images</option>
 		
 		<option value="//api/name/location">location</option>
@@ -65,6 +67,8 @@
 		<option value="//api/name/locationDescription">locationDescription</option>
 		
 		<option value="//api/name/text">text</option>
+		
+		<option value="//api/name/title">title</option>
 		
 		<option value="//api/name/topics">topics</option>
 		
@@ -75,18 +79,6 @@
 	</optgroup>
 	
 
-	
-	<optgroup label="Class Methods">
-		
-		<option value="//api/name/customCommentContent">+ customCommentContent</option>
-		
-		<option value="//api/name/customContent">+ customContent</option>
-		
-		<option value="//api/name/setCustomCommentContent:">+ setCustomCommentContent:</option>
-		
-		<option value="//api/name/setCustomFeedContent:">+ setCustomFeedContent:</option>
-		
-	</optgroup>
 	
 
 	
@@ -179,6 +171,47 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/title" title="title"></a>
+	<h3 class="method-title"><code><a href="#//api/name/title">&nbsp;&nbsp;title</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>消息标题</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *title</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComFeedEntity.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/uid" title="uid"></a>
 	<h3 class="method-title"><code><a href="#//api/name/uid">&nbsp;&nbsp;uid</a></code>
 </h3>
@@ -231,7 +264,7 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>消息的图片附件</p>
+				<p>消息的图片附件,images中的对象只可以是UIImage类对象或者是<code>UMComImageModel</code>类对象</p>
 			</div>
 			
 		    
@@ -466,90 +499,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/setCustomFeedContent:" title="setCustomFeedContent:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setCustomFeedContent:">+&nbsp;setCustomFeedContent:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>设置自定义数据</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>+ (void)setCustomFeedContent:(NSString *)<em>customContent</em></code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">UMComFeedEntity.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/setCustomCommentContent:" title="setCustomCommentContent:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/setCustomCommentContent:">+&nbsp;setCustomCommentContent:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>  设置自定义评论数据</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>+ (void)setCustomCommentContent:(NSString *)<em>customCommentContent</em></code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">UMComFeedEntity.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/customContent" title="customContent"></a>
-	<h3 class="method-title"><code><a href="#//api/name/customContent">+&nbsp;customContent</a></code>
+	<h3 class="method-title"><code><a href="#//api/name/customContent">&nbsp;&nbsp;customContent</a></code>
 </h3>
 
 	<div class="method-info">
@@ -559,53 +510,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>返回自定义数据</p>
+				<p>自定义字段</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>+ (NSString *)customContent</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">UMComFeedEntity.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/customCommentContent" title="customCommentContent"></a>
-	<h3 class="method-title"><code><a href="#//api/name/customCommentContent">+&nbsp;customCommentContent</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>返回自定义评论数据</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>+ (NSString *)customCommentContent</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *customContent</code></div>
 
 		    
 			
@@ -637,15 +547,17 @@
 					
 
                     
+                    
+          
 				</main>
 
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-09-23</p>
+						<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-11-06</p>
 						
 						
-						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
 						
 					</div>
 				</footer>

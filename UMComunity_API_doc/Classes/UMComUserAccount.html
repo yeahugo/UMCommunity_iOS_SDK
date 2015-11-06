@@ -7,7 +7,7 @@
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
-	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
 </head>
 <body class="appledoc">
 	<header>
@@ -62,6 +62,10 @@
 		
 		<option value="//api/name/gender">gender</option>
 		
+		<option value="//api/name/iconImage">iconImage</option>
+		
+		<option value="//api/name/iconImageModel">iconImageModel</option>
+		
 		<option value="//api/name/icon_url">icon_url</option>
 		
 		<option value="//api/name/level">level</option>
@@ -72,7 +76,13 @@
 		
 		<option value="//api/name/score">score</option>
 		
+		<option value="//api/name/snsPlatformName">snsPlatformName</option>
+		
 		<option value="//api/name/snsType">snsType</option>
+		
+		<option value="//api/name/userNameLength">userNameLength</option>
+		
+		<option value="//api/name/userNameType">userNameType</option>
 		
 		<option value="//api/name/usid">usid</option>
 		
@@ -147,12 +157,53 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>required sns平台名，例如<code>UMComSnsTypeSina</code></p>
+				<p>required sns对应的平台类型，例如<code>UMComSnsTypeSina</code>对应新浪</p>
 			</div>
 			
 		    
 
 			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) UMComSnsType snsType</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComUserAccount.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/snsPlatformName" title="snsPlatformName"></a>
+	<h3 class="method-title"><code><a href="#//api/name/snsPlatformName">&nbsp;&nbsp;snsPlatformName</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>required sns对应的平台名称，例如<code>sina</code>对应新浪</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, readonly) NSString *snsPlatformName</code></div>
 
 		    
 			
@@ -276,6 +327,88 @@
 		    
 
 			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *icon_url</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComUserAccount.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/iconImage" title="iconImage"></a>
+	<h3 class="method-title"><code><a href="#//api/name/iconImage">&nbsp;&nbsp;iconImage</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>用户头像</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) UIImage *iconImage</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComUserAccount.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/iconImageModel" title="iconImageModel"></a>
+	<h3 class="method-title"><code><a href="#//api/name/iconImageModel">&nbsp;&nbsp;iconImageModel</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>用户头像icon模型</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) UMComImageModel *iconImageModel</code></div>
 
 		    
 			
@@ -546,6 +679,88 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/userNameType" title="userNameType"></a>
+	<h3 class="method-title"><code><a href="#//api/name/userNameType">&nbsp;&nbsp;userNameType</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>用户名字符类型限制</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) UMComUserNameType userNameType</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComUserAccount.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/userNameLength" title="userNameLength"></a>
+	<h3 class="method-title"><code><a href="#//api/name/userNameLength">&nbsp;&nbsp;userNameLength</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>用户名长度限制</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) UMComUserNameLength userNameLength</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComUserAccount.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/initWithSnsType:" title="initWithSnsType:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/initWithSnsType:">&ndash;&nbsp;initWithSnsType:</a></code>
 </h3>
@@ -611,15 +826,17 @@
 					
 
                     
+                    
+          
 				</main>
 
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-09-23</p>
+						<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-11-06</p>
 						
 						
-						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
 						
 					</div>
 				</footer>
