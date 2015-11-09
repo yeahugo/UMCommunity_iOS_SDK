@@ -707,7 +707,6 @@ static const CGFloat kLikeViewHeight = 30;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [UMComPushRequest spamWithFeed:feed completion:^(NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        
         [UMComShowToast spamSuccess:error];
     }];
 }
@@ -854,11 +853,14 @@ static const CGFloat kLikeViewHeight = 30;
         [UMComPushRequest likeWithComment:comment
                                    isLike:![comment.liked boolValue]
                                completion:^(id responseObject, NSError *error) {
-                                   if (error) {
+                                   if (error.code == ERR_CODE_FEED_COMMENT_UNAVAILABLE) {
                                        [UMComShowToast showFetchResultTipWithError:error];
+                                       [self refreshNewData:nil];
+                                   }else{
+                                       NSIndexPath *indexPath = [weakSelf.feedsTableView indexPathForCell:cell];
+                                       [weakSelf.feedsTableView reloadRowAtIndex:indexPath];
                                    }
-                                   NSIndexPath *indexPath = [weakSelf.feedsTableView indexPathForCell:cell];
-                                   [weakSelf.feedsTableView reloadRowAtIndex:indexPath];
+                                 
                                }];
     }];
 }
@@ -909,6 +911,10 @@ static const CGFloat kLikeViewHeight = 30;
                                   images:nil
                               completion:^(NSError *error) {
         if (error) {
+            if (error.code == ERR_CODE_FEED_COMMENT_UNAVAILABLE) {
+                [UMComShowToast showFetchResultTipWithError:error];
+                [self refreshNewData:nil];
+            }
             [UMComShowToast showFetchResultTipWithError:error];
         }else{
             [weakSelf refreshFeedsComments:weakSelf.feed.feedID block:nil];

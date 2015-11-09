@@ -44,21 +44,7 @@
 
 @end
 
-
-@interface UMComTopicFeedAction : UMComAction
-
-@end
-
-@interface UMComUserCenterAction : UMComAction
-
-@end
-
-
 @interface UMComUpdateProfileAction : UMComAction
-
-@end
-
-@interface UMComReplyAction : UMComAction
 
 @end
 

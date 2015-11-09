@@ -49,6 +49,62 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
     }];
 </code></pre>
 
+<h1>自定义登录逻辑</h1>
+<p>1.社区内登录（如果实在友盟微社区内登录，推荐使用UMComAction的方法，如下）：
+（如果需要修改登录逻辑或者第一次登陆逻辑可以修改下面的方法）</p>
+<pre><code>- (void)performActionAfterLogin:(id)param
+                 viewController:(UIViewController *)viewController
+                     completion:(LoadDataCompletion)loadDataCompletion
+{
+    if (![UMComSession sharedInstance].uid) {
+        __weak UMComAction * weakSelf = self;
+        [[UMComLoginAction action] performAction:nil viewController:viewController completion:^(NSArray *data, NSError *error) {
+            __strong UMComAction *strongSelf = weakSelf;
+            weakSelf.error = error;
+            int isRegistered = [[(UMComUser *)[data firstObject] registered] intValue];
+            //第一次登录用户（当isRegistered为0时表示第一次登录）
+            if (isRegistered == 0 &amp;&amp; data) {
+                // 注册后因为用户名有错误，已经修改过用户名
+                if ([UMComSession sharedInstance].loginError) {
+                    [UMComSession sharedInstance].loginError = nil;
+                    [strongSelf performRecommendViewController:param error:error viewController:viewController completion:loadDataCompletion];//默认情况下第一次登录要跳转到
+                }
+                // 注册后用户名正确，没有修改过用户名
+                else {
+                    [[UMComUpdateProfileAction action] performAction:error viewController:viewController completion:^(NSArray *data, NSError *updateUserError) {
+                        [strongSelf performRecommendViewController:param error:updateUserError viewController:viewController completion:loadDataCompletion];
+                    }];
+                }
+            } else {
+                if ([self.actionDelegate respondsToSelector:@selector(loginSuccessPerformAction:response:viewController:completion:)]) {
+                    if ( !error) {
+                        [self.actionDelegate loginSuccessPerformAction:param response:data viewController:viewController completion:loadDataCompletion];
+                    } else {
+                        [self.actionDelegate loginFailPerformAction:param response:data viewController:viewController completion:loadDataCompletion];
+                    }
+                }
+            }
+        }];
+    } else {
+        if ([self.actionDelegate respondsToSelector:@selector(loginSuccessPerformAction:response:viewController:completion:)]) {
+            [self.actionDelegate loginSuccessPerformAction:param response:nil viewController:viewController completion:loadDataCompletion];
+        }
+    }
+}
+</code></pre>
+
+<p>2.社区外登录（如果需要自己实现登录逻辑的可以直接使用UMComPushRequest的类方法，如下）：</p>
+<pre><code>//把用户资料上传到友盟
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc] initWithSnsType:UMComSnsTypeSelfAccount];     
+    //使用UMComSnsTypeSelfAccount代表自定义登录，该枚举类型必须和安卓SDK保持一致，否则会出现不能对应同一用户的问题
+    userAccount.usid = @&quot;用户id&quot;;
+    userAccount.name = @&quot;昵称&quot;;
+    userAccount.icon_url = @&quot;http://xxxx.jpg&quot;; //登录用户头像
+    [UMComLoginManager loginWithUser:userAccount completion:^(NSArray *data, NSError *error) {
+    }];
+
+</code></pre>
+
 <h1>消息通知跳转到自定义页面</h1>
 <p>若在微社区的portal后台修改接收到消息通知跳转到的ViewController，需要修改 <code>UMComMessageManager.m</code>文件的<code>+ (void)handleUserInfo:(NSDictionary *)userInfo</code>方法，参照SDK原有的逻辑，根据传入的viewController名，跳转到各自的页面。例如下面是SDK已经实现的跳转到管理员通知页面的实例：</p>
 <pre><code>……

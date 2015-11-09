@@ -125,8 +125,8 @@
     
     [self setScrollToTopWithCurrentPage:0];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNewFeedDataWhenFeedCreatSucceed:) name:kNotificationPostFeedResultNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshAllDataWhenLoginUserChange) name:kUserLoginSucceedNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshAllDataWhenLoginUserChange) name:kUserLogoutSucceedNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshAllDataWhenLoginUserChange:) name:kUserLoginSucceedNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshAllDataWhenLoginUserChange:) name:kUserLogoutSucceedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMessageData:) name:kUMComRemoteNotificationReceivedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMessageData:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [self.view bringSubviewToFront:self.searchBar];
@@ -179,14 +179,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    self.feedsTableView = nil;
-    self.recommentfeedTableView = nil;
-    self.topicsTableView = nil;
-    self.searchBar = nil;
-    self.allTopicsRequest = nil;
-    self.titlePageControl = nil;
-    self.findButton = nil;
-    self.itemNoticeView = nil;
     // Dispose of any resources that can be recreated.
 }
 
@@ -319,14 +311,16 @@
 }
 
 #pragma mark - notifcation action
-- (void)refreshAllDataWhenLoginUserChange
+- (void)refreshAllDataWhenLoginUserChange:(NSNotification *)notification
 {
-    [self.feedsTableView.dataArray removeAllObjects];
-    [self.feedsTableView reloadFeedData];
-    [self.recommentfeedTableView.dataArray removeAllObjects];
-    [self.recommentfeedTableView reloadFeedData];
-    [self.topicsTableView.dataArray removeAllObjects];
-    [self.topicsTableView reloadData];
+    if ([kUserLogoutSucceedNotification isEqualToString:notification.name]) {
+        [self.feedsTableView.dataArray removeAllObjects];
+        [self.feedsTableView reloadFeedData];
+        [self.recommentfeedTableView.dataArray removeAllObjects];
+        [self.recommentfeedTableView reloadFeedData];
+        [self.topicsTableView.dataArray removeAllObjects];
+        [self.topicsTableView reloadData];
+    }
     __weak typeof(self) weakSelf = self;
     if (self.titlePageControl.currentPage == 0) {
         [self.feedsTableView refreshNewDataFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {

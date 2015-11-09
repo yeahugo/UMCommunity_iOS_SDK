@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63050C6F1BEC7EBD00DA4E5A /* UMComAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 63050C6A1BEC7EBD00DA4E5A /* UMComAction.m */; settings = {ASSET_TAGS = (); }; };
+		63050C701BEC7EBD00DA4E5A /* UMComLoginAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 63050C6B1BEC7EBD00DA4E5A /* UMComLoginAction.m */; settings = {ASSET_TAGS = (); }; };
+		63050C711BEC7EBD00DA4E5A /* UMComTopicRecommendAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 63050C6C1BEC7EBD00DA4E5A /* UMComTopicRecommendAction.m */; settings = {ASSET_TAGS = (); }; };
+		63050C721BEC7EBD00DA4E5A /* UMComUpdateProfileAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 63050C6D1BEC7EBD00DA4E5A /* UMComUpdateProfileAction.m */; settings = {ASSET_TAGS = (); }; };
+		63050C731BEC7EBD00DA4E5A /* UMComUserRecommendAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 63050C6E1BEC7EBD00DA4E5A /* UMComUserRecommendAction.m */; settings = {ASSET_TAGS = (); }; };
 		6339CB6C1BEC543F003F5770 /* UMComLoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6339CA251BEC543F003F5770 /* UMComLoginManager.m */; settings = {ASSET_TAGS = (); }; };
 		6339CB6D1BEC543F003F5770 /* UMComLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6339CA271BEC543F003F5770 /* UMComLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 		6339CB6E1BEC543F003F5770 /* UMComLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6339CA281BEC543F003F5770 /* UMComLoginViewController.xib */; settings = {ASSET_TAGS = (); }; };
@@ -175,6 +180,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63050C691BEC7EBD00DA4E5A /* UMComAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComAction.h; sourceTree = "<group>"; };
+		63050C6A1BEC7EBD00DA4E5A /* UMComAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComAction.m; sourceTree = "<group>"; };
+		63050C6B1BEC7EBD00DA4E5A /* UMComLoginAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComLoginAction.m; sourceTree = "<group>"; };
+		63050C6C1BEC7EBD00DA4E5A /* UMComTopicRecommendAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComTopicRecommendAction.m; sourceTree = "<group>"; };
+		63050C6D1BEC7EBD00DA4E5A /* UMComUpdateProfileAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComUpdateProfileAction.m; sourceTree = "<group>"; };
+		63050C6E1BEC7EBD00DA4E5A /* UMComUserRecommendAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComUserRecommendAction.m; sourceTree = "<group>"; };
 		6339CA1D1BEC543F003F5770 /* UMComFeedEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComFeedEntity.h; sourceTree = "<group>"; };
 		6339CA1E1BEC543F003F5770 /* UMCommunity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCommunity.h; sourceTree = "<group>"; };
 		6339CA1F1BEC543F003F5770 /* UMComPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComPullRequest.h; sourceTree = "<group>"; };
@@ -200,7 +211,6 @@
 		6339CA371BEC543F003F5770 /* UMComSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMComSDKResources.bundle; sourceTree = "<group>"; };
 		6339CA3A1BEC543F003F5770 /* UMBaseNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMBaseNetwork.h; sourceTree = "<group>"; };
 		6339CA3B1BEC543F003F5770 /* UMCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMCache.h; sourceTree = "<group>"; };
-		6339CA3C1BEC543F003F5770 /* UMComAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComAction.h; sourceTree = "<group>"; };
 		6339CA3D1BEC543F003F5770 /* UMComCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComCoreData.h; sourceTree = "<group>"; };
 		6339CA3E1BEC543F003F5770 /* UMComErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComErrorCode.h; sourceTree = "<group>"; };
 		6339CA3F1BEC543F003F5770 /* UMComErrorCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComErrorCode.m; sourceTree = "<group>"; };
@@ -574,6 +584,12 @@
 		6339CA221BEC543F003F5770 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				63050C691BEC7EBD00DA4E5A /* UMComAction.h */,
+				63050C6A1BEC7EBD00DA4E5A /* UMComAction.m */,
+				63050C6B1BEC7EBD00DA4E5A /* UMComLoginAction.m */,
+				63050C6C1BEC7EBD00DA4E5A /* UMComTopicRecommendAction.m */,
+				63050C6D1BEC7EBD00DA4E5A /* UMComUpdateProfileAction.m */,
+				63050C6E1BEC7EBD00DA4E5A /* UMComUserRecommendAction.m */,
 				6339CA231BEC543F003F5770 /* UMComLoginDelegate.h */,
 				6339CA241BEC543F003F5770 /* UMComLoginManager.h */,
 				6339CA251BEC543F003F5770 /* UMComLoginManager.m */,
@@ -626,7 +642,6 @@
 			children = (
 				6339CA3A1BEC543F003F5770 /* UMBaseNetwork.h */,
 				6339CA3B1BEC543F003F5770 /* UMCache.h */,
-				6339CA3C1BEC543F003F5770 /* UMComAction.h */,
 				6339CA3D1BEC543F003F5770 /* UMComCoreData.h */,
 				6339CA3E1BEC543F003F5770 /* UMComErrorCode.h */,
 				6339CA3F1BEC543F003F5770 /* UMComErrorCode.m */,
@@ -1432,6 +1447,7 @@
 				6339CB921BEC543F003F5770 /* UMComShowToast.m in Sources */,
 				6339CB781BEC543F003F5770 /* UMComTools.m in Sources */,
 				6339CBC91BEC543F003F5770 /* UMComFilterTopicsViewCell.m in Sources */,
+				63050C711BEC7EBD00DA4E5A /* UMComTopicRecommendAction.m in Sources */,
 				6339CB7D1BEC543F003F5770 /* UMComProgressView.m in Sources */,
 				6339CB911BEC543F003F5770 /* UMComiToast.m in Sources */,
 				6339CB831BEC543F003F5770 /* UMComMutiTextRun.m in Sources */,
@@ -1444,6 +1460,7 @@
 				6339CB971BEC543F003F5770 /* UMComCommentEditView.m in Sources */,
 				6339CB8A1BEC543F003F5770 /* UMAssetsCollectionOverlayView.m in Sources */,
 				6339CB861BEC543F003F5770 /* UMAssetsCollectionCell.m in Sources */,
+				63050C731BEC7EBD00DA4E5A /* UMComUserRecommendAction.m in Sources */,
 				6339CB8E1BEC543F003F5770 /* UMComSearchBar.m in Sources */,
 				6339CB881BEC543F003F5770 /* UMAssetsCollectionController.m in Sources */,
 				6339CBBE1BEC543F003F5770 /* UMComFindTableViewCell.m in Sources */,
@@ -1470,7 +1487,10 @@
 				6339CB821BEC543F003F5770 /* UMComMutiStyleTextView.m in Sources */,
 				6339CBA91BEC543F003F5770 /* UMComFriendTableViewCell.m in Sources */,
 				6339CBB71BEC543F003F5770 /* UMComTopicFeedViewController.m in Sources */,
+				63050C701BEC7EBD00DA4E5A /* UMComLoginAction.m in Sources */,
+				63050C721BEC7EBD00DA4E5A /* UMComUpdateProfileAction.m in Sources */,
 				6339CBA21BEC543F003F5770 /* UMComAddedImageCellView.m in Sources */,
+				63050C6F1BEC7EBD00DA4E5A /* UMComAction.m in Sources */,
 				6339CBDC1BEC543F003F5770 /* UMComUsersTableViewController.m in Sources */,
 				6339CBAD1BEC543F003F5770 /* UMComLocationTableViewCell.m in Sources */,
 				6339CBD71BEC543F003F5770 /* UMComUserCenterCollectionView.m in Sources */,

@@ -89,7 +89,7 @@
     }else if (error.code == ERR_CODE_TITLE_LENGTH_ERROR){
         [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(EER_MSG_TITLE_LENGTH_ERROR,@"标题长度超过上限啦")];
     }else if (error.code == ERR_CODE_FEED_COMMENT_UNAVAILABLE){
-        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FEED_COMMENT_UNAVAILABLE ,@"该评论无效。")];
+        [[self class] fetchFailWithNoticeMessage:UMComLocalizedString(ERR_MSG_FEED_COMMENT_UNAVAILABLE ,@"该评论已被删除")];
     }
     //====topic====
     else if (error.code == ERR_CODE_HAVE_FOCUSED){
