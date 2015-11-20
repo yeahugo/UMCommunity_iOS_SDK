@@ -1122,7 +1122,7 @@
     [self.realTextView resignFirstResponder];
     [self.editViewModel.editContent setString:self.realTextView.text];
     if (!self.forwardFeed && ![self isString:self.realTextView.text]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:UMComLocalizedString(@"Sorry",@"抱歉") message:UMComLocalizedString(@"Empty_Text",@"消息不能为空") delegate:nil cancelButtonTitle:UMComLocalizedString(@"OK",@"好") otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:UMComLocalizedString(@"Sorry",@"抱歉") message:UMComLocalizedString(@"Empty_Text",@"文字内容不能为空") delegate:nil cancelButtonTitle:UMComLocalizedString(@"OK",@"好") otherButtonTitles:nil];
         [alertView show];
         [self.realTextView becomeFirstResponder];
         return;
@@ -1154,7 +1154,7 @@
         
         return;
     }
-    
+//
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __block UMComEditViewController *weakSelf = self;
     if (self.fakeForwardTextView.hidden) {

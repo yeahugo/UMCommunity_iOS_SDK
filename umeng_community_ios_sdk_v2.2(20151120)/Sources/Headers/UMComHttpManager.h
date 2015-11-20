@@ -271,18 +271,19 @@ typedef void (^RequestCompletedNoPageResponse)(id responseObject, NSError *error
                      iconDict:(NSDictionary *)iconDict
                     iconImage:(UIImage *)image
                        custom:(NSString *)custom
+                 userNameType:(UMComUserNameType)userNameType
+               userNameLength:(UMComUserNameLength)userNameLength
                      response:(RequestCompletedNoPageResponse)response;
 
+//举报用户
++ (void)spamUser:(NSString *)userId
+        response:(RequestCompletedNoPageResponse)response;
 
 //检查用户名是否合法
 + (void)checkUserName:(NSString *)name
          userNameType:(UMComUserNameType)userNameType
        userNameLength:(UMComUserNameLength)userNameLength
           resultBlock:(RequestCompletedNoPageResponse)response;
-
-//举报用户
-+ (void)spamUser:(NSString *)userId
-        response:(RequestCompletedNoPageResponse)response;
 
 
 #pragma mark -

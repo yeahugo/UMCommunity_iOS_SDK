@@ -367,13 +367,13 @@
                 
                 if (weakSelf.navigationController.viewControllers.count > 1) {
                     if (weakSelf.completion) {
-                        weakSelf.completion(nil,nil);
+                        weakSelf.completion(nil,error);
                     }
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 } else {
                     [weakSelf dismissViewControllerAnimated:YES completion:^{
                         if (weakSelf.completion) {
-                            weakSelf.completion(nil,nil);
+                            weakSelf.completion(nil,error);
                         }
                     }];
                 }
