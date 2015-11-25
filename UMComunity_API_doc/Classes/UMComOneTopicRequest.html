@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>UMComFriendFeedsRequest Class Reference</title>
+	<title>UMComOneTopicRequest Class Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -60,7 +60,7 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/initWithCount:">- initWithCount:</option>
+		<option value="//api/name/initWithTopicId:">- initWithTopicId:</option>
 		
 	</optgroup>
 	
@@ -77,7 +77,7 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">UMComFriendFeedsRequest Class Reference</h1>
+					<h1 class="title">UMComOneTopicRequest Class Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
@@ -96,8 +96,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>朋友圈Feed请求
-<strong>需要用户登录</strong></p>
+						<p>获取单个话题,使用方法见父类<a href="../Classes/UMComPullRequest.html"><code>UMComPullRequest</code></a>,获取的数据是<code>UMComTopic</code>对象组成的NSArray 只有一个对象</p>
 					</div>
 					
 					
@@ -113,8 +112,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/initWithCount:" title="initWithCount:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/initWithCount:">&ndash;&nbsp;initWithCount:</a></code>
+	<a name="//api/name/initWithTopicId:" title="initWithTopicId:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithTopicId:">&ndash;&nbsp;initWithTopicId:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -124,38 +123,27 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>获取朋友圈请求的初始化方法,获取的数据是<code>UMComFeed</code>对象组成的NSArray
-使用方法见父类<a href="../Classes/UMComPullRequest.html"><code>UMComPullRequest</code></a></p>
+				<p>获取单个话题</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (id)initWithCount:(NSInteger)<em>count</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (id)initWithTopicId:(NSString *)<em>topicId</em></code></div>
 
 		    
 			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>count</code></th>
-						<td><p>数量</p></td>
-					</tr>
-				
-				</table>
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>@param topicId</p>
+
+<p>returns 返回获取单个话题请求对象</p>
 			</div>
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>朋友圈请求对象</p>
-			</div>
-			
-
-			
-
 			
 
 			

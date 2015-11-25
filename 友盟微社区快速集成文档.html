@@ -23,7 +23,6 @@ AVFoundation.framework</p>
 <ol>
 <li>在xcode的info.plist添加一项<code>NSLocationAlwaysUsageDescription</code> 为NSString:""</li>
 <li>在info.plist 增加一项 <code>View controller-based status bar appearance</code> 为YES.</li>
-<li>本SDK需要使用JSONKit来实现数据解析，若目标工程使用ARC，需要在Build Phases-&gt;Compile Sources的JSONKit.m文件添加Compiler Flags：<code>-fno-objc-arc</code>。</li>
 <li>若要qq登录的功能，需要添加xcode的一项url scheme：tencent+QQ 开放平台的应用appid，例如tencent100424468 。还有添加一下url scheme：“QQ”+腾讯QQ互联应用appId转换成十六进制（不足8位前面补0），例如“QQ05FC5B14”。另外需要在你的工程的info.plist设置Bundle display name。</li>
 <li>若要微信登录的功能，需要添加一项xcode的url scheme为微信appid，例如wxd930ea5d5a258f4f。</li>
 <li>为了兼容iOS9，需要在Xcode7里工程设置的Build Settings-&gt;Enable Bitcode设置成NO,（没有用Xcode7 可以忽略）。</li>

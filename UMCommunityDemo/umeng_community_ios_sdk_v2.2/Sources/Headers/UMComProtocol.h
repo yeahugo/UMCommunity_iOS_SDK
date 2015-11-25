@@ -121,4 +121,6 @@
 #define UpLoadImageToAlbc   @"api/proxy/upload"
 #define CommentLike         @"feed/comment/like"
 
+#define TopicOne            @"topic/"
+
 #endif

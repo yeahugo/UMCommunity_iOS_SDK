@@ -111,6 +111,7 @@
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sum" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="topic_focused_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="user" inverseEntity="Album" syncable="YES"/>
         <relationship name="comment" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comment" inverseName="creator" inverseEntity="Comment" syncable="YES"/>
@@ -129,6 +130,6 @@
         <element name="Like" positionX="70" positionY="261" width="128" height="105"/>
         <element name="Notification" positionX="-81" positionY="-18" width="128" height="120"/>
         <element name="Topic" positionX="178" positionY="69" width="128" height="270"/>
-        <element name="User" positionX="-288" positionY="99" width="128" height="555"/>
+        <element name="User" positionX="-288" positionY="99" width="128" height="570"/>
     </elements>
 </model>

@@ -119,6 +119,10 @@ typedef void (^RequestCompletedNoPageResponse)(id responseObject, NSError *error
                                 topicId:(NSString *)topicId
                                response:(PageDataResponse)response;
 
+//获取单个话题
++ (void)getOneTopicWithTopicId:(NSString *)topicId
+                      response:(PageDataResponse)response;
+
 
 #pragma mark - user
 

@@ -588,6 +588,23 @@ typedef void (^FetchServerDataResponse)(NSArray *data,BOOL haveNextPage, NSError
 
 @end
 
+/**
+ 获取单个话题,使用方法见父类`UMComPullRequest`,获取的数据是`UMComTopic`对象组成的NSArray 只有一个对象
+ 
+ */
+@interface UMComOneTopicRequest : UMComPullRequest
+
+/**
+ 获取单个话题
+ 
+ @param topicId
+ 
+ returns 返回获取单个话题请求对象
+ */
+- (id)initWithTopicId:(NSString *)topicId;
+
+@end
+
 
 #pragma mark - comment
 

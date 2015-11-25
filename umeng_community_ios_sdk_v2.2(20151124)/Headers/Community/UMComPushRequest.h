@@ -53,16 +53,6 @@ typedef void (^PostResponseResultResponse)(id responseObject, NSError *error);
  */
 + (void)updateWithUser:(UMComUserAccount *)userAccount
             completion:(PostResultResponse)result;
-//
-//
-///**
-// 更新用户头像
-// 
-// @param image 头像图片
-// @param result 结果
-// */
-//+ (void)updateWithProfileImage:(UIImage *)image
-//                    completion:(PostResultResponse)result;
 
 
 /**

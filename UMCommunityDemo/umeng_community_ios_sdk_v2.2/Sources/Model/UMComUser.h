@@ -2,8 +2,8 @@
 //  UMComUser.h
 //  UMCommunity
 //
-//  Created by Gavin Ye on 9/15/15.
-//  Copyright (c) 2015 Umeng. All rights reserved.
+//  Created by umeng on 15/11/20.
+//  Copyright (c) 2015年 Umeng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -39,6 +39,7 @@
 @property (nonatomic, retain) NSNumber * sum;
 @property (nonatomic, retain) NSString * token;
 @property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSNumber * topic_focused_count;
 @property (nonatomic, retain) UMComAlbum *album;
 @property (nonatomic, retain) NSOrderedSet *comment;
 @property (nonatomic, retain) NSOrderedSet *fans;
