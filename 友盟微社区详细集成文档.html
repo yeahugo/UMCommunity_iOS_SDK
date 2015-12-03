@@ -1,5 +1,6 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><link rel="stylesheet" type="text/css" href="markdown.css"></link></head><body>
-</body></html><h1>使用自定义登录</h1>
+</body></html><h1>登录/注册</h1>
+<h2>使用自定义登录</h2>
 <p>下面是修改在微社区的页面内弹出自定义的登录页面方法：</p>
 <pre><code> //在你弹出友盟微社区的页面前，设置你的登录页面，例如
 LoginViewController *loginViewController = [[LoginViewController alloc] initWithNibName:@&quot;LoginViewController&quot; bundle:nil];
@@ -49,8 +50,23 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
     }];
 </code></pre>
 
-<h1>自定义登录逻辑</h1>
-<p>1.社区内登录（如果实在友盟微社区内登录，推荐使用UMComAction的方法，如下）：
+<h2>开发者使用自己的账号系统登录</h2>
+<pre><code>   //开发者使用自己账号系统uid登录到友盟微社区并通过自己的UID获取用户信息使用示例：
+    UMComUserAccount *userAccount = [[UMComUserAccount alloc]initWithSnsType:UMComSnsTypeSelfAccount];
+    userAccount.usid = @&quot;selfacountuserid&quot;;//自己账号UID
+    userAccount.name = @&quot;用户名&quot;;
+    [UMComPushRequest loginWithUser:userAccount completion:^(id responseObject, NSError *error) {
+        //通过自己账号系统UID获取用户信息,登录成功之后自己账号系统UID会保存到[UMComSession sharedInstance].source_uid中，UMComSnsTypeSelfAccount对应的平台名称会保存到[UMComSession sharedInstance].source中
+
+        UMComUserProfileRequest *userFecth = [[UMComUserProfileRequest alloc]initWithUid:nil sourceUid:@{@&quot;source&quot;:[UMComSession sharedInstance].source,@&quot;source_uid&quot;:[UMComSession sharedInstance].source_uid}];
+        [userFecth fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+
+        }];
+    }];
+</code></pre>
+
+<h2>修改 登录/注册 后的逻辑</h2>
+<p>1.社区内登录（如果是在友盟微社区内登录，推荐使用UMComAction的方法，如下）：
 （如果需要修改登录逻辑或者第一次登陆逻辑可以修改下面的方法）</p>
 <pre><code>- (void)performActionAfterLogin:(id)param
                  viewController:(UIViewController *)viewController
@@ -105,7 +121,8 @@ LoginViewController *loginViewController = [[LoginViewController alloc] initWith
 
 </code></pre>
 
-<h1>消息通知跳转到自定义页面</h1>
+<h1>其他</h1>
+<h2>消息通知跳转到自定义页面</h2>
 <p>若在微社区的portal后台修改接收到消息通知跳转到的ViewController，需要修改 <code>UMComMessageManager.m</code>文件的<code>+ (void)handleUserInfo:(NSDictionary *)userInfo</code>方法，参照SDK原有的逻辑，根据传入的viewController名，跳转到各自的页面。例如下面是SDK已经实现的跳转到管理员通知页面的实例：</p>
 <pre><code>……
 else if ([controllerName isEqualToString:@&quot;UMComRemoteNoticeViewController&quot;]){
@@ -118,7 +135,7 @@ else if ([controllerName isEqualToString:@&quot;UMComRemoteNoticeViewController&
 }
 </code></pre>
 
-<h1>设置Feed自定义字段</h1>
+<h2>使用自定义字段</h2>
 <p>若应用消息流需要视频、音乐等其他字段类型，可以利用下面的方法，在用户点击发送feed的代码插入自定义的消息内容，然后修改消息流展示视图，将服务器返回的自定义消息内容显示出来：</p>
 <pre><code>#import &quot;UMComFeedEntity.h&quot;
 例如： UMComFeedEntity *feedEntity = [[UMComFeedEntity alloc] init]; 

@@ -20,6 +20,10 @@
 
 @property (nonatomic, copy) NSString *uid;
 
+@property (nonatomic, copy) NSString *source_uid;
+
+@property (nonatomic, copy) NSString *source;
+
 @property (nonatomic, copy) NSString *appkey;
 
 @property (nonatomic, strong, readonly) NSDictionary *baseHeader;

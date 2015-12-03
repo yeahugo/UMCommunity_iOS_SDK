@@ -214,18 +214,12 @@
 		63E3FD9E1C05B7D700E1BCB9 /* UMComCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComCoreData.h; sourceTree = "<group>"; };
 		63E3FD9F1C05B7D700E1BCB9 /* UMComErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComErrorCode.h; sourceTree = "<group>"; };
 		63E3FDA01C05B7D700E1BCB9 /* UMComErrorCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComErrorCode.m; sourceTree = "<group>"; };
-		63E3FDA11C05B7D700E1BCB9 /* UMComFetchedResultsController+UMCom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UMComFetchedResultsController+UMCom.h"; sourceTree = "<group>"; };
-		63E3FDA21C05B7D700E1BCB9 /* UMComFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComFetchRequest.h; sourceTree = "<group>"; };
 		63E3FDA31C05B7D700E1BCB9 /* UMComHttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComHttpClient.h; sourceTree = "<group>"; };
 		63E3FDA41C05B7D700E1BCB9 /* UMComHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComHttpManager.h; sourceTree = "<group>"; };
-		63E3FDA51C05B7D700E1BCB9 /* UMComHttpPagesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComHttpPagesManager.h; sourceTree = "<group>"; };
-		63E3FDA61C05B7D700E1BCB9 /* UMComHttpPagesRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComHttpPagesRequest.h; sourceTree = "<group>"; };
-		63E3FDA71C05B7D700E1BCB9 /* UMComIncrementalStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComIncrementalStore.h; sourceTree = "<group>"; };
 		63E3FDA81C05B7D700E1BCB9 /* UMComProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComProtocol.h; sourceTree = "<group>"; };
 		63E3FDA91C05B7D700E1BCB9 /* UMComSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComSession.h; sourceTree = "<group>"; };
 		63E3FDAA1C05B7D700E1BCB9 /* UMComTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComTools.h; sourceTree = "<group>"; };
 		63E3FDAB1C05B7D700E1BCB9 /* UMComTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMComTools.m; sourceTree = "<group>"; };
-		63E3FDAC1C05B7D700E1BCB9 /* UMComUserResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMComUserResultController.h; sourceTree = "<group>"; };
 		63E3FDAD1C05B7D700E1BCB9 /* UMImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMImageLoadConnection.h; sourceTree = "<group>"; };
 		63E3FDAE1C05B7D700E1BCB9 /* UMImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMImageLoader.h; sourceTree = "<group>"; };
 		63E3FDAF1C05B7D700E1BCB9 /* UMImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMImageView.h; sourceTree = "<group>"; };
@@ -645,18 +639,12 @@
 				63E3FD9E1C05B7D700E1BCB9 /* UMComCoreData.h */,
 				63E3FD9F1C05B7D700E1BCB9 /* UMComErrorCode.h */,
 				63E3FDA01C05B7D700E1BCB9 /* UMComErrorCode.m */,
-				63E3FDA11C05B7D700E1BCB9 /* UMComFetchedResultsController+UMCom.h */,
-				63E3FDA21C05B7D700E1BCB9 /* UMComFetchRequest.h */,
 				63E3FDA31C05B7D700E1BCB9 /* UMComHttpClient.h */,
 				63E3FDA41C05B7D700E1BCB9 /* UMComHttpManager.h */,
-				63E3FDA51C05B7D700E1BCB9 /* UMComHttpPagesManager.h */,
-				63E3FDA61C05B7D700E1BCB9 /* UMComHttpPagesRequest.h */,
-				63E3FDA71C05B7D700E1BCB9 /* UMComIncrementalStore.h */,
 				63E3FDA81C05B7D700E1BCB9 /* UMComProtocol.h */,
 				63E3FDA91C05B7D700E1BCB9 /* UMComSession.h */,
 				63E3FDAA1C05B7D700E1BCB9 /* UMComTools.h */,
 				63E3FDAB1C05B7D700E1BCB9 /* UMComTools.m */,
-				63E3FDAC1C05B7D700E1BCB9 /* UMComUserResultController.h */,
 				63E3FDAD1C05B7D700E1BCB9 /* UMImageLoadConnection.h */,
 				63E3FDAE1C05B7D700E1BCB9 /* UMImageLoader.h */,
 				63E3FDAF1C05B7D700E1BCB9 /* UMImageView.h */,

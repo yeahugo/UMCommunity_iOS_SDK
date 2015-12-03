@@ -502,9 +502,10 @@ typedef void (^FetchServerDataResponse)(NSArray *data,BOOL haveNextPage, NSError
 /**
  获取用户详细信息请求的初始化方法,使用方法见父类`UMComPullRequest`
  
- @param uid 用户id
- @param sourceUids 自定义用户登录的key和id，自定义登录的key是@"self_account"
+ @param uid 友盟账号系统的用户ID,对应的是`UMComUser`的属性uid
+ @param sourceUids 是NSDictionry类型，sourceUids结构是 @{@"source":@"self_acount",@"source_uid":自己平台UID};self_account自己的平台，source_uid自己平台UID
  
+ @warming uid和sourceUids 两个参数只需要选其中一个就可以，但是账号必须跟友盟微社区UID一一对应
  @returns 获取用户详细信息请求对象
  */
 - (id)initWithUid:(NSString *)uid sourceUid:(NSDictionary *)sourceUids;
