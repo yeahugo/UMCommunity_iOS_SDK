@@ -14,12 +14,30 @@
 #import "UMSocialWechatHandler.h"
 #import "LoginViewController.h"
 #import "UMComNavigationController.h"
+#import "UMComMainViewController.h"
+#import "UMComSession.h"
+#import "UMComFeedDetailViewController.h"
+#import "UMComNavigationController.h"
+#import "UMComPostContentViewController.h"
 
-#define UMengCommunityAppkey @"54d19091fd98c55a19000406"
+
+//#define UMengCommunityAppkey @"54d19091fd98c55a19000406" //
+//#define UMengCommunityAppkey @"550bb547fd98c59931000be8"
+//#define UMengCommunityAppkey @"4eaee02c527015373b000003" //
+#define UMengCommunityAppkey @"54c877ecfd98c5b9d8000776"//test
+//#define UMengCommunityAppkey @"53c6468356240b2b4d00f88d"
+//#define UMengCommunityAppkey @"54daf6b0fd98c52a04000a15"
+//#define UMengCommunityAppkey @"561e2e35e0f55aa743000adc"
+
+#define UMengCommunityForumAppkey @"54c877ecfd98c5b9d8000776"
 
 
 
 #define UMengLoginAppkey UMengCommunityAppkey
+
+@interface UMAppDelegate ()
+
+@end
 
 @implementation UMAppDelegate
 
@@ -47,10 +65,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         [UMComMessageManager startWithOptions:nil];
         //使用你的消息通知处理
     }
-
-    //下面实现自定义登录
-//    LoginViewController *loginViewControler =[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-//    [UMComLoginManager setLoginHandler:loginViewControler];
+    
 //    //设置微信AppId、appSecret，分享url
     [UMSocialWechatHandler setWXAppId:@"wx96110a1e3af63a39" appSecret:@"c60e3d3ff109a5d17013df272df99199" url:@"http://www.umeng.com/social"];
     //设置分享到QQ互联的appId和appKey
@@ -61,9 +76,46 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+//    UINavigationController *communityController = [UMCommunity getFeedsModalViewController];
+//    self.window.rootViewController = communityController;
+    UMComMainViewController *mainVc = [[UMComMainViewController alloc]init];
+    UMComNavigationController *rootVc = [[UMComNavigationController alloc]initWithRootViewController:mainVc];
+    self.window.rootViewController = rootVc;
     
-    UINavigationController *communityController = [UMCommunity getFeedsModalViewController];
-    self.window.rootViewController = communityController;
+    [UMComMessageManager remoteNotificationForEnterDetailView:^(NSString *appkey, NSString *feedID, NSString *commentID, NSDictionary *extraDict) {
+        UIViewController *controller = nil;
+        if ([appkey isEqualToString:UMengCommunityForumAppkey]) {
+            UMComPostContentViewController *forumDetailVC = [[UMComPostContentViewController alloc] initWithFeedID:feedID andCommentID:commentID];
+            controller = forumDetailVC;
+        } else {
+            UMComFeedDetailViewController *feedDetailVC = [[UMComFeedDetailViewController alloc]initWithFeed:feedID commentId:commentID viewExtra:extraDict];
+            feedDetailVC.showType = UMComShowFromClickRemoteNotice;
+            controller = feedDetailVC;
+        }
+        UMComNavigationController *feedDetailNav = [[UMComNavigationController alloc] initWithRootViewController:controller];
+        [rootVc presentViewController:feedDetailNav animated:YES completion:nil];
+    }];
+    
+//    UMComUserAccount *account = [[UMComUserAccount alloc]initWithSnsType:UMComSnsTypeSelfAccount];
+//    account.name = @"helloword";
+//    account.usid = @"1234567890";
+//    sourceUids = @{@"source":self_account,@"source_uid":source_uid} 这参数这么传 source表示平台，source_uid表示自己系统的UID
+//    [UMComPushRequest loginWithUser:account completion:^(id responseObject, NSError *error) {
+//        UMComPullRequest *userProfileRequest = [[UMComUserProfileRequest alloc]initWithUid:nil sourceUid:@{@"source":account.snsPlatformName,@"source_uid":account.usid}];
+//        [userProfileRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+//            
+//        }];
+//    }];
+//    UMComImageModel *imageModel = [[UMComImageModel alloc]init];
+//    imageModel.smallImageUrlString = @"http://img3.imgtn.bdimg.com/it/u=265610369,1867119364&fm=21&gp=0.jpg";//@"http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg";
+//    account.iconImageModel = imageModel;
+//    
+//    [UMComPushRequest updateWithUser:account completion:^(NSError *error) {
+//        UMComPullRequest *userProfileRequest = [[UMComUserProfileRequest alloc]initWithUid:nil sourceUid:@{@"source":account.snsPlatformName,@"source_uid":account.usid}];
+//        [userProfileRequest fetchRequestFromServer:^(NSArray *data, BOOL haveNextPage, NSError *error) {
+//            NSLog(@"%@",[UMComSession sharedInstance].loginUser.icon_url);
+//        }];
+//    }];
     return YES;
 }
 

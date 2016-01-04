@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "79A4CD29FC6952579D5D8282F71833BEE1E4B1EF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "79A4CD29FC6952579D5D8282F71833BEE1E4B1EF" : 0,
+    "F90E67CD0393E88BD121087709512236ECDA7015" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "307F3C73-7297-49C8-907D-F560EB6766E4",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "79A4CD29FC6952579D5D8282F71833BEE1E4B1EF" : "umeng_community_ios_sdk_v2.3\/",
+    "F90E67CD0393E88BD121087709512236ECDA7015" : "umeng_community_ios_sdk"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "UMCommunityDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "UMCommunityDemo\/UMCommunityDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/yeahugo\/UMCommunity_iOS_SDK.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "79A4CD29FC6952579D5D8282F71833BEE1E4B1EF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:yeahugo\/UMCommunity_iOS_SDK.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F90E67CD0393E88BD121087709512236ECDA7015"
+    }
+  ]
+}

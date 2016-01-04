@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UMComUserCenterViewController">
+            <connections>
+                <outlet property="albumLabel" destination="6Lv-W0-Tli" id="TGJ-L7-cLU"/>
+                <outlet property="bottomLine" destination="WOd-k6-gG9" id="bjH-2g-r6U"/>
+                <outlet property="fanButton" destination="q8x-aB-PQt" id="SZD-yL-7cs"/>
+                <outlet property="fanNumber" destination="sBB-DC-unP" id="Bs0-X0-kgo"/>
+                <outlet property="feedButton" destination="6OI-mG-Wx1" id="SzO-fB-mPi"/>
+                <outlet property="feedNumber" destination="PrC-C6-sxN" id="UMy-ot-rvh"/>
+                <outlet property="focus" destination="F4a-6y-oLI" id="mEe-df-h3a"/>
+                <outlet property="followButton" destination="uzo-0T-gvU" id="zi9-uQ-LXi"/>
+                <outlet property="followerNumber" destination="8KQ-jN-hIE" id="daZ-Qe-IXb"/>
+                <outlet property="headerView" destination="wY0-Hf-7jp" id="nM6-FU-NxV"/>
+                <outlet property="menuView" destination="F0u-ga-jsY" id="7rf-j7-pqF"/>
+                <outlet property="profileImageView" destination="zRy-Jw-aNH" id="Fo0-Lv-Zsq"/>
+                <outlet property="topLine" destination="Lho-iH-XWg" id="LDO-7V-9se"/>
+                <outlet property="topicLabel" destination="2hZ-Ho-P7A" id="j6V-Cx-LB0"/>
+                <outlet property="userName" destination="HxV-fH-eST" id="Bnz-Ld-YpG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <point key="canvasLocation" x="-540" y="206"/>
+        </view>
+        <view contentMode="scaleToFill" id="wY0-Hf-7jp">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="223"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HxV-fH-eST">
+                    <rect key="frame" x="109" y="75" width="102" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="F4a-6y-oLI">
+                    <rect key="frame" x="112" y="105" width="96" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="取消关注">
+                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="onClickFoucus:" destination="-1" eventType="touchUpInside" id="rbb-v8-Bso"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" id="FpC-79-9Xa">
+                    <rect key="frame" x="80" y="140" width="160" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" id="VFT-K2-zCR" userLabel="albumBt">
+                            <rect key="frame" x="0.0" y="0.0" width="80" height="23"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UMComSDKResources.bundle/images/um_album.png" id="fxT-kq-Xlh">
+                                    <rect key="frame" x="14" y="4" width="14" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相册" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Lv-W0-Tli">
+                                    <rect key="frame" x="30.000000922968855" y="1" width="36" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="asa-su-dMx" appends="YES" id="9cr-XH-STh"/>
+                            </connections>
+                        </view>
+                        <view contentMode="scaleToFill" id="Vok-vp-Sps" userLabel="topicBt">
+                            <rect key="frame" x="80" y="0.0" width="80" height="23"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UMComSDKResources.bundle/images/um_topic.png" id="pkq-zz-K8v">
+                                    <rect key="frame" x="20" y="4" width="14" height="14"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="话题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2hZ-Ho-P7A">
+                                    <rect key="frame" x="36.999999891008628" y="1" width="35" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="8b6-9H-BsS" appends="YES" id="dVE-bh-uWH"/>
+                            </connections>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="F0u-ga-jsY">
+                    <rect key="frame" x="0.0" y="175" width="320" height="48"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" id="Lho-iH-XWg" userLabel="topLine">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" id="PrC-C6-sxN">
+                            <rect key="frame" x="10" y="2" width="50" height="23"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.29019607843137257" green="0.56470588235294117" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" id="sBB-DC-unP">
+                            <rect key="frame" x="260" y="2" width="50" height="23"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.29019607843137257" green="0.56470588235294117" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" id="8KQ-jN-hIE">
+                            <rect key="frame" x="135" y="2" width="50" height="23"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.29019607843137257" green="0.56470588235294117" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6OI-mG-Wx1">
+                            <rect key="frame" x="10" y="16" width="50" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="消息">
+                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="onClickFeeds:" destination="-1" eventType="touchUpInside" id="p00-Wk-gcm"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="q8x-aB-PQt">
+                            <rect key="frame" x="260" y="16" width="50" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="粉丝">
+                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="onClickFans:" destination="-1" eventType="touchUpInside" id="whJ-Rr-5V1"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uzo-0T-gvU">
+                            <rect key="frame" x="135" y="16" width="50" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="关注">
+                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="onClickFollowers:" destination="-1" eventType="touchUpInside" id="5Vr-mw-88d"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" id="WOd-k6-gG9" userLabel="bottomLine">
+                            <rect key="frame" x="0.0" y="47" width="320" height="1"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+                <view contentMode="scaleToFill" id="zRy-Jw-aNH" customClass="UMComImageView">
+                    <rect key="frame" x="130" y="15" width="60" height="60"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-174" y="-11.5"/>
+        </view>
+        <viewController id="mmc-S6-oRv">
+            <view key="view" contentMode="scaleToFill" id="93f-ti-IhS">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            </view>
+        </viewController>
+        <tapGestureRecognizer id="asa-su-dMx" userLabel="Tap_album">
+            <connections>
+                <action selector="onClickAlbum:" destination="-1" id="lvl-He-In7"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="8b6-9H-BsS" userLabel="Tap_topic">
+            <connections>
+                <action selector="onClickTopic:" destination="-1" id="72G-7d-3dc"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="UMComSDKResources.bundle/images/um_album.png" width="75" height="75"/>
+        <image name="UMComSDKResources.bundle/images/um_topic.png" width="75" height="75"/>
+    </resources>
+</document>

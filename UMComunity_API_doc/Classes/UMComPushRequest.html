@@ -58,7 +58,11 @@
 	
 	<optgroup label="Class Methods">
 		
+		<option value="//api/name/banUser:inTopics:ban:completion:">+ banUser:inTopics:ban:completion:</option>
+		
 		<option value="//api/name/checkUserName:userNameType:userNameLength:completion:">+ checkUserName:userNameType:userNameLength:completion:</option>
+		
+		<option value="//api/name/commentFeedWithFeed:commentContent:replyComment:commentCustomContent:images:completion:">+ commentFeedWithFeed:commentContent:replyComment:commentCustomContent:images:completion:</option>
 		
 		<option value="//api/name/deleteWithComment:feed:completion:">+ deleteWithComment:feed:completion:</option>
 		
@@ -74,6 +78,8 @@
 		
 		<option value="//api/name/forwardWithFeed:newFeed:completion:">+ forwardWithFeed:newFeed:completion:</option>
 		
+		<option value="//api/name/initChartBoxWithToUser:responese:">+ initChartBoxWithToUser:responese:</option>
+		
 		<option value="//api/name/likeWithComment:isLike:completion:">+ likeWithComment:isLike:completion:</option>
 		
 		<option value="//api/name/likeWithFeed:isLike:completion:">+ likeWithFeed:isLike:completion:</option>
@@ -84,9 +90,9 @@
 		
 		<option value="//api/name/postWithFeed:completion:">+ postWithFeed:completion:</option>
 		
-		<option value="//api/name/postWithSourceFeed:commentContent:replyUser:commentCustomContent:images:completion:">+ postWithSourceFeed:commentContent:replyUser:commentCustomContent:images:completion:</option>
-		
 		<option value="//api/name/requestConfigDataWithResult:">+ requestConfigDataWithResult:</option>
+		
+		<option value="//api/name/sendPrivateMessageWithContent:toUser:responese:">+ sendPrivateMessageWithContent:toUser:responese:</option>
 		
 		<option value="//api/name/spamWithComment:completion:">+ spamWithComment:completion:</option>
 		
@@ -385,6 +391,74 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/banUser:inTopics:ban:completion:" title="banUser:inTopics:ban:completion:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/banUser:inTopics:ban:completion:">+&nbsp;banUser:inTopics:ban:completion:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>管理员对用户禁言</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)banUser:(UMComUser *)<em>user</em> inTopics:(NSArray *)<em>topics</em> ban:(BOOL)<em>ban</em> completion:(PostResponseResultResponse)<em>result</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>user</code></th>
+						<td><p>被禁言用户</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>topics</code></th>
+						<td><p>禁言的话题<code>UMComTopic</code>对象列表，即管理员可以根据自己的权限对某个用户在某个话题下禁言，全局管理员则具有任何话题下的禁言权限</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>ban</code></th>
+						<td><p>是否禁言，如果为YES表示禁言，如果为NO表示取消禁言</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>result</code></th>
+						<td><p>操作结果回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComPushRequest.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/checkUserName:userNameType:userNameLength:completion:" title="checkUserName:userNameType:userNameLength:completion:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/checkUserName:userNameType:userNameLength:completion:">+&nbsp;checkUserName:userNameType:userNameLength:completion:</a></code>
 </h3>
@@ -467,7 +541,7 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>获取初始化数据</p>
+				<p>获取初始化数据和更新未读消息数</p>
 			</div>
 			
 		    
@@ -482,8 +556,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>result</code></th>
-						<td><p>初始化数据结果，<code>responseObject</code>的key<code>config.feed_length</code>为设置最大feed文字内容
-               <code>responseObject</code>的key<code>msg_box</code>是各个未读消息数，<code>msg_box</code>下面的<code>total</code>为所有未读通知数，key为<code>notice</code>为管理员未读通知数，<code>comment</code>为被评论未读通知数，<code>at</code>为被@未读通知数，<code>like</code>为被点赞未读通知数</p></td>
+						<td><p>初始化数据结果，<code>responseObject</code>的key<code>config.feed_length</code>为设置最大feed文字内容 <code>responseObject</code>的key<code>msg_box</code>是各个未读消息数，<code>msg_box</code>下面的<code>total</code>为所有未读通知数，key为<code>notice</code>为管理员未读通知数，<code>comment</code>为被评论未读通知数，<code>at</code>为被@未读通知数，<code>like</code>为被点赞未读通知数</p></td>
 					</tr>
 				
 				</table>
@@ -494,6 +567,11 @@
 
 			
 
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="warning"><p><strong>Warning:</strong> 这些数据都会保存在UMComSession单利里面 <code>config.feed_lenght</code>对应的UMComSession的maxFeedLength属性，<code>message_box</code>保存在UMComSession的unReadNoticeModel属性里面，他是<code>UMComUnReadNoticeModel</code>类的对象，</p></div>
+			</div>
 			
 
 			
@@ -730,7 +808,7 @@ feedEntity.text = feedString;
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>feed</code></th>
-						<td><p>Feed</p></td>
+						<td><p>被举报的Feed</p></td>
 					</tr>
 				
 					<tr>
@@ -846,7 +924,7 @@ feedEntity.text = feedString;
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>feed</code></th>
-						<td><p>被收藏的 feed</p></td>
+						<td><p>被收藏的feed</p></td>
 					</tr>
 				
 					<tr>
@@ -999,8 +1077,8 @@ feedEntity.text = feedString;
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/postWithSourceFeed:commentContent:replyUser:commentCustomContent:images:completion:" title="postWithSourceFeed:commentContent:replyUser:commentCustomContent:images:completion:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/postWithSourceFeed:commentContent:replyUser:commentCustomContent:images:completion:">+&nbsp;postWithSourceFeed:commentContent:replyUser:commentCustomContent:images:completion:</a></code>
+	<a name="//api/name/commentFeedWithFeed:commentContent:replyComment:commentCustomContent:images:completion:" title="commentFeedWithFeed:commentContent:replyComment:commentCustomContent:images:completion:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/commentFeedWithFeed:commentContent:replyComment:commentCustomContent:images:completion:">+&nbsp;commentFeedWithFeed:commentContent:replyComment:commentCustomContent:images:completion:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1015,7 +1093,7 @@ feedEntity.text = feedString;
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>+ (void)postWithSourceFeed:(UMComFeed *)<em>feed</em> commentContent:(NSString *)<em>commentContent</em> replyUser:(UMComUser *)<em>replyUser</em> commentCustomContent:(NSString *)<em>commentCustomContent</em> images:(NSArray *)<em>images</em> completion:(PostResultResponse)<em>result</em></code></div>
+			<div class="method-subsection method-declaration"><code>+ (void)commentFeedWithFeed:(UMComFeed *)<em>feed</em> commentContent:(NSString *)<em>commentContent</em> replyComment:(UMComComment *)<em>replyComment</em> commentCustomContent:(NSString *)<em>commentCustomContent</em> images:(NSArray *)<em>images</em> completion:(PostResponseResultResponse)<em>response</em></code></div>
 
 		    
 			
@@ -1025,32 +1103,32 @@ feedEntity.text = feedString;
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>feed</code></th>
-						<td><p>被评论的Feed</p></td>
+						<td><p>被评论的Feed （必传）</p></td>
 					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>commentContent</code></th>
-						<td><p>评论内容</p></td>
+						<td><p>评论内容 （必传）</p></td>
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>replyUser</code></th>
-						<td><p>回复的用户</p></td>
+						<th scope="row" class="argument-name"><code>replyComment</code></th>
+						<td><p>回复的评论 （可选，当回复某条评论时必传）</p></td>
 					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>commentCustomContent</code></th>
-						<td><p>评论自定义字段</p></td>
+						<td><p>评论自定义字段 （可选，用户根据自己业务需要添加的扩展字段）</p></td>
 					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>images</code></th>
-						<td><p>评论附带图片（images中的对象可以是UIIamge类对象，也可以是UMComImageModel类对象）</p></td>
+						<td><p>评论附带图片（images中的对象可以是UIIamge类对象，也可以直接是图片的urlString）,图片限制3张（可选）</p></td>
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>result</code></th>
-						<td><p>结果</p></td>
+						<th scope="row" class="argument-name"><code>response</code></th>
+						<td><p>评论请求完成的回调，返回两个参数分别是：<code>UMComComment</code>对象和<code>NSError</code>类对象，成功则返回一个<code>UMComComment</code>对象和error为nil，失败则返回nil和错误error</p></td>
 					</tr>
 				
 				</table>
@@ -1102,13 +1180,13 @@ feedEntity.text = feedString;
 				<table class="argument-def parameter-def">
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>result</code></th>
-						<td><p>返回结果</p></td>
+						<th scope="row" class="argument-name"><code>comment</code></th>
+						<td><p>评论</p></td>
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>commentId</code></th>
-						<td><p>评论Id</p></td>
+						<th scope="row" class="argument-name"><code>result</code></th>
+						<td><p>返回结果</p></td>
 					</tr>
 				
 				</table>
@@ -1223,6 +1301,11 @@ feedEntity.text = feedString;
 				<table class="argument-def parameter-def">
 				
 					<tr>
+						<th scope="row" class="argument-name"><code>comment</code></th>
+						<td><p>评论</p></td>
+					</tr>
+				
+					<tr>
 						<th scope="row" class="argument-name"><code>isLike</code></th>
 						<td><p>是否点赞，如果点赞则为YES,取消点赞则为NO</p></td>
 					</tr>
@@ -1230,11 +1313,6 @@ feedEntity.text = feedString;
 					<tr>
 						<th scope="row" class="argument-name"><code>result</code></th>
 						<td><p>返回结果</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>commentId</code></th>
-						<td><p>评论Id</p></td>
 					</tr>
 				
 				</table>
@@ -1297,7 +1375,123 @@ feedEntity.text = feedString;
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>result</code></th>
-						<td><p>结果</p></td>
+						<td><p>结果返回一个NSError对象</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComPushRequest.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initChartBoxWithToUser:responese:" title="initChartBoxWithToUser:responese:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initChartBoxWithToUser:responese:">+&nbsp;initChartBoxWithToUser:responese:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>初始化私信聊天窗口</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)initChartBoxWithToUser:(UMComUser *)<em>user</em> responese:(PostResponseResultResponse)<em>response</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>user</code></th>
+						<td><p>私信聊天对象（管理员）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>response</code></th>
+						<td><p>返回的是一个<code>UMComPrivateLetter</code>对象和一个NSError对象</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">UMComPushRequest.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/sendPrivateMessageWithContent:toUser:responese:" title="sendPrivateMessageWithContent:toUser:responese:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sendPrivateMessageWithContent:toUser:responese:">+&nbsp;sendPrivateMessageWithContent:toUser:responese:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>向管理员发送私信</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)sendPrivateMessageWithContent:(NSString *)<em>content</em> toUser:(UMComUser *)<em>user</em> responese:(PostResponseResultResponse)<em>response</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>user</code></th>
+						<td><p>私信聊天对象（管理员）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>response</code></th>
+						<td><p>返回的是一个<code>UMComPrivateMessage</code>对象和一个NSError对象</p></td>
 					</tr>
 				
 				</table>
@@ -1338,7 +1532,7 @@ feedEntity.text = feedString;
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2015 umeng. All rights reserved. Updated: 2015-12-10</p>
+						<p class="copyright">Copyright &copy; 2016 umeng. All rights reserved. Updated: 2016-01-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
